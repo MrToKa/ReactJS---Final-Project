@@ -1,10 +1,11 @@
 import './App.css'
+import AppLayout from './components/Layout/layout'
 
 function App() {
 
   return (
     <>
-      <h1>ReactJS Final Project</h1>      
+      <AppLayout />
     </>
   )
 }
