@@ -1,49 +1,48 @@
-import { ScheduleOutlined, ContactsOutlined, ToolOutlined } from '@ant-design/icons';
+import React from 'react';
+import { Link } from 'react-router';
+import { Menu } from 'antd';
+import { ScheduleOutlined, ContactsOutlined, ToolOutlined, HomeOutlined } from '@ant-design/icons';
 
-export const items = [
+const items = [
   {
-    label: 'Projects',
-    key: 'projects',
+    key: '/',
+    label: <Link to="/">Home</Link>,
+    icon: <HomeOutlined />,
+    title: 'Home',
+  },
+  {
+    key: '/projects',
+    label: <Link to="/projects">Projects</Link>,
     icon: <ScheduleOutlined />,
+    title: 'Projects',
   },
   {
-    label: 'Employees',
-    key: 'employees',
+    key: '/instruments',
+    label: <Link to="/instruments">Instruments</Link>,
     icon: <ContactsOutlined />,
+    title: 'Instruments',
   },
   {
-    label: 'Instruments',
-    key: 'instruments',
+    key: '/employees',
+    label: <Link to="/employees">Employees</Link>,
     icon: <ToolOutlined />,
-    children: [
-      {
-        type: 'group',
-        label: 'Item 1',
-        children: [
-          {
-            label: 'Option 1',
-            key: 'setting:1',
-          },
-          {
-            label: 'Option 2',
-            key: 'setting:2',
-          },
-        ],
-      },
-      {
-        type: 'group',
-        label: 'Item 2',
-        children: [
-          {
-            label: 'Option 3',
-            key: 'setting:3',
-          },
-          {
-            label: 'Option 4',
-            key: 'setting:4',
-          },
-        ],
-      },
-    ],
-  }
+    title: 'Employees',    
+  },
 ];
+
+const Navbar = () => {
+  return (
+    <Menu
+      theme="dark"
+      mode="horizontal"
+      selectedKeys={[window.location.pathname]}      
+      items={items}      
+      style={{
+        flex: 1,
+        minWidth: 0,
+      }}
+    />
+  );
+};
+
+export default Navbar;
