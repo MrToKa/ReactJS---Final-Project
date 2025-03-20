@@ -1,17 +1,16 @@
 import React from 'react';
 
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
-import { Card } from 'antd';
+import { EditOutlined, EllipsisOutlined } from '@ant-design/icons';
+import { Card, Button } from 'antd';
 
 const { Meta } = Card;
 
 export default function ProjectCard({ project }) {
     return (
         <Card
-            hoverable
             style={{
                 width: 400,
-                height: 400,
+                height: 405,
                 margin: '20px',
             }}
             cover={
@@ -28,9 +27,8 @@ export default function ProjectCard({ project }) {
                 </div>
             }
             actions={[
-                <SettingOutlined key="setting" />,
-                <EditOutlined key="edit" />,
-                <EllipsisOutlined key="ellipsis" />,
+                <Button type="text" icon={<EditOutlined />} key="edit">Edit</Button>,
+                <Button type="text" icon={<EllipsisOutlined />} key="ellipsis">More</Button>,
             ]}
         >
             <Meta
