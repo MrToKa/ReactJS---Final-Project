@@ -17,17 +17,18 @@ const items = [
     title: 'Projects',
   },
   {
-    key: '/instruments',
-    label: <Link to="/instruments">Instruments</Link>,
-    icon: <ContactsOutlined />,
-    title: 'Instruments',
-  },
-  {
     key: '/employees',
     label: <Link to="/employees">Employees</Link>,
     icon: <ToolOutlined />,
     title: 'Employees',    
   },
+  {
+    key: '/instruments',
+    label: <Link to="/instruments">Instruments</Link>,
+    icon: <ContactsOutlined />,
+    title: 'Instruments',
+  },
+
 ];
 
 const Navbar = () => {
