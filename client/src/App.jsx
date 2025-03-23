@@ -1,10 +1,10 @@
 import React from "react";
 import { Routes, Route } from "react-router";
 import Home from "./pages/Home";
-import Projects from "./pages/Projects";
-import Employees from "./pages/Employees";
-import Instruments from "./pages/Instruments";
-import InstrumentItemDetails from "./pages/InstrumentItemDetails";
+import Projects from "./pages/Projects/Projects";
+import Employees from "./pages/Employees/Employees";
+import Instruments from "./pages/Instruments/Instruments";
+import InstrumentItemDetails from "./pages/Instruments/InstrumentItemDetails";
 import Option2 from "./pages/Option2";
 import Navbar from "./components/Layout/navbar";
 import NotFound from "./pages/404";

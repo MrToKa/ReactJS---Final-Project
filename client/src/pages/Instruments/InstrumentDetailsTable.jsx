@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Space, Table, Tag } from 'antd';
-import TablePagination from './InstrumentDetailsTablePagination';
+import TablePagination from '../TablePagination';
 
 const columns = [
   {
@@ -76,22 +76,21 @@ const data = [
 ];
 
 export default function InstrumentsTable() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 2; 
+  const [paginatedData, setPaginatedData] = useState(data.slice(0, 2)); 
 
-  const paginatedData = data.slice((currentPage - 1) * pageSize, currentPage * pageSize);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
+  const handlePageChange = (currentPage, pageSize) => {
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    setPaginatedData(data.slice(startIndex, endIndex)); 
   };
 
   return (
     <>
       <Table columns={columns} dataSource={paginatedData} pagination={false} />
       <TablePagination
-        InstrumentsType={data} 
-        pageSize={pageSize} 
-        onChange={handlePageChange} 
+        items={data} 
+        onPageChange={handlePageChange}
+        tableName="instruments"
       />
     </>
   );
