@@ -1,13 +1,10 @@
 import { useEffect, useState } from 'react';
-
 import { Col, Row } from 'antd';
 import InstrumentCard from './InstrumentCard';
 
-
 export default function Instruments() {
-
   const [instrument, setInstrument] = useState([]);
-  
+
   useEffect(() => {
     fetch('https://fakestoreapi.com/products')
       .then((response) => response.json())
@@ -15,11 +12,14 @@ export default function Instruments() {
   }, []);
 
   return (
-  <Row gutter={12} justify="center">
-    {instrument.map((item) => (
-      <Col span={4} key={item.id}>
-        <InstrumentCard instrument={item} /> {/* Pass the individual item */}
-      </Col>
-    ))}
-  </Row>
-);};
+    <>
+      <Row gutter={12} justify="center">
+        {instrument.map((item) => (
+          <Col span={4} key={item.id}>
+            <InstrumentCard instrument={item} />
+          </Col>
+        ))}
+      </Row>
+    </>
+  );
+};

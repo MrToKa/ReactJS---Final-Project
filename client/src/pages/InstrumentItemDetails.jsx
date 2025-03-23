@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 import { Card, Flex, Typography } from 'antd';
+import InstrumentsTable from './InstrumentDetailsTable';
 
 const imgStyle = {
   display: 'block',
@@ -23,6 +24,7 @@ export default function InstrumentItem() {
 
 
   return (
+  <>
   <Card
     styles={{
       body: {
@@ -55,5 +57,7 @@ export default function InstrumentItem() {
     </Flex>
   </Card> 
 
+  <InstrumentsTable />
+  </>
 );
 };
