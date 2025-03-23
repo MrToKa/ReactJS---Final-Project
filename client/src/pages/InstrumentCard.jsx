@@ -1,17 +1,29 @@
-import React from 'react';
-import { Card } from 'antd';
+import { Card } from "antd";
+import { Link } from "react-router";
 
 const { Meta } = Card;
 
-const InstrumentCard = () => (
-  <Card
-    hoverable
-    style={{
-      width: 240,
-    }}
-    cover={<img alt="example" src="https://www.powerbuilt.com/cdn/shop/products/640948-01.jpg?v=1658745639" />}
-  >
-    <Meta title="Instrument Type" description="www.instagram.com" />
-  </Card>
-);
-export default InstrumentCard;
+export default function InstrumentCard({ instrument }) {
+  return (
+    <Link key={instrument.id} to={`/instruments/${instrument.id}`}>
+      <Card
+        hoverable
+        style={{
+          width: 240,
+        }}
+
+        cover={<img alt={instrument.title} src={instrument.image} />}
+        href={`/instruments/${instrument.id}`}
+      >
+        <Meta
+          title={instrument.title}
+          description={
+            instrument.description.length > 100
+              ? `${instrument.description.substring(0, 100)}...`
+              : instrument.description
+          }
+        />
+      </Card>
+    </Link>
+  );
+}

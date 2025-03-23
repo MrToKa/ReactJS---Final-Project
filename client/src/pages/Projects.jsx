@@ -31,9 +31,9 @@ const projects = [{
 ];
 
 const Projects = () => (
-  <Row gutter={24} justify="center" style={{ height: 'auto' }}> {/* Adjusted height */}
+  <Row gutter={24} justify="center" style={{ height: 'auto' }}> 
     {projects.map((project) => (
-      <Col key={project.id} span={6}> {/* Adjusted span to 6 */}
+      <Col key={project.id} span={6}> 
         <ProjectCard project={project} />
       </Col>
     ))}
