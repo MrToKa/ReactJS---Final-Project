@@ -4,6 +4,7 @@ import { Link } from "react-router";
 const { Meta } = Card;
 
 export default function InstrumentCard({ instrument }) {
+  
   return (
     <Link key={instrument.id} to={`/instruments/${instrument.id}`}>
       <Card
