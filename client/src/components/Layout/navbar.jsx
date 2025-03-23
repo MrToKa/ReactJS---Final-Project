@@ -31,6 +31,10 @@ const items = [
 
 ];
 
+const onClick = (e) => {
+  window.location.pathname = e.key;
+}
+
 const Navbar = () => {
   return (
     <Menu
@@ -42,6 +46,7 @@ const Navbar = () => {
         flex: 1,
         minWidth: 0,
       }}
+      onClick={onClick}
     />
   );
 };

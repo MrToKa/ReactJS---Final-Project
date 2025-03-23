@@ -22,7 +22,6 @@ export default function InstrumentItem() {
       .then((data) => setInstrument(data));
   }, [instrumentId]);
 
-
   return (
   <>
   <Card
