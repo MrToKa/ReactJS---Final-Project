@@ -13,9 +13,9 @@ export default function Instruments() {
 
   return (
     <>
-      <Row gutter={12} justify="center">
+      <Row gutter={24} justify="center" style={{ height: 'auto' }}>
         {instrument.map((item) => (
-          <Col span={4} key={item.id}>
+          <Col span={6} key={item.id}>
             <InstrumentCard instrument={item} />
           </Col>
         ))}

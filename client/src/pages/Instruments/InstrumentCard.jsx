@@ -4,16 +4,35 @@ import { Link } from "react-router";
 const { Meta } = Card;
 
 export default function InstrumentCard({ instrument }) {
-  
   return (
     <Link key={instrument.id} to={`/instruments/${instrument.id}`}>
       <Card
         hoverable
         style={{
-          width: 240,
+          width: 400,
+          height: 405,
+          margin: "20px",
         }}
-
-        cover={<img alt={instrument.title} src={instrument.image} />}
+        cover={
+          <div
+            style={{
+              width: 398,
+              height: 250,
+              overflow: "hidden",
+              border: "1px solid #f0f0f0",
+            }}
+          >
+            <img
+              alt={instrument.title}
+              src={instrument.image}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "contain",
+              }}
+            />
+          </div>
+        }
         href={`/instruments/${instrument.id}`}
       >
         <Meta

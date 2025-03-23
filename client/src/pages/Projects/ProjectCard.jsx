@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router';
 
-import { EditOutlined, EllipsisOutlined } from '@ant-design/icons';
+import { AimOutlined , EyeOutlined } from '@ant-design/icons';
 import { Card, Button } from 'antd';
 
 const { Meta } = Card;
@@ -27,13 +28,19 @@ export default function ProjectCard({ project }) {
                 </div>
             }
             actions={[
-                <Button type="text" icon={<EditOutlined />} key="edit">Edit</Button>,
-                <Button type="text" icon={<EllipsisOutlined />} key="ellipsis">More</Button>,
+                <Link to={`/projects/${project.id}`} key="ellipsis">
+                    <Button type="text" icon={<EyeOutlined />}>See More...</Button>
+                </Link>,
             ]}
         >
             <Meta
                 title={project.name}
-                description={project.location}
+                description={
+                    <span>
+                        <AimOutlined style={{ marginRight: 8 }} />
+                        {project.location}
+                    </span>
+                }
             />
         </Card>
     );
