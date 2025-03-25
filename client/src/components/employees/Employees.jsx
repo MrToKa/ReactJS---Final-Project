@@ -5,7 +5,7 @@ import { Link } from "react-router";
 import { SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Table } from "antd";
 
-import TablePagination from "../TablePagination";
+import TablePagination from "../common/TablePagination";
 
 export default function Employees() {
   const [users, setUsers] = useState([]);

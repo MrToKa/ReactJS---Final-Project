@@ -1,19 +1,20 @@
 import React from "react";
 import { Routes, Route } from "react-router";
-import Home from "./pages/Home";
-import Projects from "./pages/Projects/Projects";
-import ProjectDetails from "./pages/Projects/ProjectDetails";
-import Employees from "./pages/Employees/Employees";
-import EmployeeDetails from "./pages/Employees/EmployeeDetails";
-import Instruments from "./pages/Instruments/Instruments";
-import InstrumentItemDetails from "./pages/Instruments/InstrumentItemDetails";
-import Navbar from "./components/Layout/navbar";
-import NotFound from "./pages/404";
+import Home from "./components/home/Home";
+import Projects from "./components/projects/Projects";
+import ProjectDetails from "./components/projects/ProjectDetails";
+import Employees from "./components/employees/Employees";
+import EmployeeDetails from "./components/employees/EmployeeDetails";
+import Instruments from "./components/instruments/Instruments";
+import InstrumentItemDetails from "./components/instruments/InstrumentItemDetails";
+import Navbar from "./components/navigation/Navbar";
+import NotFound from "./components/404";
 
 const App = () => {
   return (
     <>
       <Navbar />
+      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<Projects />} />

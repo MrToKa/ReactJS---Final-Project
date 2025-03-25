@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Space, Table, Tag } from 'antd';
-import TablePagination from '../TablePagination';
+import TablePagination from '../common/TablePagination';
 
 const columns = [
   {
