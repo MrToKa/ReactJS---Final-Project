@@ -1,0 +1,22 @@
+{
+    "fa7e767c-c2dc-4e0d-b524-96c7698baf16": {
+        "name": "HKW Jena",
+        "location": "Jena, Germoney",
+        "status": "completed",
+        "image": "https://www.bv-apolda.de/fileadmin/_processed_/d/0/csm_hkw-jena-12_699e638daa.jpg",
+        "startDate": "2025-02-24",
+        "endDate": "2025-03-12",
+        "description": "Really nice project!",
+        "_id": "fa7e767c-c2dc-4e0d-b524-96c7698baf16"
+    },
+    "538f5ac6-47d8-4f30-8009-96dd28621d22": {
+        "name": "Ski Pista",
+        "location": "Copenhagen, Denmark",
+        "status": "ongoing",
+        "image": "https://emag.directindustry.com/wp-content/uploads/sites/3/copenhill_big-yankodesign01.jpg",
+        "startDate": "2025-03-18",
+        "endDate": "2025-03-28",
+        "description": "A really nice Ski Pista!",
+        "_id": "538f5ac6-47d8-4f30-8009-96dd28621d22"
+    }
+}

@@ -28,7 +28,7 @@ export default function ProjectCard({ project }) {
                 </div>
             }
             actions={[
-                <Link to={`/projects/${project.id}`} key="ellipsis">
+                <Link to={`/projects/${project._id}`} key="ellipsis">
                     <Button type="text" icon={<EyeOutlined />}>See More...</Button>
                 </Link>,
             ]}
