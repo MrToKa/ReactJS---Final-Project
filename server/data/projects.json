@@ -18,5 +18,15 @@
         "endDate": "2025-03-28",
         "description": "A really nice Ski Pista!",
         "_id": "538f5ac6-47d8-4f30-8009-96dd28621d22"
+    },
+    "64c8c9e6-3c31-4a30-b4c2-e7ee6ee8ba5b": {
+        "name": "NeoChim",
+        "location": "Dimitrovgrad, Bulgaria",
+        "status": "future",
+        "image": "https://www.bulgarianagriculture.com/re_images/1351778433_neochimlogo.gif",
+        "startDate": "2025-05-11",
+        "endDate": "2025-06-08",
+        "description": "A pritty dangerous Project...",
+        "_id": "64c8c9e6-3c31-4a30-b4c2-e7ee6ee8ba5b"
     }
 }

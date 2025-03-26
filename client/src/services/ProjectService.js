@@ -35,5 +35,20 @@ export default {
             method: 'DELETE'
         });
         return await response.json();
-    }
+    },
+
+    async getOngoingProjects() {
+        const response = await this.getAll();
+        return response.filter(p => p.status === 'ongoing');
+    },
+
+    async getCompletedProjects() {
+        const response = await this.getAll();
+        return response.filter(p => p.status === 'completed');
+    },
+
+    async getFutureProjects() {
+        const response = await this.getAll();
+        return response.filter(p => p.status === 'future');
+    }    
 };
