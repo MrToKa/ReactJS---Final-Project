@@ -4,15 +4,15 @@ import { Button, Form, Input, Modal, Radio } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import ProjectService from "../../services/ProjectService";
 
-export default function CreateProjectButton() {
+export default function CreateProjectButton({ reloadProjects }) {
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
 
   const submitAction = async (values) => {
     const data = { ...values };
     await ProjectService.create(data);
-
     setOpen(false);
+    reloadProjects();
   };
 
   return (

@@ -5,36 +5,33 @@ import ProjectCard from "./ProjectCard";
 import AdminMenu from "./ProjectsMenu";
 import ProjectService from "../../services/ProjectService";
 
-// const projects = async () => {
-//   const projects = await ProjectService.getAll();
-//   console.log("Projects: ");
-//   console.log(projects);
-//   return Object.values(projects);
-// };
-
-export default function Projects(){ 
+export default function Projects() {
   const [projects, setProjects] = useState([]);
 
+  const reloadProjects = () => {
+    ProjectService.getAll().then(setProjects);
+  };
+
   useEffect(() => {
-    ProjectService.getAll().then(setProjects);    
+    reloadProjects();
   }, []);
 
   return (
-  <>
-    <AdminMenu />
-    {projects.length === 0 ? (
-      <div style={{ textAlign: "center", marginTop: "20px", fontSize: "4 rem" }}>
-        No projects yet!
-      </div>
-    ) : (
-      <Row gutter={24} justify="center" style={{ height: "auto" }}>
-        {projects.map((project) => (
-          <Col key={project._id} span={6}>
-            <ProjectCard project={project} />
-          </Col>
-        ))}
-      </Row>
-    )}
-  </>
-);
+    <>
+      <AdminMenu reloadProjects={reloadProjects} />
+      {projects.length === 0 ? (
+        <div style={{ textAlign: "center", marginTop: "20px", fontSize: "4 rem" }}>
+          No projects yet!
+        </div>
+      ) : (
+        <Row gutter={24} justify="center" style={{ height: "auto" }}>
+          {projects.map((project) => (
+            <Col key={project._id} span={6}>
+              <ProjectCard project={project} />
+            </Col>
+          ))}
+        </Row>
+      )}
+    </>
+  );
 }
