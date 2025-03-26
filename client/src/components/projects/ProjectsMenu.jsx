@@ -5,14 +5,17 @@ import { FastBackwardOutlined, FastForwardOutlined } from '@ant-design/icons';
 import CreateProjectButton from './ButtonsFunctionality/CreateProjectButton';
 import OngoingProjectsButton from './ButtonsFunctionality/OngoingProjectsButton';
 import CompletedProjectsButton from './ButtonsFunctionality/CompletedProjectsButton';
+import FutureProjectsButton from './ButtonsFunctionality/FutureProjectsButton';
 
 const ProjectsMenu = ({ reloadProjects, setProjects }) => {
   const [isOngoingActive, setIsOngoingActive] = useState(false); // Track ongoing button state
   const [isCompletedActive, setIsCompletedActive] = useState(false); // Track completed button state
+  const [isFutureActive, setIsFutureActive] = useState(false); // Track future button state
 
   const resetStyles = () => {
     setIsOngoingActive(false); // Reset ongoing button state
     setIsCompletedActive(false); // Reset completed button state
+    setIsFutureActive(false); // Reset future button state
   };
 
   return (
@@ -32,9 +35,12 @@ const ProjectsMenu = ({ reloadProjects, setProjects }) => {
             setIsCompletedActive={setIsCompletedActive}
             resetStyles={resetStyles} // Pass resetStyles
           />
-          <Button type="primary" icon={<FastForwardOutlined />}>
-            Show future
-          </Button>
+          <FutureProjectsButton
+            setProjects={setProjects}
+            isFutureActive={isFutureActive}
+            setIsFutureActive={setIsFutureActive}
+            resetStyles={resetStyles} // Pass resetStyles
+          />
         </Flex>
       </Flex>
     </Card>
