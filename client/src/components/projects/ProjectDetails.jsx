@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import { useParams } from 'react-router';
+import { useEffect, useState, useCallback } from "react";
+import { useParams } from "react-router"; // Correct import for useParams
 
 import { Card, Flex, Typography } from "antd";
 import ProjectService from "../../services/ProjectService";
+import ProjectDetailsMenu from "./ProjectDetailsMenu/ProjectDetailsMenu";
 
 const imgStyle = {
   display: "block",
@@ -15,11 +16,20 @@ const imgStyle = {
 export default function ProjectDetails() {
   const { projectId } = useParams();
   const [project, setProject] = useState({});
-  
+
+  const refreshProject = useCallback(() => {
+    ProjectService.getById(projectId).then((data) => {
+      if (data) {
+        setProject(data);
+      } else {
+        console.error("Failed to fetch project data or data is null.");
+      }
+    });
+  }, [projectId]);
+
   useEffect(() => {
-    ProjectService.getById(projectId).then((data) => setProject(data));
-  }, [projectId]);  
-  
+    refreshProject();
+  }, [refreshProject]);
 
   return (
     <>
@@ -33,9 +43,9 @@ export default function ProjectDetails() {
       >
         <Flex justify="space-between">
           <img
-          alt={project.name}
-          src={project.image}
-          style={imgStyle}
+            alt={project.name || "Project Image"}
+            src={project.image || "https://via.placeholder.com/300"}
+            style={imgStyle}
           />
           <Flex
             vertical
@@ -46,13 +56,18 @@ export default function ProjectDetails() {
             }}
           >
             <Typography.Title level={3}>
-              {project.name}
+              {project.name || "No Name Available"}
             </Typography.Title>
-            <Typography.Text>{project.location}</Typography.Text>
-            <Typography.Text>{project.description}</Typography.Text>
+            <Typography.Text>{project.location || "No Location Available"}</Typography.Text>
+            <Typography.Text>{project.startDate || "No Start Date"}</Typography.Text>
+            <Typography.Text>{project.endDate || "No End Date"}</Typography.Text>
+            <Typography.Text>{project.status || "No Status"}</Typography.Text>
+            <Typography.Text>{project.description || "No Description Available"}</Typography.Text>
           </Flex>
         </Flex>
       </Card>
+
+      <ProjectDetailsMenu refreshProject={refreshProject} />
     </>
   );
-};
+}

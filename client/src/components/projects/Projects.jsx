@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Col, Row } from "antd";
 import ProjectCard from "./ProjectCard";
-import ProjectsMenu from "./ProjectsMenu";
+import ProjectsMenu from "./PeojectsMenu/ProjectsMenu";
 import ProjectService from "../../services/ProjectService";
 
 export default function Projects() {

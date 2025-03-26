@@ -34,7 +34,11 @@ export default {
         const response = await fetch(`${baseUrl}/${id}`, {
             method: 'DELETE'
         });
-        return await response.json();
+        if (!response.ok) {
+            throw new Error(`Failed to delete project with id ${id}: ${response.statusText}`);
+        }
+        // Return a success message or status instead of parsing JSON
+        return { success: true };
     },
 
     async getOngoingProjects() {

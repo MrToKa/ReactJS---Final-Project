@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 
-import { Card, Button, Flex } from 'antd';
-import { FastBackwardOutlined, FastForwardOutlined } from '@ant-design/icons';
-import CreateProjectButton from './ButtonsFunctionality/CreateProjectButton';
-import OngoingProjectsButton from './ButtonsFunctionality/OngoingProjectsButton';
-import CompletedProjectsButton from './ButtonsFunctionality/CompletedProjectsButton';
-import FutureProjectsButton from './ButtonsFunctionality/FutureProjectsButton';
+import { Card, Flex } from 'antd';
+import CreateProjectButton from './CreateProjectButton';
+import OngoingProjectsButton from './OngoingProjectsButton';
+import CompletedProjectsButton from './CompletedProjectsButton';
+import FutureProjectsButton from './FutureProjectsButton';
 
 const ProjectsMenu = ({ reloadProjects, setProjects }) => {
   const [isOngoingActive, setIsOngoingActive] = useState(false); // Track ongoing button state
