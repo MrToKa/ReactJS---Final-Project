@@ -37,12 +37,12 @@ export default {
 
     async getFreeEmployees() {
         const response = await this.getAll();
-        return response.filter(e => e.currentProject === null);
+        return response.filter(e => e.currentProject === "");
     },
 
     async getEmployeesOnProjects() {
         const response = await this.getAll();
-        return response.filter(e => e.currentProject !== null);
+        return response.filter(e => e.currentProject !== "");
     },
 
     async getEmployeesByProjectId(projectId) {
@@ -50,9 +50,9 @@ export default {
         return response.filter(e => e.currentProject === projectId);
     },
 
-    async setEmployeeOnProject(employeeId, projectId) {
+    async setEmployeeOnProject(employeeId, projectName) {
         const employee = await this.getById(employeeId);
-        employee.currentProject = projectId;
+        employee.currentProject = projectName;
         return this.update(employeeId, employee);
     },
 

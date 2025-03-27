@@ -32,16 +32,16 @@ export default function Employees() {
     setPaginatedData(employeesWithKeys.slice(startIndex, endIndex)); // Update paginated data
   };
 
-  const reloadEmployees = () => {
-    EmployeeService.getAll().then(processAndSetEmployees); // Use helper function
+  const reloadEmployees = async () => {
+    await EmployeeService.getAll().then(processAndSetEmployees); // Use helper function
   };
 
-  const loadFreeEmployees = () => {
-    EmployeeService.getFreeEmployees().then(processAndSetEmployees); // Use helper function
+  const loadFreeEmployees = async () => {
+    await EmployeeService.getFreeEmployees().then(processAndSetEmployees); // Use helper function
   };
 
-  const loadEmployeesOnProjects = () => {
-    EmployeeService.getEmployeesOnProjects().then(processAndSetEmployees); // Use helper function
+  const loadEmployeesOnProjects = async () => {
+    await EmployeeService.getEmployeesOnProjects().then(processAndSetEmployees); // Use helper function
   };
 
   const toggleFreeEmployees = () => {
@@ -76,6 +76,12 @@ export default function Employees() {
   useEffect(() => {
     reloadEmployees(); // Fetch all employees on initial load
   }, []);
+
+  useEffect(() => {
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    setPaginatedData(employees.slice(startIndex, endIndex)); // Update paginated data
+  }, [employees, currentPage, pageSize]); // Recalculate paginated data when dependencies change
 
   const searchInput = useRef(null);
 
@@ -242,6 +248,7 @@ export default function Employees() {
         toggleEmployeesOnProjects={toggleEmployeesOnProjects}
         isShowingFree={isShowingFree}
         isShowingOnProjects={isShowingOnProjects}
+        setEmployees={setEmployees}
       />
       <Table
         columns={columns}

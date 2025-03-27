@@ -21,8 +21,8 @@ const EmployeesMenu = ({ reloadEmployees, setEmployees }) => {
           <CreateEmployeeButton reloadEmployees={reloadEmployees} resetStyles={resetStyles} /> {/* Pass resetStyles */}
           <EmployeesOnProjectsButton
             setEmployees={setEmployees}
-            isOnProjectsActive={isOnProjectsActive}
-            setIsOnProjectsActive={setIsOnProjectsActive}
+            isOnProjectActive={isOnProjectsActive} // Fix prop name to match the expected name
+            setIsOnProjectActive={setIsOnProjectsActive} // Fix prop name to match the expected name
             resetStyles={resetStyles} // Pass resetStyles
           />
           <FreeEmployeesButton

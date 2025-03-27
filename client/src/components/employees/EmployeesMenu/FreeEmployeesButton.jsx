@@ -1,24 +1,31 @@
-export default function FreeEmployeesButton({
-    setEmployees,
-    isFreeActive,
-    setIsFreeActive,
-    resetStyles,
-    }) {
-    const handleClick = () => {
-        // Fetch free employees from the API
-        fetch("https://fakestoreapi.com/users")
-        .then((response) => response.json())
-        .then((data) => {
-            const freeEmployees = data.filter((user) => user.free); // Assuming 'free' is a property indicating if the employee is free
-            setEmployees(freeEmployees);
-            resetStyles(); // Reset styles after fetching
-            setIsFreeActive(true); // Set the active state for "free employees"
-        });
+import { Button } from 'antd';
+import { CheckOutlined, UndoOutlined } from '@ant-design/icons';
+import EmployeeService from "../../../services/EmployeeService";
+
+export default function FreeEmployeesButton({ setEmployees, isFreeActive, setIsFreeActive, resetStyles }) {
+    const toggleFreeEmployees = async () => {
+        if (isFreeActive) {
+        await EmployeeService.getAll().then(setEmployees); // Load all employees
+        } else {
+        await EmployeeService.getFreeEmployees().then(setEmployees); // Load free employees
+        }
+        setIsFreeActive(!isFreeActive); // Toggle state
     };
     
     return (
-        <button onClick={handleClick} style={{ backgroundColor: isFreeActive ? "blue" : "gray" }}>
-        Free Employees
-        </button>
+        <Button
+        type="primary"
+        icon={isFreeActive ? <UndoOutlined /> : <CheckOutlined />} // Toggle icon
+        style={{
+            backgroundColor: isFreeActive ? "red" : undefined, // Toggle color
+            borderColor: isFreeActive ? "red" : undefined,
+        }}
+        onClick={() => {
+            resetStyles(); // Reset styles of other buttons
+            toggleFreeEmployees(); // Toggle employees
+        }}
+        >
+        {isFreeActive ? "Show all employees" : "Show free"} {/* Toggle text */}
+        </Button>
     );
     }
