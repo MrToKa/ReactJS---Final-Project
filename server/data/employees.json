@@ -1,0 +1,123 @@
+{
+    "fd84b55b-bff9-4cee-bb8a-e2f92307ce1c": {
+      "firstName": "Ben",
+      "lastName": "Dover",
+      "email": "ben.dover@example.com",
+      "password": "BenDover",
+      "job": "Mechanic",
+      "image": "https://www.worldhistory.org/img/c/p/1600x900/17904.png",
+      "currentProject": "",
+      "previousProjects": [],
+      "instruments": [],
+      "_id": "fd84b55b-bff9-4cee-bb8a-e2f92307ce1c"
+    },
+    "6c447779-4ac7-4aaf-81bc-dc6d760cbfe1": {
+      "firstName": "Mike",
+      "lastName": "Rotch",
+      "email": "mike.rotch@example.com",
+      "password": "MikeRotch",
+      "job": "Fitter",
+      "image": "https://www.worldhistory.org/img/c/p/1600x900/17904.png",
+      "currentProject": "",
+      "previousProjects": [],
+      "instruments": [],
+      "_id": "6c447779-4ac7-4aaf-81bc-dc6d760cbfe1"
+    },
+    "7096f7ad-ae0c-4249-9f36-64bc9f9aa73a": {
+      "firstName": "Anita",
+      "lastName": "Bath",
+      "email": "anita.bath@example.com",
+      "password": "AnitaBath",
+      "job": "Puller",
+      "image": "https://www.worldhistory.org/img/c/p/1600x900/17904.png",
+      "currentProject": "",
+      "previousProjects": [],
+      "instruments": [],
+      "_id": "7096f7ad-ae0c-4249-9f36-64bc9f9aa73a"
+    },
+    "cddf1dd4-4684-4cef-bcde-2d85451e655f": {
+      "firstName": "Oliver",
+      "lastName": "Klozoff",
+      "email": "oliver.klozoff@example.com",
+      "password": "OliverKlozoff",
+      "job": "Technician",
+      "image": "https://www.worldhistory.org/img/c/p/1600x900/17904.png",
+      "currentProject": "",
+      "previousProjects": [],
+      "instruments": [],
+      "_id": "cddf1dd4-4684-4cef-bcde-2d85451e655f"
+    },
+    "9f4fff7e-26ef-4404-af21-c879de6ba5ad": {
+      "firstName": "Hugh",
+      "lastName": "Jass",
+      "email": "hugh.jass@example.com",
+      "password": "HughJass",
+      "job": "Site Manager",
+      "image": "https://www.worldhistory.org/img/c/p/1600x900/17904.png",
+      "currentProject": "",
+      "previousProjects": [],
+      "instruments": [],
+      "_id": "9f4fff7e-26ef-4404-af21-c879de6ba5ad"
+    },
+    "3f2d7417-8c59-4807-b649-cca2e00bcce8": {
+      "firstName": "Seymour",
+      "lastName": "Butts",
+      "email": "seymour.butts@example.com",
+      "password": "SeymourButts",
+      "job": "Mechanic",
+      "image": "https://www.worldhistory.org/img/c/p/1600x900/17904.png",
+      "currentProject": "",
+      "previousProjects": [],
+      "instruments": [],
+      "_id": "3f2d7417-8c59-4807-b649-cca2e00bcce8"
+    },
+    "b8313c23-aafd-4e3f-a920-6d97471436a5": {
+      "firstName": "Al",
+      "lastName": "E. Gator",
+      "email": "al.e.gator@example.com",
+      "password": "AlE.Gator",
+      "job": "Fitter",
+      "image": "https://www.worldhistory.org/img/c/p/1600x900/17904.png",
+      "currentProject": "",
+      "previousProjects": [],
+      "instruments": [],
+      "_id": "b8313c23-aafd-4e3f-a920-6d97471436a5"
+    },
+    "9bd9e68d-f8ad-4af7-9d60-90c8ba3bcca3": {
+      "firstName": "Harry",
+      "lastName": "Azcrac",
+      "email": "harry.azcrac@example.com",
+      "password": "HarryAzcrac",
+      "job": "Puller",
+      "image": "https://www.worldhistory.org/img/c/p/1600x900/17904.png",
+      "currentProject": "",
+      "previousProjects": [],
+      "instruments": [],
+      "_id": "9bd9e68d-f8ad-4af7-9d60-90c8ba3bcca3"
+    },
+    "4620a24e-dc8c-4921-9a0a-3f5147ee79a0": {
+      "firstName": "Willie",
+      "lastName": "Stroker",
+      "email": "willie.stroker@example.com",
+      "password": "WillieStroker",
+      "job": "Technician",
+      "image": "https://www.worldhistory.org/img/c/p/1600x900/17904.png",
+      "currentProject": "",
+      "previousProjects": [],
+      "instruments": [],
+      "_id": "4620a24e-dc8c-4921-9a0a-3f5147ee79a0"
+    },
+    "a5e61156-3c3c-401d-851f-522039d1f225": {
+      "firstName": "Bud",
+      "lastName": "Light",
+      "email": "bud.light@example.com",
+      "password": "BudLight",
+      "job": "Site Manager",
+      "image": "https://www.worldhistory.org/img/c/p/1600x900/17904.png",
+      "currentProject": "",
+      "previousProjects": [],
+      "instruments": [],
+      "_id": "a5e61156-3c3c-401d-851f-522039d1f225"
+    }
+}
+  
