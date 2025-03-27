@@ -2,13 +2,12 @@ import {Button} from 'antd';
 import { TeamOutlined, UndoOutlined } from '@ant-design/icons';
 import EmployeeService from "../../../services/EmployeeService";
 
-export default function EmployeesOnProjectsButton({ setEmployees, isOnProjectActive, setIsOnProjectActive, resetStyles }) {
+export default function EmployeesOnProjectsButton({ isOnProjectActive, setIsOnProjectActive, resetStyles, processAndSetEmployees }) {
     const toggleEmployeesOnProjects = async () => {
-        if (isOnProjectActive) {
-            await EmployeeService.getAll().then(setEmployees); // Load all employees
-        } else {
-            await EmployeeService.getEmployeesOnProjects().then(setEmployees); // Load employees on projects
-        }
+        const employees = isOnProjectActive
+            ? await EmployeeService.getAll() // Load all employees
+            : await EmployeeService.getEmployeesOnProjects(); // Load employees on projects
+        processAndSetEmployees(employees); // Update full list of employees
         setIsOnProjectActive(!isOnProjectActive); // Toggle state
     };
 

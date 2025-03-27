@@ -2,13 +2,12 @@ import { Button } from 'antd';
 import { CheckOutlined, UndoOutlined } from '@ant-design/icons';
 import EmployeeService from "../../../services/EmployeeService";
 
-export default function FreeEmployeesButton({ setEmployees, isFreeActive, setIsFreeActive, resetStyles }) {
+export default function FreeEmployeesButton({ isFreeActive, setIsFreeActive, resetStyles, processAndSetEmployees }) {
     const toggleFreeEmployees = async () => {
-        if (isFreeActive) {
-        await EmployeeService.getAll().then(setEmployees); // Load all employees
-        } else {
-        await EmployeeService.getFreeEmployees().then(setEmployees); // Load free employees
-        }
+        const employees = isFreeActive
+            ? await EmployeeService.getAll() // Load all employees
+            : await EmployeeService.getFreeEmployees(); // Load free employees
+        processAndSetEmployees(employees); // Update full list of employees and recalculate paginated data
         setIsFreeActive(!isFreeActive); // Toggle state
     };
     
@@ -28,4 +27,4 @@ export default function FreeEmployeesButton({ setEmployees, isFreeActive, setIsF
         {isFreeActive ? "Show all employees" : "Show free"} {/* Toggle text */}
         </Button>
     );
-    }
+}

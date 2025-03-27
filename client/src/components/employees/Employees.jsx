@@ -27,9 +27,8 @@ export default function Employees() {
       key: employee._id || employee.id, // Ensure each employee has a unique key
     }));
     setEmployees(employeesWithKeys);
-    const startIndex = (currentPage - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
-    setPaginatedData(employeesWithKeys.slice(startIndex, endIndex)); // Update paginated data
+    setCurrentPage(1); // Reset to the first page
+    setPaginatedData(employeesWithKeys.slice(0, pageSize)); // Update paginated data for the first page
   };
 
   const reloadEmployees = async () => {
@@ -249,6 +248,7 @@ export default function Employees() {
         isShowingFree={isShowingFree}
         isShowingOnProjects={isShowingOnProjects}
         setEmployees={setEmployees}
+        processAndSetEmployees={processAndSetEmployees} // Pass processAndSetEmployees
       />
       <Table
         columns={columns}
