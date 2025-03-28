@@ -5,76 +5,45 @@ import { useNavigate } from "react-router";
 import { SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Table } from "antd";
 
-import TablePagination from "../common/TablePagination";
-import EmployeesMenu from "./EmployeesMenu/EmployeesMenu"; // Import EmployeesMenu
-import EmployeeService from "../../services/EmployeeService";
+import TablePagination from "../../common/TablePagination";
+import EmployeeService from "../../../services/EmployeeService";
 
-export default function Employees() {
+export default function ProjectEmployeesTable({ project }) { // Destructure project
+  const { name: projectName, status: projectStatus } = project; // Extract name and status
   const [employees, setEmployees] = useState([]);
   const [paginatedData, setPaginatedData] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
-  const [isShowingFree, setIsShowingFree] = useState(false); // Track free employees state
-  const [isShowingOnProjects, setIsShowingOnProjects] = useState(false); // Track employees on projects state
   const [currentPage, setCurrentPage] = useState(1); // Track current page
   const [pageSize, setPageSize] = useState(2); // Track page size
 
   const navigate = useNavigate(); // Initialize navigate function
 
-  const processAndSetEmployees = (data) => {
-    const employeesWithKeys = data.map((employee) => ({
-      ...employee,
-      key: employee._id || employee.id, // Ensure each employee has a unique key
-    }));
-    setEmployees(employeesWithKeys);
-    setCurrentPage(1); // Reset to the first page
-    setPaginatedData(employeesWithKeys.slice(0, pageSize)); // Update paginated data for the first page
+  const employeeData = async () => {
+    await EmployeeService.getEmployeesByProjectName(projectName).then(
+      (data) => {
+        const employeesWithKeys = data.map((employee) => ({
+          ...employee,
+          key: employee._id || employee.id, // Ensure each employee has a unique key
+        }));
+        setEmployees(employeesWithKeys);
+        setCurrentPage(1); // Reset to the first page
+        setPaginatedData(employeesWithKeys.slice(0, pageSize)); // Update paginated data for the first page
+      }
+    );
   };
-
-  const reloadEmployees = async () => {
-    await EmployeeService.getAll().then(processAndSetEmployees); // Use helper function
-  };
-
-  const loadFreeEmployees = async () => {
-    await EmployeeService.getFreeEmployees().then(processAndSetEmployees); // Use helper function
-  };
-
-  const loadEmployeesOnProjects = async () => {
-    await EmployeeService.getEmployeesOnProjects().then(processAndSetEmployees); // Use helper function
-  };
-
-  const toggleFreeEmployees = () => {
-    if (isShowingFree) {
-      reloadEmployees(); // Load all employees
-    } else {
-      loadFreeEmployees(); // Load free employees
-    }
-    setIsShowingFree(!isShowingFree); // Toggle state
-  };
-
-  const toggleEmployeesOnProjects = () => {
-    if (isShowingOnProjects) {
-      reloadEmployees(); // Load all employees
-    } else {
-      loadEmployeesOnProjects(); // Load employees on projects
-    }
-    setIsShowingOnProjects(!isShowingOnProjects); // Toggle state
-  };
-
-  
-  const tableHeader = () => {
-    if (isShowingFree) {
-      return "Free Employees";
-    } else if (isShowingOnProjects) {
-      return "Employees on Projects";
-    } else {
-      return "Employees";
-    }
-  }
 
   useEffect(() => {
-    reloadEmployees(); // Fetch all employees on initial load
+    employeeData(); // Call the function to fetch data when the component mounts
   }, []);
+
+  const handlePageChange = (newPage, newPageSize) => {
+    setCurrentPage(newPage);
+    setPageSize(newPageSize);
+    const startIndex = (newPage - 1) * newPageSize;
+    const endIndex = startIndex + newPageSize;
+    setPaginatedData(employees.slice(startIndex, endIndex)); // Update paginated data
+  };
 
   useEffect(() => {
     const startIndex = (currentPage - 1) * pageSize;
@@ -205,65 +174,48 @@ export default function Employees() {
       title: "First Name",
       dataIndex: "firstName",
       key: "firstName",
-      width: "25%",
       ...getColumnSearchProps("firstName"),
     },
     {
       title: "Last Name",
       dataIndex: "lastName",
       key: "lastName",
-      width: "25%",
       ...getColumnSearchProps("lastName"),
     },
     {
       title: "Job",
       dataIndex: "job",
       key: "job",
-      width: "25%",
       ...getColumnSearchProps("job"),
-    },
-    {
-      title: "Current Project",
-      dataIndex: "currentProject",
-      key: "currentProject",
-      width: "25%",
-      ...getColumnSearchProps("currentProject"),
     },
   ];
 
-  const handlePageChange = (newPage, newPageSize) => {
-    setCurrentPage(newPage);
-    setPageSize(newPageSize);
-    const startIndex = (newPage - 1) * newPageSize;
-    const endIndex = startIndex + newPageSize;
-    setPaginatedData(employees.slice(startIndex, endIndex)); // Update paginated data
-  };
-
   return (
     <>
-      <EmployeesMenu
-        reloadEmployees={reloadEmployees}
-        toggleFreeEmployees={toggleFreeEmployees}
-        toggleEmployeesOnProjects={toggleEmployeesOnProjects}
-        isShowingFree={isShowingFree}
-        isShowingOnProjects={isShowingOnProjects}
-        setEmployees={setEmployees}
-        processAndSetEmployees={processAndSetEmployees} // Pass processAndSetEmployees
-      />
       <Table
         columns={columns}
         dataSource={paginatedData}
         pagination={false}
-        title={() => (
-          <div style={{ textAlign: "center", fontWeight: "bold", fontSize: "3rem" }}>
-            {tableHeader()}
-          </div>
-        )} 
         onRow={(record) => ({
           onClick: () => navigate(`/employees/${record.key}`),
           style: { cursor: "pointer" }, // Add cursor style here
-        })}        
+        })}
+        style={{
+          marginTop: 16,
+          borderRadius: 8,
+          overflow: "hidden",
+        }}
+        rowClassName="table-row"
+        rowKey={(record) => record.key} // Use the unique key for each row
+        footer={() =>
+          projectStatus !== "completed" && projectStatus !== "future" ? (
+            <div style={{ textAlign: "right", padding: "1px" }}>
+              There are currently {employees.length} employees on site
+            </div>
+          ) : null
+        }
       />
+
       <TablePagination
         items={employees}
         onPageChange={handlePageChange}

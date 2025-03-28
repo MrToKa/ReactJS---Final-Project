@@ -4,6 +4,7 @@ import { useParams } from "react-router"; // Correct import for useParams
 import { Card, Flex, Typography } from "antd";
 import ProjectService from "../../services/ProjectService";
 import ProjectDetailsMenu from "./ProjectDetailsMenu/ProjectDetailsMenu";
+import ProjectEmployeesTable from "./ProjectEmployeesTable/ProjectEmployeesTable";
 
 const imgStyle = {
   display: "block",
@@ -43,8 +44,8 @@ export default function ProjectDetails() {
       >
         <Flex justify="space-between">
           <img
-            alt={project.name || "Project Image"}
-            src={project.image || "https://via.placeholder.com/300"}
+            alt={project.name}
+            src={project.image}
             style={imgStyle}
           />
           <Flex
@@ -58,16 +59,27 @@ export default function ProjectDetails() {
             <Typography.Title level={3}>
               {project.name || "No Name Available"}
             </Typography.Title>
-            <Typography.Text>{project.location || "No Location Available"}</Typography.Text>
-            <Typography.Text>{project.startDate || "No Start Date"}</Typography.Text>
-            <Typography.Text>{project.endDate || "No End Date"}</Typography.Text>
+            <Typography.Text>
+              {project.location || "No Location Available"}
+            </Typography.Text>
+            <Typography.Text>
+              {project.startDate || "No Start Date"}
+            </Typography.Text>
+            <Typography.Text>
+              {project.endDate || "No End Date"}
+            </Typography.Text>
             <Typography.Text>{project.status || "No Status"}</Typography.Text>
-            <Typography.Text>{project.description || "No Description Available"}</Typography.Text>
+            <Typography.Text>
+              {project.description || "No Description Available"}
+            </Typography.Text>
           </Flex>
         </Flex>
       </Card>
 
       <ProjectDetailsMenu refreshProject={refreshProject} />
+      {project.name && (
+          <ProjectEmployeesTable project={project} />
+      )}
     </>
   );
 }

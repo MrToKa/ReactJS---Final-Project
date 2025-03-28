@@ -45,9 +45,9 @@ export default {
         return response.filter(e => e.currentProject !== "");
     },
 
-    async getEmployeesByProjectId(projectId) {
+    async getEmployeesByProjectName(projectName) {
         const response = await this.getAll();
-        return response.filter(e => e.currentProject === projectId);
+        return response.filter(e => e.currentProject === projectName);
     },
 
     async setEmployeeOnProject(employeeId, projectName) {
