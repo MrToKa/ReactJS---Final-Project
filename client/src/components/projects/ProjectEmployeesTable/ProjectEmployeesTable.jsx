@@ -178,18 +178,21 @@ export default function ProjectEmployeesTable({ project }) { // Destructure proj
       dataIndex: "firstName",
       key: "firstName",
       ...getColumnSearchProps("firstName"),
+      width: "33%",
     },
     {
       title: "Last Name",
       dataIndex: "lastName",
       key: "lastName",
       ...getColumnSearchProps("lastName"),
+      width: "33%",
     },
     {
       title: "Job",
       dataIndex: "job",
       key: "job",
       ...getColumnSearchProps("job"),
+        width: "33%",
     },
   ];
 

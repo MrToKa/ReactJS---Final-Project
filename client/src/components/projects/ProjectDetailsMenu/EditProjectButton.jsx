@@ -26,15 +26,14 @@ export default function EditProjectButton({ projectId, refreshProject }) {
 
   const handleOpen = async () => {
     try {
-    const data = await ProjectService.getById(projectId);
-    setProject(data);
-    form.setFieldsValue(data);
-    setOpen(true);
-    }
-    catch (error) {
+      const data = await ProjectService.getById(projectId);
+      setProject(data);
+      form.setFieldsValue(data);
+      setOpen(true);
+    } catch (error) {
       console.error(error);
     }
-  };  
+  };
 
   return (
     <>
@@ -56,7 +55,7 @@ export default function EditProjectButton({ projectId, refreshProject }) {
         modalRender={(dom) => (
           <Form
             layout="vertical"
-            form={form}
+            form={form} // Pass the form instance here
             name="Update Project Modal"
             clearOnDestroy
             onFinish={(values) => submitAction(values)}
@@ -73,8 +72,8 @@ export default function EditProjectButton({ projectId, refreshProject }) {
               required: true,
               message: "Please fill in the name of the project!",
             },
-          ]} 
-          initialValue={project.name}             
+          ]}
+          initialValue={project.name}
         >
           <Input />
         </Form.Item>
@@ -100,7 +99,7 @@ export default function EditProjectButton({ projectId, refreshProject }) {
               message: "Please select the status of the project!",
             },
           ]}
-            initialValue={project.status}
+          initialValue={project.status}
         >
           <Radio.Group>
             <Radio value="ongoing">Ongoing</Radio>
@@ -126,7 +125,7 @@ export default function EditProjectButton({ projectId, refreshProject }) {
               message: "Please fill in the description of the project!",
             },
           ]}
-            initialValue={project.description}
+          initialValue={project.description}
         >
           <Input.TextArea />
         </Form.Item>
