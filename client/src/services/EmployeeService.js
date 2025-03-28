@@ -50,6 +50,11 @@ export default {
         return response.filter(e => e.currentProject === projectName);
     },
 
+    async getEmployeesWereOnProject(projectName) {
+        const response = await this.getAll();
+        return response.filter(e => e.previousProjects && e.previousProjects.includes(projectName));
+    },
+
     async setEmployeeOnProject(employeeId, projectName) {
         const employee = await this.getById(employeeId);
         employee.currentProject = projectName;

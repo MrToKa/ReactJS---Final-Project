@@ -77,7 +77,7 @@ export default function ProjectDetails() {
       </Card>
 
       <ProjectDetailsMenu refreshProject={refreshProject} />
-      {project.name && (
+      {project.name && project.status !== "future" && (
           <ProjectEmployeesTable project={project} />
       )}
     </>

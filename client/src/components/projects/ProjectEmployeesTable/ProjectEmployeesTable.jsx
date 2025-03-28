@@ -20,17 +20,20 @@ export default function ProjectEmployeesTable({ project }) { // Destructure proj
   const navigate = useNavigate(); // Initialize navigate function
 
   const employeeData = async () => {
-    await EmployeeService.getEmployeesByProjectName(projectName).then(
-      (data) => {
-        const employeesWithKeys = data.map((employee) => ({
-          ...employee,
-          key: employee._id || employee.id, // Ensure each employee has a unique key
-        }));
-        setEmployees(employeesWithKeys);
-        setCurrentPage(1); // Reset to the first page
-        setPaginatedData(employeesWithKeys.slice(0, pageSize)); // Update paginated data for the first page
-      }
-    );
+    let data = [];
+    if (projectStatus === "ongoing") {
+      data = await EmployeeService.getEmployeesByProjectName(projectName);
+    } else if (projectStatus === "completed") {
+      data = await EmployeeService.getEmployeesWereOnProject(projectName);
+    }
+
+    const employeesWithKeys = data.map((employee) => ({
+      ...employee,
+      key: employee._id || employee.id, // Ensure each employee has a unique key
+    }));
+    setEmployees(employeesWithKeys);
+    setCurrentPage(1); // Reset to the first page
+    setPaginatedData(employeesWithKeys.slice(0, pageSize)); // Update paginated data for the first page
   };
 
   useEffect(() => {
