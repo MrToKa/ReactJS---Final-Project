@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 
 import { Card, Flex, Typography } from "antd";
 import EmployeeTab from "./EmployeeDetailsTabs";
+import EmployeeService from "../../services/EmployeeService";
 
 const imgStyle = {
   display: "block",
@@ -17,9 +18,19 @@ export default function Employee() {
   const [employee, setEmployee] = useState({});
 
   useEffect(() => {
-    fetch(`https://fakestoreapi.com/users/${employeeId}`)
-      .then((response) => response.json())
-      .then((data) => setEmployee(data));
+    EmployeeService.getById(employeeId)
+      .then((response) => {
+        if (response && typeof response === "object") {
+          setEmployee(response);
+        } else {
+          console.error("Invalid response format:", response);
+          setEmployee({});
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching employee:", error);
+        setEmployee({});
+      });
   }, [employeeId]);
 
   return (
@@ -35,7 +46,7 @@ export default function Employee() {
         <Flex justify="space-between">
           <img
             alt="ProfilePicture"
-            src={"https://www.worldhistory.org/img/c/p/1600x900/17904.png"}
+            src={employee.image}
             style={imgStyle}
           />
           <Flex
@@ -47,7 +58,7 @@ export default function Employee() {
             }}
           >
             <Typography.Title level={3}>
-              {employee.name?.firstname} {employee.name?.lastname}
+              {employee.firstName} {employee.lastName}
             </Typography.Title>
             <Typography.Text>{employee.email}</Typography.Text>
           </Flex>
