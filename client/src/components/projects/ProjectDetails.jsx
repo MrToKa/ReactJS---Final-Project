@@ -42,7 +42,15 @@ export default function ProjectDetails() {
           },
         }}
       >
-        <Flex justify="space-between">
+        <Flex
+          justify="center"
+          align="center"
+          style={{
+            width: "100%",
+            flexDirection: "row", // Ensure horizontal alignment
+            gap: "32px", // Add spacing between the image and text
+          }}
+        >
           <img
             alt={project.name}
             src={project.image}
@@ -50,28 +58,33 @@ export default function ProjectDetails() {
           />
           <Flex
             vertical
-            align="flex-end"
+            align="flex-start"
             justify="space-between"
             style={{
               padding: 32,
+              maxWidth: "600px", // Optional: Limit the width of the text section
             }}
           >
             <Typography.Title level={3}>
-              {project.name || "No Name Available"}
+              {project.name}
             </Typography.Title>
-            <Typography.Text>
-              {project.location || "No Location Available"}
-            </Typography.Text>
-            <Typography.Text>
-              {project.startDate || "No Start Date"}
-            </Typography.Text>
-            <Typography.Text>
-              {project.endDate || "No End Date"}
-            </Typography.Text>
-            <Typography.Text>{project.status || "No Status"}</Typography.Text>
-            <Typography.Text>
-              {project.description || "No Description Available"}
-            </Typography.Text>
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+              <Typography.Text>
+                <strong>Location:</strong> {project.location}
+              </Typography.Text>
+              <Typography.Text>
+                <strong>Start date:</strong> {project.startDate}
+              </Typography.Text>
+              <Typography.Text>
+                <strong>End date:</strong> {project.endDate}
+              </Typography.Text>
+              <Typography.Text>
+                <strong>Project status:</strong> {project.status}
+              </Typography.Text>
+              <Typography.Text>
+                <strong>Description:</strong> {project.description}
+              </Typography.Text>
+            </div>
           </Flex>
         </Flex>
       </Card>

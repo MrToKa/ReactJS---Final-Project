@@ -107,7 +107,15 @@ export default function Employee() {
           },
         }}
       >
-        <Flex justify="space-between">
+        <Flex
+          justify="center"
+          align="center"
+          style={{
+            width: "100%",
+            flexDirection: "row", // Ensure horizontal alignment
+            gap: "32px", // Add spacing between the image and text
+          }}
+        >
           <img
             alt="ProfilePicture"
             src={employee.image}
@@ -115,17 +123,24 @@ export default function Employee() {
           />
           <Flex
             vertical
-            align="flex-end"
+            align="flex-start"
             justify="space-between"
             style={{
               padding: 32,
+              maxWidth: "600px", // Optional: Limit the width of the text section
             }}
-          >            
+          >
             <Typography.Title level={3}>
               {employee.firstName} {employee.lastName}
             </Typography.Title>
-            <Typography.Text>{employee.email}</Typography.Text>            
-            <Typography.Text>Current Project: {currProject}</Typography.Text>
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+              <Typography.Text>
+                <strong>E-mail:</strong> {employee.email}
+              </Typography.Text>
+              <Typography.Text>
+                <strong>Current Project:</strong> {currProject}
+              </Typography.Text>
+            </div>
           </Flex>
         </Flex>
       </Card>
