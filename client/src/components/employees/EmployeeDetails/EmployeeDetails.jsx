@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router";
 
 import { Card, Flex, Typography } from "antd";
@@ -6,6 +6,7 @@ import EmployeeTab from "./EmployeeDetailsTabs";
 import EmployeeService from "../../../services/EmployeeService";
 import ProjectService from "../../../services/ProjectService";
 import InstrumentService from "../../../services/InstrumentService";
+import EmployeeDetailsMenu from "../EmployeeDetailsMenu/EmployeeDetailsMenu";
 
 const imgStyle = {
   display: "block",
@@ -97,6 +98,20 @@ export default function Employee() {
     }
   }, [employeeId]);    
 
+  const refreshEmployee = useCallback(() => {
+    EmployeeService.getById(employeeId).then((data) => {
+      if (data) {
+        setEmployee(data);
+      } else {
+        console.error("Failed to fetch employee data or data is null.");
+      }
+    });
+  }, [employeeId]);
+
+  useEffect(() => {
+    refreshEmployee();  
+  }, [refreshEmployee]);
+
   return (
     <>
       <Card
@@ -144,6 +159,8 @@ export default function Employee() {
           </Flex>
         </Flex>
       </Card>
+
+      <EmployeeDetailsMenu refreshEmployee={refreshEmployee} />
 
       <EmployeeTab projects={projects} instruments={instruments} />
     </>
