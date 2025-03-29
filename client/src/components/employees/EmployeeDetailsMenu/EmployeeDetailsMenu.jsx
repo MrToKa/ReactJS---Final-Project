@@ -6,20 +6,23 @@ import DeleteButton from "./DeleteButton";
 import AssignProjectButton from "./AssignProjectButton";
 import ReturnHomeButton from "./ReturnHomeButton";
 
-export default function EmployeeDetailsMenu({ refreshEmployee }) {
+export default function EmployeeDetailsMenu({ employee, refreshEmployee }) {
   const { employeeId } = useParams();
 
   return (
     <Card>
       <Flex wrap gap="large" justify="center">
-        <ReturnHomeButton 
-        employeeId={employeeId}
-        refreshEmployee={refreshEmployee} 
-        />
-        <AssignProjectButton
-          employeeId={employeeId}
-          refreshEmployee={refreshEmployee}
-        />
+        {employee.currentProject ? (
+          <ReturnHomeButton 
+            employeeId={employeeId}
+            refreshEmployee={refreshEmployee} 
+          />
+        ) : (
+          <AssignProjectButton
+            employeeId={employeeId}
+            refreshEmployee={refreshEmployee}
+          />
+        )}
         <EditButton employeeId={employeeId} 
         refreshEmployee={refreshEmployee} 
         />

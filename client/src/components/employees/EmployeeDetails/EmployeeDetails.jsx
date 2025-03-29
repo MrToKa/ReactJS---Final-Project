@@ -163,7 +163,10 @@ export default function Employee() {
         </Flex>
       </Card>
 
-      <EmployeeDetailsMenu refreshEmployee={refreshEmployee} />
+      <EmployeeDetailsMenu 
+        employee={employee} // Pass employee object
+        refreshEmployee={refreshEmployee} 
+      />
 
       <EmployeeTab projects={projects} instruments={instruments} />
     </>

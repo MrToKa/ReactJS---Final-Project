@@ -57,9 +57,9 @@ export default {
         return response.filter(e => e.previousProjects && e.previousProjects.includes(projectId));
     },
 
-    async setEmployeeOnProject(employeeId, projectName) {
+    async setEmployeeOnProject(employeeId, projectId) {
         const employee = await this.getById(employeeId);
-        employee.currentProject = projectName;
+        employee.currentProject = projectId;
         return this.update(employeeId, employee);
     },
 
