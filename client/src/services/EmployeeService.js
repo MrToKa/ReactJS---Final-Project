@@ -65,7 +65,8 @@ export default {
 
     async setEmployeeFree(employeeId) {
         const employee = await this.getById(employeeId);
-        employee.currentProject = null;
+        employee.previousProjects.push(employee.currentProject);
+        employee.currentProject = "";
         return this.update(employeeId, employee);
     },
 

@@ -12,7 +12,10 @@ export default function EmployeeDetailsMenu({ refreshEmployee }) {
   return (
     <Card>
       <Flex wrap gap="large" justify="center">
-        <ReturnHomeButton />
+        <ReturnHomeButton 
+        employeeId={employeeId}
+        refreshEmployee={refreshEmployee} 
+        />
         <AssignProjectButton
           employeeId={employeeId}
           refreshEmployee={refreshEmployee}

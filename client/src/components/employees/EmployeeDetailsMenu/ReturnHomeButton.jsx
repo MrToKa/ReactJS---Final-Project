@@ -1,16 +1,22 @@
+import { Button } from "antd";
+import { HomeOutlined } from "@ant-design/icons";
 
+import EmployeeService from "../../../services/EmployeeService";
 
-export default function ReturnHomeButton() {
-    const handleReturnHome = () => {
-        // Logic to return to the home page
-        console.log("Returning to home page");
-        // Redirect to home page (assuming you have a function for this)
-        window.location.href = "/";
+export default function ReturnHomeButton({ employeeId, refreshEmployee }) {
+    const handleReturnHome = async() => {
+        
+        await EmployeeService.setEmployeeFree(employeeId);
+        refreshEmployee();
     };
 
     return (
-        <button onClick={handleReturnHome}>
-            Return Home
-        </button>
+        <Button
+                type="primary"
+                icon={<HomeOutlined />}
+                onClick={handleReturnHome}
+            >
+                Return Home
+            </Button>
     );
 }
