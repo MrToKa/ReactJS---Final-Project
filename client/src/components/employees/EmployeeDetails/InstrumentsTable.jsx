@@ -16,6 +16,10 @@ const columns = [
 ];
 
 export default function InstrumentsTable({ instruments }) {
+  if (!instruments || instruments.length === 0) {
+    return <div style={{ textAlign: 'center', padding: '20px', fontSize: '2em' }}>No instruments assigned</div>;
+  }
+
   return (
     <Table
       columns={columns}
