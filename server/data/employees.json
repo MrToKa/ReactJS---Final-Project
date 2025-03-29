@@ -6,8 +6,8 @@
       "password": "BenDover",
       "job": "Mechanic",
       "image": "https://www.worldhistory.org/img/c/p/1600x900/17904.png",
-      "currentProject": "Ski Pista",
-      "previousProjects": [],
+      "currentProject": "538f5ac6-47d8-4f30-8009-96dd28621d22",
+      "previousProjects": ["fa7e767c-c2dc-4e0d-b524-96c7698baf16"],
       "instruments": ["a1f234d0-7ac3-4d98-a389-3f6b9e1c9df0", "b3a87c12-9c43-41d3-a35a-8e7d8aa0112a"],
       "_id": "fd84b55b-bff9-4cee-bb8a-e2f92307ce1c"
     },
@@ -19,7 +19,7 @@
       "job": "Fitter",
       "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Galileo_Galilei_%281564-1642%29_RMG_BHC2700.tiff/lossy-page1-440px-Galileo_Galilei_%281564-1642%29_RMG_BHC2700.tiff.jpg",
       "currentProject": "",
-      "previousProjects": ["HKW Jena", "Ski Pista"],
+      "previousProjects": ["fa7e767c-c2dc-4e0d-b524-96c7698baf16", "538f5ac6-47d8-4f30-8009-96dd28621d22"],
       "instruments": ["e8c374a2-7e7c-44b2-90f3-539d5e202d33"],
       "_id": "6c447779-4ac7-4aaf-81bc-dc6d760cbfe1"
     },
@@ -30,7 +30,7 @@
       "password": "AnitaBath",
       "job": "Puller",
       "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Marie_Curie_c._1920s.jpg/500px-Marie_Curie_c._1920s.jpg",
-      "currentProject": "Ski Pista",
+      "currentProject": "538f5ac6-47d8-4f30-8009-96dd28621d22",
       "previousProjects": [],
       "instruments": ["fb4de86a-28ae-4f71-b132-57c59d348fcc"],
       "_id": "7096f7ad-ae0c-4249-9f36-64bc9f9aa73a"
@@ -42,7 +42,7 @@
       "password": "OliverKlozoff",
       "job": "Technician",
       "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Albert_Einstein_1947.jpg/500px-Albert_Einstein_1947.jpg",
-      "currentProject": "Ski Pista",
+      "currentProject": "538f5ac6-47d8-4f30-8009-96dd28621d22",
       "previousProjects": [],
       "instruments": ["1027e1f6-0d34-4bc5-8f0b-918d0ad2bd1a"],
       "_id": "cddf1dd4-4684-4cef-bcde-2d85451e655f"
@@ -54,7 +54,7 @@
       "password": "HughJass",
       "job": "Site Manager",
       "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Tesla_circa_1890.jpeg/440px-Tesla_circa_1890.jpeg",
-      "currentProject": "Ski Pista",
+      "currentProject": "538f5ac6-47d8-4f30-8009-96dd28621d22",
       "previousProjects": [],
       "instruments": ["5f90a216-b191-4eb9-8c24-4a1109ed348b", "7e5a9fa7-1b56-4c4f-a778-d8ea297f1a1f", "18e7498d-9cb3-4a6d-998a-30e4e3a9b315", "7fc3d7ab-e790-489b-882b-c6e8c1585d04"],
       "_id": "9f4fff7e-26ef-4404-af21-c879de6ba5ad"

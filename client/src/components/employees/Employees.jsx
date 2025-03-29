@@ -8,24 +8,35 @@ import { Button, Input, Space, Table } from "antd";
 import TablePagination from "../common/TablePagination";
 import EmployeesMenu from "./EmployeesMenu/EmployeesMenu"; // Import EmployeesMenu
 import EmployeeService from "../../services/EmployeeService";
+import ProjectService from "../../services/ProjectService";
 
 export default function Employees() {
-  const [employees, setEmployees] = useState([]);
-  const [paginatedData, setPaginatedData] = useState([]);
   const [isShowingFree, setIsShowingFree] = useState(false); // Track free employees state
   const [isShowingOnProjects, setIsShowingOnProjects] = useState(false); // Track employees on projects state
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
+  const [paginatedData, setPaginatedData] = useState([]);
+  const [employees, setEmployees] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Track current page
   const [pageSize, setPageSize] = useState(2); // Track page size
 
   const navigate = useNavigate(); // Initialize navigate function
 
-  const processAndSetEmployees = (data) => {
-    const employeesWithKeys = data.map((employee) => ({
-      ...employee,
-      key: employee._id || employee.id, // Ensure each employee has a unique key
-    }));
+  const processAndSetEmployees = async (data) => {
+    const employeesWithKeys = await Promise.all(
+      data.map(async (employee) => {
+        let projectName = "Currently free"; // Default value if no project
+        if (employee.currentProject) {
+          const project = await ProjectService.getById(employee.currentProject);
+          projectName = project?.name; 
+        }
+        return {
+          ...employee,
+          key: employee._id,
+          currentProject: projectName, // Replace project ID with project name
+        };
+      })
+    );
     setEmployees(employeesWithKeys);
     setCurrentPage(1); // Reset to the first page
     setPaginatedData(employeesWithKeys.slice(0, pageSize)); // Update paginated data for the first page

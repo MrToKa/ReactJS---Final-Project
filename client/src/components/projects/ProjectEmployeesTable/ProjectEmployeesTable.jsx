@@ -9,7 +9,7 @@ import TablePagination from "../../common/TablePagination";
 import EmployeeService from "../../../services/EmployeeService";
 
 export default function ProjectEmployeesTable({ project }) { // Destructure project
-  const { name: projectName, status: projectStatus } = project; // Extract name and status
+  const { _id: id, status: projectStatus } = project; // Extract name and status
   const [employees, setEmployees] = useState([]);
   const [paginatedData, setPaginatedData] = useState([]);
   const [searchText, setSearchText] = useState("");
@@ -22,11 +22,10 @@ export default function ProjectEmployeesTable({ project }) { // Destructure proj
   const employeeData = async () => {
     let data = [];
     if (projectStatus === "ongoing") {
-      data = await EmployeeService.getEmployeesByProjectName(projectName);
+      data = await EmployeeService.getEmployeesByProjectId(id);
     } else if (projectStatus === "completed") {
-      data = await EmployeeService.getEmployeesWereOnProject(projectName);
+      data = await EmployeeService.getEmployeesWereOnProject(id);
     }
-
     const employeesWithKeys = data.map((employee) => ({
       ...employee,
       key: employee._id || employee.id, // Ensure each employee has a unique key

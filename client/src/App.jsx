@@ -4,7 +4,7 @@ import Home from "./components/home/Home";
 import Projects from "./components/projects/Projects";
 import ProjectDetails from "./components/projects/ProjectDetails";
 import Employees from "./components/employees/Employees";
-import EmployeeDetails from "./components/employees/EmployeeDetails";
+import EmployeeDetails from "./components/employees/EmployeeDetails/EmployeeDetails";
 import Instruments from "./components/instruments/Instruments";
 import Navbar from "./components/navigation/Navbar";
 import NotFound from "./components/404";

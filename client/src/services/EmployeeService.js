@@ -47,14 +47,14 @@ export default {
         return response.filter(e => e.currentProject !== "");
     },
 
-    async getEmployeesByProjectName(projectName) {
+    async getEmployeesByProjectId(projectId) {
         const response = await this.getAll();
-        return response.filter(e => e.currentProject === projectName);
+        return response.filter(e => e.currentProject === projectId);
     },
 
-    async getEmployeesWereOnProject(projectName) {
+    async getEmployeesWereOnProject(projectId) {
         const response = await this.getAll();
-        return response.filter(e => e.previousProjects && e.previousProjects.includes(projectName));
+        return response.filter(e => e.previousProjects && e.previousProjects.includes(projectId));
     },
 
     async setEmployeeOnProject(employeeId, projectName) {
