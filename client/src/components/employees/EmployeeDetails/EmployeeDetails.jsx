@@ -153,6 +153,9 @@ export default function Employee() {
                 <strong>E-mail:</strong> {employee.email}
               </Typography.Text>
               <Typography.Text>
+                <strong>Job position:</strong> {employee.job}
+              </Typography.Text>
+              <Typography.Text>
                 <strong>Current Project:</strong> {currProject}
               </Typography.Text>
             </div>
