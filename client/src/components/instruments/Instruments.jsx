@@ -17,12 +17,22 @@ export default function Instruments() {
       });
   }, []);
 
+  const handleDelete = () => {
+    InstrumentService.getAll()
+      .then((data) => {
+        setInstrument(data); // Refresh the instruments list directly from the server
+      })
+      .catch((error) => {
+        console.error('Error refreshing instruments:', error);
+      });
+  };
+
   return (
     <>
       <Row gutter={24} justify="center" style={{ height: 'auto' }}>
         {instrument.map((item, index) => (
           <Col span={6} key={item.id || `instrument-${index}`}>
-            <InstrumentCard instrument={item} />
+            <InstrumentCard instrument={item} onDelete={handleDelete} />
           </Col>
         ))}
       </Row>

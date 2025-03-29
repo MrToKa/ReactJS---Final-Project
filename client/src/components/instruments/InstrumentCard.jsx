@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
 
 import { Card, Space } from "antd";
 import EmployeeService from "../../services/EmployeeService";
@@ -8,7 +7,7 @@ import CardButtonDelete from "./CardButtonDelete";
 
 const { Meta } = Card;
 
-export default function InstrumentCard({ instrument }) {
+export default function InstrumentCard({ instrument, onDelete }) {
   const [owner, setOwner] = useState([]);
 
   const instrumnetOwner = (ownerId) => {
@@ -30,8 +29,10 @@ export default function InstrumentCard({ instrument }) {
   useEffect(() => {
     if (instrument.currentOwner) {
       instrumnetOwner(instrument.currentOwner);
+    } else {
+      setOwner([]); // Clear the owner if there is no current owner
     }
-  }, [instrument.currentOwner]);
+  }, [instrument]); // Add `instrument` to the dependency array
 
   const renderCard = (ownerInfo) => (
     <Card
@@ -70,7 +71,7 @@ export default function InstrumentCard({ instrument }) {
       </p>
       <Space style={{ display: "flex", justifyContent: "space-between" }}>
         <CardButtonReturn instrument={instrument} />
-        <CardButtonDelete instrument={instrument} />
+        <CardButtonDelete instrument={instrument} onDelete={onDelete} />
       </Space>
     </Card>
   );

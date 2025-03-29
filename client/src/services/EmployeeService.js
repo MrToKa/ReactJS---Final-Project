@@ -71,5 +71,13 @@ export default {
         const employee = await this.getById(employeeId);
         employee.currentInstrument = instrumentId;
         await this.update(employeeId, employee);
+    },
+
+    async returnInstrumentFromEmployee(employeeId, instrumentId) {
+        const employee = await this.getById(employeeId);
+        if (employee.currentInstrument && employee.currentInstrument.includes(instrumentId)) {
+            employee.currentInstrument = employee.currentInstrument.filter(id => id !== instrumentId);
+        }        
+        return this.update(employeeId, employee);
     }
 };

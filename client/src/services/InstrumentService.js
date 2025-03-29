@@ -1,7 +1,5 @@
 const baseUrl = 'http://localhost:3030/jsonstore/instruments';
 
-import EmployeeService from './EmployeeService.js';
-
 export default {
     async getAll() {
         const response = await fetch(baseUrl);
