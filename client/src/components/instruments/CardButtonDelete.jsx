@@ -18,9 +18,7 @@ const showConfirm = (instrument, onDelete) => {
         onDelete(instrument._id); // Update the state in the parent component
       });
     },
-    onCancel() {
-      console.log("Cancel");
-    },
+    onCancel() {}
   });
 };
 

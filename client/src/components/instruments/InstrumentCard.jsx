@@ -4,6 +4,7 @@ import { Card, Space } from "antd";
 import EmployeeService from "../../services/EmployeeService";
 import CardButtonReturn from "./CardButtonReturn";
 import CardButtonDelete from "./CardButtonDelete";
+import CardButtonGive from "./CardButtonGive";
 
 const { Meta } = Card;
 
@@ -70,7 +71,11 @@ export default function InstrumentCard({ instrument, onDelete, onReturn }) {
         <strong>Current owner:</strong> {ownerInfo}
       </p>
       <Space style={{ display: "flex", justifyContent: "space-between" }}>
-        <CardButtonReturn instrument={instrument} onReturn={onReturn} />
+        {owner._id ? (
+          <CardButtonReturn instrument={instrument} onReturn={onReturn} />
+        ) : (
+          <CardButtonGive instrument={instrument} onReturn={onReturn} />
+        )}
         <CardButtonDelete instrument={instrument} onDelete={onDelete} />
       </Space>
     </Card>

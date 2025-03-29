@@ -70,14 +70,17 @@ export default {
     },
 
     async setInstrumentToEmployee(employeeId, instrumentId) {
+        console.log(employeeId);
+        console.log(instrumentId);
         const employee = await this.getById(employeeId);
-        employee.currentInstrument = instrumentId;
+        employee.instruments.push(instrumentId);
+        const instrument = await InstrumentService.getById(instrumentId);
+        instrument.currentOwner = employeeId;
+        await InstrumentService.update(instrumentId, instrument);
         await this.update(employeeId, employee);
     },
 
     async returnInstrumentFromEmployee(employeeId, instrumentId) {
-        console.log(employeeId);
-        console.log(instrumentId);
         const employee = await this.getById(employeeId);
         if (employee.instruments && employee.instruments.includes(instrumentId)) {
             employee.instruments = employee.instruments.filter(id => id !== instrumentId);

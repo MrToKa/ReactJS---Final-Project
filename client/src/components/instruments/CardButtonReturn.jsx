@@ -1,12 +1,9 @@
 import { Button } from "antd";
 import { useEffect, useState } from "react";
+
 import EmployeeService from "../../services/EmployeeService";
-import InstrumentService from "../../services/InstrumentService";
 
 export default function CardButtonReturn({ instrument, onReturn }) {
-  const buttonText = instrument.currentOwner
-    ? "Return to warehouse"
-    : "Give to worker";
 
   const [owner, setOwner] = useState(null);
 
@@ -35,21 +32,15 @@ export default function CardButtonReturn({ instrument, onReturn }) {
         if (instrument.currentOwner) {
           if (owner && owner._id) {
             EmployeeService.returnInstrumentFromEmployee(owner._id, instrument._id).then(() => {
-              console.log("Instrument returned to warehouse");
               onReturn(); // Refresh the instruments list
             });
           } else {
             console.error("Owner ID is not available");
           }
-        } else {
-          InstrumentService.giveToWorker(instrument.id, owner?.id).then(() => {
-            console.log("Instrument given to worker");
-            onReturn(); // Refresh the instruments list
-          });
-        }
+        } 
       }}
     >
-      {buttonText}
+      Return to warehouse
     </Button>
   );
 }
