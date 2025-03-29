@@ -1,11 +1,36 @@
+import { useEffect, useState } from "react";
+
 import { Card } from "antd";
-import { Link } from "react-router";
+import EmployeeService from "../../services/EmployeeService";
 
 const { Meta } = Card;
 
 export default function InstrumentCard({ instrument }) {
-  return (
-    <Link key={instrument.id} to={`/instruments/${instrument.id}`}>
+  const [owner, setOwner] = useState([]);
+
+  const instrumnetOwner = (ownerId) => {
+    EmployeeService.getById(ownerId)
+      .then((response) => {
+        if (response && typeof response === "object") {
+          setOwner(response);
+        } else {
+          console.error("Invalid response format:", response);
+          setOwner({});
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching owner:", error);
+        setOwner({});
+      });
+  };
+
+  useEffect(() => {
+    if (instrument.currentOwner) {
+      instrumnetOwner(instrument.currentOwner);
+    }
+  }, [instrument.currentOwner]);
+
+  return (    
       <Card
         hoverable
         style={{
@@ -23,7 +48,7 @@ export default function InstrumentCard({ instrument }) {
             }}
           >
             <img
-              alt={instrument.title}
+              alt={instrument.name}
               src={instrument.image}
               style={{
                 width: "100%",
@@ -33,17 +58,16 @@ export default function InstrumentCard({ instrument }) {
             />
           </div>
         }
-        href={`/instruments/${instrument.id}`}
       >
         <Meta
-          title={instrument.title}
-          description={
-            instrument.description.length > 100
-              ? `${instrument.description.substring(0, 100)}...`
-              : instrument.description
-          }
+          title={instrument.name}      
         />
-      </Card>
-    </Link>
+        <p style={{ marginTop: "10px" }}>
+          <strong>ID:</strong> {instrument.identityNumber}
+        </p>
+        <p style={{ marginTop: "10px" }}>
+          <strong>Current owner:</strong> {owner.firstName} {owner.lastName}
+        </p>
+      </Card>   
   );
 }

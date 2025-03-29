@@ -65,5 +65,11 @@ export default {
         const employee = await this.getById(employeeId);
         employee.currentProject = null;
         return this.update(employeeId, employee);
+    },
+
+    async setInstrumentToEmployee(employeeId, instrumentId) {
+        const employee = await this.getById(employeeId);
+        employee.currentInstrument = instrumentId;
+        await this.update(employeeId, employee);
     }
 };

@@ -61,17 +61,6 @@ export default function Employees() {
     setIsShowingOnProjects(!isShowingOnProjects); // Toggle state
   };
 
-  
-  const tableHeader = () => {
-    if (isShowingFree) {
-      return "Free Employees";
-    } else if (isShowingOnProjects) {
-      return "Employees on Projects";
-    } else {
-      return "Employees";
-    }
-  }
-
   useEffect(() => {
     reloadEmployees(); // Fetch all employees on initial load
   }, []);
@@ -256,7 +245,7 @@ export default function Employees() {
         pagination={false}
         title={() => (
           <div style={{ textAlign: "center", fontWeight: "bold", fontSize: "3rem" }}>
-            {tableHeader()}
+            Employees
           </div>
         )} 
         onRow={(record) => ({

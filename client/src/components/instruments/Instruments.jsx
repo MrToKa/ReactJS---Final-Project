@@ -1,21 +1,27 @@
 import { useEffect, useState } from 'react';
 import { Col, Row } from 'antd';
+
 import InstrumentCard from './InstrumentCard';
+import InstrumentService from '../../services/InstrumentService';
 
 export default function Instruments() {
   const [instrument, setInstrument] = useState([]);
 
   useEffect(() => {
-    fetch('https://fakestoreapi.com/products')
-      .then((response) => response.json())
-      .then((data) => setInstrument(data));
+    InstrumentService.getAll()
+      .then((data) => {
+        setInstrument(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching instruments:', error);
+      });
   }, []);
 
   return (
     <>
       <Row gutter={24} justify="center" style={{ height: 'auto' }}>
-        {instrument.map((item) => (
-          <Col span={6} key={item.id}>
+        {instrument.map((item, index) => (
+          <Col span={6} key={item.id || `instrument-${index}`}>
             <InstrumentCard instrument={item} />
           </Col>
         ))}

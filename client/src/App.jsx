@@ -6,7 +6,6 @@ import ProjectDetails from "./components/projects/ProjectDetails";
 import Employees from "./components/employees/Employees";
 import EmployeeDetails from "./components/employees/EmployeeDetails";
 import Instruments from "./components/instruments/Instruments";
-import InstrumentItemDetails from "./components/instruments/InstrumentItemDetails";
 import Navbar from "./components/navigation/Navbar";
 import NotFound from "./components/404";
 
@@ -22,7 +21,6 @@ const App = () => {
         <Route path="/employees" element={<Employees />} />
         <Route path="/employees/:employeeId" element={<EmployeeDetails />} />
         <Route path="/instruments" element={<Instruments />} />
-        <Route path="/instruments/:instrumentId" element={<InstrumentItemDetails />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
