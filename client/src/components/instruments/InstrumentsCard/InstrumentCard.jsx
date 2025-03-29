@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 
 import { Card, Space } from "antd";
-import EmployeeService from "../../services/EmployeeService";
-import CardButtonReturn from "./CardButtonReturn";
-import CardButtonDelete from "./CardButtonDelete";
-import CardButtonGive from "./CardButtonGive";
+import EmployeeService from "../../../services/EmployeeService";
+import ReturnButton from "./ReturnButton";
+import DeleteButton from "./DeleteButton";
+import GiveButton from "./GiveButton";
+import EditButton from "./EditButton";
 
 const { Meta } = Card;
 
@@ -72,11 +73,16 @@ export default function InstrumentCard({ instrument, onDelete, onReturn }) {
       </p>
       <Space style={{ display: "flex", justifyContent: "space-between" }}>
         {owner._id ? (
-          <CardButtonReturn instrument={instrument} onReturn={onReturn} />
+          <ReturnButton instrument={instrument} onReturn={onReturn} />
         ) : (
-          <CardButtonGive instrument={instrument} onReturn={onReturn} />
+          <GiveButton instrument={instrument} onReturn={onReturn} />
         )}
-        <CardButtonDelete instrument={instrument} onDelete={onDelete} />
+        <EditButton
+          instrumentId={instrument._id}
+          currentOwner={instrument.currentOwner}
+          onReturn={onReturn}
+        />
+        <DeleteButton instrument={instrument} onDelete={onDelete} />
       </Space>
     </Card>
   );

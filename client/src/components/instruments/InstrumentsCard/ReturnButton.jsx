@@ -1,9 +1,9 @@
 import { Button } from "antd";
 import { useEffect, useState } from "react";
 
-import EmployeeService from "../../services/EmployeeService";
+import EmployeeService from "../../../services/EmployeeService";
 
-export default function CardButtonReturn({ instrument, onReturn }) {
+export default function ReturnButton({ instrument, onReturn }) {
 
   const [owner, setOwner] = useState(null);
 

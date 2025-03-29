@@ -1,7 +1,7 @@
 import { Button, Modal, Radio, message } from "antd"; // Added 'message' from antd
 import { useState } from "react";
 
-import EmployeeService from "../../services/EmployeeService";
+import EmployeeService from "../../../services/EmployeeService";
 
 const style = {
   display: "flex",
@@ -9,7 +9,7 @@ const style = {
   gap: 8,
 };
 
-export default function CardButtonGive({ instrument, onReturn }) {
+export default function GiveButton({ instrument, onReturn }) {
   const [employeesList, setEmployeesList] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);

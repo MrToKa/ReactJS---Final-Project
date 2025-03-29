@@ -3,8 +3,8 @@ import React from "react";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 
 import { Button, Modal } from "antd";
-import EmployeeService from "../../services/EmployeeService";
-import InstrumentService from "../../services/InstrumentService";
+import EmployeeService from "../../../services/EmployeeService";
+import InstrumentService from "../../../services/InstrumentService";
 
 const { confirm } = Modal;
 
@@ -22,7 +22,7 @@ const showConfirm = (instrument, onDelete) => {
   });
 };
 
-export default function CardButtonDelete({ instrument, onDelete }) {
+export default function DeleteButton({ instrument, onDelete }) {
   return (
     <Button
       color="danger"

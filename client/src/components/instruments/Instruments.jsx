@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Col, Row } from 'antd';
-import InstrumentCard from './InstrumentCard';
+import InstrumentCard from './InstrumentsCard/InstrumentCard';
 import InstrumentService from '../../services/InstrumentService';
 
 export default function Instruments() {
