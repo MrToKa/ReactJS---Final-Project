@@ -6,7 +6,7 @@ import EditButton from "./EditButton";
 
 const { Meta } = Card;
 
-export default function InstrumentCard({ instrument, owner, onDelete, onReturn }) {
+export default function InstrumentCard({ instrument, owner, onDelete, onReturn, resetStyles }) {
   const renderCard = () => (
     <Card
       style={{
@@ -44,9 +44,9 @@ export default function InstrumentCard({ instrument, owner, onDelete, onReturn }
       </p>
       <Space style={{ display: "flex", justifyContent: "space-between" }}>
         {owner ? (
-          <ReturnButton instrument={instrument} owner={owner} onReturn={onReturn} />
+          <ReturnButton instrument={instrument} owner={owner} onReturn={onReturn} resetStyles={resetStyles} />
         ) : (
-          <GiveButton instrument={instrument} onReturn={onReturn} />
+          <GiveButton instrument={instrument} onReturn={onReturn} resetStyles={resetStyles} />
         )}
         <EditButton
           instrumentId={instrument._id}

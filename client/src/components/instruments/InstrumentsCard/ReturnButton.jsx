@@ -15,7 +15,7 @@ export default function ReturnButton({ instrument, owner, onReturn }) {
           } else {
             console.error("Owner ID is not available");
           }
-        } 
+        }
       }}
     >
       Return to warehouse

@@ -1,4 +1,4 @@
-import { Button, Modal, Radio, message } from "antd"; // Added 'message' from antd
+import { Button, Modal, Radio, message } from "antd";
 import { useState } from "react";
 
 import EmployeeService from "../../../services/EmployeeService";
@@ -42,8 +42,8 @@ export default function GiveButton({ instrument, onReturn }) {
       EmployeeService.setInstrumentToEmployee(
         selectedEmployee,
         instrument._id
-      ).then(() => {        
-        onReturn(); // Refresh the instruments list
+      ).then(() => {
+        onReturn(); // Refresh the filtered list
       });
       setEmployeesList([]);
       setIsModalOpen(false);

@@ -84,7 +84,7 @@ export default {
             employee.instruments = employee.instruments.filter(id => id !== instrumentId);
         } 
         const instrument = await InstrumentService.getById(instrumentId);
-        instrument.currentOwner = null;
+        instrument.currentOwner = "";
         await InstrumentService.update(instrumentId, instrument); 
         return this.update(employeeId, employee);
     }

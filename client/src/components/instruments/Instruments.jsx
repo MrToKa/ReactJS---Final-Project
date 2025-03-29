@@ -9,18 +9,24 @@ import InstrumentsMenu from './InstrumentsMenu/InstrumentsMenu';
 
 export default function Instruments() {
   const [instrument, setInstrument] = useState([]);
-  const [owners, setOwners] = useState({}); // Cache for all employees
-  const [isSowingFree, setIsSowingFree] = useState(false); // State to manage free instruments
-  const [isShowingOccupied, setIsShowingOccupied] = useState(false); // State to manage occupied instruments
-  
+  const [owners, setOwners] = useState({});
+  const [isShowingFree, setIsShowingFree] = useState(false); // Lifted state for free instruments
+  const [isShowingOccupied, setIsShowingOccupied] = useState(false); // Lifted state for occupied instruments
+
   const refreshInstruments = () => {
-    InstrumentService.getAll()
-      .then((data) => {
-        setInstrument(data); // Refresh the instruments list
-      })
-      .catch((error) => {
-        console.error('Error refreshing instruments:', error);
-      });
+    if (isShowingFree) {
+      loadFreeInstruments(); // Reload free instruments if the "Show Free" filter is active
+    } else if (isShowingOccupied) {
+      loadOccupiedInstruments(); // Reload occupied instruments if the "Show Occupied" filter is active
+    } else {
+      InstrumentService.getAll()
+        .then((data) => {
+          setInstrument(data); // Reload all instruments if no filter is active
+        })
+        .catch((error) => {
+          console.error('Error refreshing instruments:', error);
+        });
+    }
   };
 
   const fetchAllEmployees = () => {
@@ -72,44 +78,26 @@ export default function Instruments() {
       .catch((error) => {
         console.error('Error loading occupied instruments:', error);
       });
-  }
-
-  const toggleFreeInstruments = () => {
-    if (isSowingFree) {
-      refreshInstruments(); // Load all instruments
-    } else {
-      loadFreeInstruments(); // Load free instruments      
-    }
-    setIsSowingFree(!isSowingFree); // Toggle state
-  }
-
-  const toggleOccupiedInstruments = () => {
-    if (isShowingOccupied) {
-      refreshInstruments(); // Load all instruments
-    } else {
-      loadOccupiedInstruments(); // Load occupied instruments
-    }
-    setIsShowingOccupied(!isShowingOccupied); // Toggle state
-  }
+  }  
 
   return (
     <>
-    <InstrumentsMenu 
-    refreshInstruments={refreshInstruments} 
-    toggleFreeInstruments={toggleFreeInstruments}
-    toggleOccupiedInstruments={toggleOccupiedInstruments}
-    isSowingFree={isSowingFree} // Pass the state of free instruments
-    isShowingOccupied={isShowingOccupied} // Pass the state of occupied instruments
-    processAndSetInstruments={processAndSetInstruments}
-    />
+      <InstrumentsMenu
+        refreshInstruments={refreshInstruments}
+        isShowingFree={isShowingFree} // Pass state for free instruments
+        setIsShowingFree={setIsShowingFree} // Pass setter for free instruments
+        isShowingOccupied={isShowingOccupied} // Pass state for occupied instruments
+        setIsShowingOccupied={setIsShowingOccupied} // Pass setter for occupied instruments
+        processAndSetInstruments={processAndSetInstruments}
+      />
       <Row gutter={24} justify="center" style={{ height: 'auto' }}>
         {instrument.map((item, index) => (
           <Col span={6} key={item.id || `instrument-${index}`}>
             <InstrumentCard
               instrument={item}
-              owner={owners[item.currentOwner] || null} // Pass cached owner data
+              owner={owners[item.currentOwner] || null}
               onDelete={refreshInstruments}
-              onReturn={refreshInstruments}
+              onReturn={refreshInstruments} // Refresh instruments after returning
             />
           </Col>
         ))}
