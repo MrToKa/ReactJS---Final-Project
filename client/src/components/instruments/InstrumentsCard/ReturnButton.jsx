@@ -1,30 +1,8 @@
 import { Button } from "antd";
-import { useEffect, useState } from "react";
 
 import EmployeeService from "../../../services/EmployeeService";
 
-export default function ReturnButton({ instrument, onReturn }) {
-
-  const [owner, setOwner] = useState(null);
-
-  useEffect(() => {
-    if (instrument.currentOwner) {
-      EmployeeService.getById(instrument.currentOwner)
-        .then((response) => {
-          if (response && typeof response === "object") {
-            setOwner(response);
-          } else {
-            console.error("Invalid response format:", response);
-            setOwner(null);
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching owner:", error);
-          setOwner(null);
-        });
-    }
-  }, [instrument.currentOwner]);
-
+export default function ReturnButton({ instrument, owner, onReturn }) {
   return (
     <Button
       type="primary"

@@ -1,7 +1,4 @@
-import { useEffect, useState } from "react";
-
 import { Card, Space } from "antd";
-import EmployeeService from "../../../services/EmployeeService";
 import ReturnButton from "./ReturnButton";
 import DeleteButton from "./DeleteButton";
 import GiveButton from "./GiveButton";
@@ -9,34 +6,8 @@ import EditButton from "./EditButton";
 
 const { Meta } = Card;
 
-export default function InstrumentCard({ instrument, onDelete, onReturn }) {
-  const [owner, setOwner] = useState([]);
-
-  const instrumnetOwner = (ownerId) => {
-    EmployeeService.getById(ownerId)
-      .then((response) => {
-        if (response && typeof response === "object") {
-          setOwner(response);
-        } else {
-          console.error("Invalid response format:", response);
-          setOwner({});
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching owner:", error);
-        setOwner({});
-      });
-  };
-
-  useEffect(() => {
-    if (instrument.currentOwner) {
-      instrumnetOwner(instrument.currentOwner);
-    } else {
-      setOwner([]); // Clear the owner if there is no current owner
-    }
-  }, [instrument]); // Add `instrument` to the dependency array
-
-  const renderCard = (ownerInfo) => (
+export default function InstrumentCard({ instrument, owner, onDelete, onReturn }) {
+  const renderCard = () => (
     <Card
       style={{
         width: 400,
@@ -69,11 +40,11 @@ export default function InstrumentCard({ instrument, onDelete, onReturn }) {
         <strong>ID:</strong> {instrument.identityNumber}
       </p>
       <p style={{ marginTop: "10px" }}>
-        <strong>Current owner:</strong> {ownerInfo}
+        <strong>Current owner:</strong> {owner ? `${owner.firstName} ${owner.lastName}` : "Free"}
       </p>
       <Space style={{ display: "flex", justifyContent: "space-between" }}>
-        {owner._id ? (
-          <ReturnButton instrument={instrument} onReturn={onReturn} />
+        {owner ? (
+          <ReturnButton instrument={instrument} owner={owner} onReturn={onReturn} />
         ) : (
           <GiveButton instrument={instrument} onReturn={onReturn} />
         )}
@@ -87,7 +58,5 @@ export default function InstrumentCard({ instrument, onDelete, onReturn }) {
     </Card>
   );
 
-  return owner._id
-    ? renderCard(`${owner.firstName} ${owner.lastName}`)
-    : renderCard("Free");
+  return renderCard(owner);
 }

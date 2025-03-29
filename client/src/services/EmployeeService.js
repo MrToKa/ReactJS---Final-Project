@@ -70,8 +70,6 @@ export default {
     },
 
     async setInstrumentToEmployee(employeeId, instrumentId) {
-        console.log(employeeId);
-        console.log(instrumentId);
         const employee = await this.getById(employeeId);
         employee.instruments.push(instrumentId);
         const instrument = await InstrumentService.getById(instrumentId);
@@ -87,9 +85,7 @@ export default {
         } 
         const instrument = await InstrumentService.getById(instrumentId);
         instrument.currentOwner = null;
-        await InstrumentService.update(instrumentId, instrument);
-
-        console.log(employee.instruments);    
+        await InstrumentService.update(instrumentId, instrument); 
         return this.update(employeeId, employee);
     }
 };
