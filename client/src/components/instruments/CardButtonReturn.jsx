@@ -1,44 +1,50 @@
 import { Button } from "antd";
-
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 import EmployeeService from "../../services/EmployeeService";
 import InstrumentService from "../../services/InstrumentService";
 
-export default function InstrumentCardButton({ instrument }) {
+export default function CardButtonReturn({ instrument, onReturn }) {
   const buttonText = instrument.currentOwner
     ? "Return to warehouse"
     : "Give to worker";
 
-  const [owner, setOwner] = useState([]);
+  const [owner, setOwner] = useState(null);
 
-  const instrumnetOwner = (ownerId) => {
-    EmployeeService.getById(ownerId)
-      .then((response) => {
-        if (response && typeof response === "object") {
-          setOwner(response);
-        } else {
-          console.error("Invalid response format:", response);
-          setOwner({});
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching owner:", error);
-        setOwner({});
-      });
-  };
+  useEffect(() => {
+    if (instrument.currentOwner) {
+      EmployeeService.getById(instrument.currentOwner)
+        .then((response) => {
+          if (response && typeof response === "object") {
+            setOwner(response);
+          } else {
+            console.error("Invalid response format:", response);
+            setOwner(null);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching owner:", error);
+          setOwner(null);
+        });
+    }
+  }, [instrument.currentOwner]);
 
   return (
     <Button
       type="primary"
       onClick={() => {
         if (instrument.currentOwner) {
-          InstrumentService.returnInstrument(instrument.id).then(() => {
-            console.log("Instrument returned to warehouse");
-          });
+          if (owner && owner._id) {
+            EmployeeService.returnInstrumentFromEmployee(owner._id, instrument._id).then(() => {
+              console.log("Instrument returned to warehouse");
+              onReturn(); // Refresh the instruments list
+            });
+          } else {
+            console.error("Owner ID is not available");
+          }
         } else {
-          InstrumentService.giveToWorker(instrument.id, owner.id).then(() => {
+          InstrumentService.giveToWorker(instrument.id, owner?.id).then(() => {
             console.log("Instrument given to worker");
+            onReturn(); // Refresh the instruments list
           });
         }
       }}

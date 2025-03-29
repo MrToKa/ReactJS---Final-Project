@@ -7,7 +7,7 @@ import CardButtonDelete from "./CardButtonDelete";
 
 const { Meta } = Card;
 
-export default function InstrumentCard({ instrument, onDelete }) {
+export default function InstrumentCard({ instrument, onDelete, onReturn }) {
   const [owner, setOwner] = useState([]);
 
   const instrumnetOwner = (ownerId) => {
@@ -70,7 +70,7 @@ export default function InstrumentCard({ instrument, onDelete }) {
         <strong>Current owner:</strong> {ownerInfo}
       </p>
       <Space style={{ display: "flex", justifyContent: "space-between" }}>
-        <CardButtonReturn instrument={instrument} />
+        <CardButtonReturn instrument={instrument} onReturn={onReturn} />
         <CardButtonDelete instrument={instrument} onDelete={onDelete} />
       </Space>
     </Card>

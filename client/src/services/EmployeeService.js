@@ -1,5 +1,7 @@
 const baseUrl = 'http://localhost:3030/jsonstore/employees';
 
+import InstrumentService from './InstrumentService.js';
+
 export default {
     async getAll() {
         const response = await fetch(baseUrl);
@@ -74,10 +76,17 @@ export default {
     },
 
     async returnInstrumentFromEmployee(employeeId, instrumentId) {
+        console.log(employeeId);
+        console.log(instrumentId);
         const employee = await this.getById(employeeId);
-        if (employee.currentInstrument && employee.currentInstrument.includes(instrumentId)) {
-            employee.currentInstrument = employee.currentInstrument.filter(id => id !== instrumentId);
-        }        
+        if (employee.instruments && employee.instruments.includes(instrumentId)) {
+            employee.instruments = employee.instruments.filter(id => id !== instrumentId);
+        } 
+        const instrument = await InstrumentService.getById(instrumentId);
+        instrument.currentOwner = null;
+        await InstrumentService.update(instrumentId, instrument);
+
+        console.log(employee.instruments);    
         return this.update(employeeId, employee);
     }
 };
