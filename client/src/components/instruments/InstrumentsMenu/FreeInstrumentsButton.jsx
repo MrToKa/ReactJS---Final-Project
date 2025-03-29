@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 
-import { CheckOutlined, UndoOutlined } from '@ant-design/icons';
+import { HddOutlined, UndoOutlined } from '@ant-design/icons';
 import InstrumentService from "../../../services/InstrumentService";
 
 export default function FreeInstrumentsButton({ isFreeActive, setIsFreeActive, resetStyles, processAndSetInstruments }) {
@@ -15,7 +15,7 @@ export default function FreeInstrumentsButton({ isFreeActive, setIsFreeActive, r
     return (
         <Button
         type="primary"
-        icon={isFreeActive ? <UndoOutlined /> : <CheckOutlined />} // Toggle icon
+        icon={isFreeActive ? <UndoOutlined /> : <HddOutlined />} // Toggle icon
         style={{
             backgroundColor: isFreeActive ? "red" : undefined, // Toggle color
             borderColor: isFreeActive ? "red" : undefined,

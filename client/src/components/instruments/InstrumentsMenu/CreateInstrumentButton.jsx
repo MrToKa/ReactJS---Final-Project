@@ -4,17 +4,16 @@ import { Button, Form, Input, Modal } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import InstrumentService from "../../../services/InstrumentService";
 
-export default function CreateInstrumentButton({ reloadInstruments, resetStyles }) {
+export default function CreateInstrumentButton({ reloadInstruments }) {
     const [form] = Form.useForm();
     const [open, setOpen] = useState(false);
 
     const submitAction = async (values) => {
         const data = { ...values };
-        data.isOccupied = false; // Set isOccupied to false by default
+        data.currentOwner = ""; // Set currentOwner to empty string
         await InstrumentService.create(data);
         setOpen(false);
         reloadInstruments();
-        resetStyles(); // Reset styles of other buttons
     };
 
     return (

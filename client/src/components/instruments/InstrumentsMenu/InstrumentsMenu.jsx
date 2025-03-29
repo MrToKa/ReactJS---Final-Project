@@ -22,7 +22,7 @@ export default function InstrumentsMenu({
   return (
     <Card>
       <Flex wrap gap="large" justify="center">
-        <CreateInstrumentButton reloadInstruments={refreshInstruments} resetStyles={resetStyles} />
+        <CreateInstrumentButton reloadInstruments={refreshInstruments} />
         <OccupiedInstrumentsButton
           isOccupiedActive={isShowingOccupied} // Use state passed from Instruments.jsx
           setIsOccupiedActive={setIsShowingOccupied} // Use setter passed from Instruments.jsx

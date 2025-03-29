@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 
-import { CheckOutlined, UndoOutlined } from '@ant-design/icons';
+import { ToolOutlined, UndoOutlined } from '@ant-design/icons';
 import InstrumentService from "../../../services/InstrumentService";
 
 export default function OccupiedInstrumentsButton({ isOccupiedActive, setIsOccupiedActive, resetStyles, processAndSetInstruments }) {
@@ -15,7 +15,7 @@ export default function OccupiedInstrumentsButton({ isOccupiedActive, setIsOccup
     return (
         <Button
             type="primary"
-            icon={isOccupiedActive ? <UndoOutlined /> : <CheckOutlined />}
+            icon={isOccupiedActive ? <UndoOutlined /> : <ToolOutlined />}
             style={{
                 backgroundColor: isOccupiedActive ? "red" : undefined,
                 borderColor: isOccupiedActive ? "red" : undefined,

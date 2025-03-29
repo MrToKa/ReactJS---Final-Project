@@ -89,7 +89,10 @@ export default function Instruments() {
         isShowingOccupied={isShowingOccupied} // Pass state for occupied instruments
         setIsShowingOccupied={setIsShowingOccupied} // Pass setter for occupied instruments
         processAndSetInstruments={processAndSetInstruments}
-      />
+      />      
+      <h2 style={{ textAlign: 'center', marginTop: '20px' }}>
+        {isShowingFree ? 'Free Instruments' : isShowingOccupied ? 'Occupied Instruments' : 'All Instruments'}
+      </h2>
       <Row gutter={24} justify="center" style={{ height: 'auto' }}>
         {instrument.map((item, index) => (
           <Col span={6} key={item.id || `instrument-${index}`}>
