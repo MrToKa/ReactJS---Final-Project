@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Button, Form, Input, Modal, Radio } from "antd";
+import { Button, Form, Input, Modal } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import EmployeeService from "../../../services/EmployeeService";
 

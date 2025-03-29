@@ -12,10 +12,10 @@ import EmployeeService from "../../services/EmployeeService";
 export default function Employees() {
   const [employees, setEmployees] = useState([]);
   const [paginatedData, setPaginatedData] = useState([]);
-  const [searchText, setSearchText] = useState("");
-  const [searchedColumn, setSearchedColumn] = useState("");
   const [isShowingFree, setIsShowingFree] = useState(false); // Track free employees state
   const [isShowingOnProjects, setIsShowingOnProjects] = useState(false); // Track employees on projects state
+  const [searchText, setSearchText] = useState("");
+  const [searchedColumn, setSearchedColumn] = useState("");
   const [currentPage, setCurrentPage] = useState(1); // Track current page
   const [pageSize, setPageSize] = useState(2); // Track page size
 

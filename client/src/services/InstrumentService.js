@@ -34,5 +34,15 @@ export default {
         return fetch(`${baseUrl}/${id}`, {
             method: 'DELETE'
         });
+    },
+
+    async getFreeInstruments() {
+        const response = await this.getAll();
+        return response.filter(i => i.currentOwner === "");
+    },
+
+    async getOccupiedInstruments() {
+        const response = await this.getAll();
+        return response.filter(i => i.currentOwner !== "");
     }
 };
