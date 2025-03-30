@@ -29,6 +29,7 @@ export default {
         });
         return await response.json();
     },
+
     delete(id) {
         return fetch(`${baseUrl}/${id}`, {
             method: 'DELETE'
@@ -43,6 +44,30 @@ export default {
         });
         if (!response.ok) {
             throw new Error('Login failed');
+        }
+        return await response.json();
+    },
+
+    async logout() {
+        const response = await fetch(`${baseUrl}/logout`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+        });
+        if (!response.ok) {
+            throw new Error('Logout failed');
+        }
+        return await response.json();
+    },
+
+    async register(user) {
+        const response = await fetch(`${baseUrl}/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(user)
+        });
+        if (!response.ok) {
+            throw new Error('Registration failed');
         }
         return await response.json();
     },

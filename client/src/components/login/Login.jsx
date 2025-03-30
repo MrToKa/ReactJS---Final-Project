@@ -25,12 +25,14 @@ export default function Login() {
 
   const loginHandler = async (formData) => {
     setIsPending(true);
+    console.log(`Form data:`, formData);
     try {
       const data = await login(formData.email, formData.password);
       userLoginHandler(data);
       console.log(data);
       navigate("/");
-    } catch {
+    } catch (error) {
+      console.log(error);
       errorMessage();
     } finally {
       setIsPending(false);
