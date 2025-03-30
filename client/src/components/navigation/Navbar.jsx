@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+
 import { Menu } from 'antd';
 import { ScheduleOutlined, ContactsOutlined, ToolOutlined, HomeOutlined } from '@ant-design/icons';
 
@@ -31,11 +32,13 @@ const items = [
 
 ];
 
-const onClick = (e) => {
-  window.location.pathname = e.key;
-}
-
 const Navbar = () => {
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  const onClick = (e) => {
+    navigate(e.key); // Use navigate instead of window.location.pathname
+  };
+
   return (
     <Menu
       theme="dark"
