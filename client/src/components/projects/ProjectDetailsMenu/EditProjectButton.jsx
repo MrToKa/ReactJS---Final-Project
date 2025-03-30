@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Button, Form, Input, Modal, Radio } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 
-import ProjectService from "../../../services/ProjectService";
+import ProjectService from "../../../services/projectService";
 
 export default function EditProjectButton({ projectId, refreshProject }) {
   const [form] = Form.useForm();

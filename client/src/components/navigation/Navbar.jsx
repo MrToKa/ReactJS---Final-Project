@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router';
+
 import { Menu } from 'antd';
 import { ScheduleOutlined, ContactsOutlined, ToolOutlined, HomeOutlined } from '@ant-design/icons';
 
-const items = [
+const menu = [
   {
     key: '/',
     label: <Link to="/">Home</Link>,
@@ -28,8 +29,7 @@ const items = [
     icon: <ContactsOutlined />,
     title: 'Instruments',
   },
-
-];
+]; 
 
 const onClick = (e) => {
   window.location.pathname = e.key;
@@ -37,17 +37,18 @@ const onClick = (e) => {
 
 const Navbar = () => {
   return (
-    <Menu
-      theme="dark"
-      mode="horizontal"
-      selectedKeys={[window.location.pathname]}      
-      items={items}      
-      style={{
-        flex: 1,
-        minWidth: 0,
-      }}
-      onClick={onClick}
-    />
+    
+      <Menu
+        theme="dark"
+        mode="horizontal"
+        selectedKeys={[window.location.pathname]}      
+        items={menu}      
+        style={{
+          flex: 1,
+          minWidth: 0,
+        }}
+        onClick={onClick}
+      />      
   );
 };
 
