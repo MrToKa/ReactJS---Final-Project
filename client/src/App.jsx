@@ -1,6 +1,6 @@
 import React from "react";
 
-import AppLayout from "./components/navigation/Layout";
+import AppLayout from "./components/layout/Layout";
 
 
 const App = () => {

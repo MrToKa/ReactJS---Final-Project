@@ -4,8 +4,8 @@ import { useNavigate } from "react-router";
 import { Button, Modal, Typography } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
-import EmployeeService from '../../../services/employeeService';
-import InstrumentService from "../../../services/InstrumentService";
+import EmployeeService from '../../../../services/employeeService';
+import InstrumentService from "../../../../services/instrumentService";
 
 
 export default function DeleteButton({ employeeId }) {

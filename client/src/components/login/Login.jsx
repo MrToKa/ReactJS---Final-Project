@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Button, Checkbox, Form, Input, Flex, Typography } from "antd";
+import { Button, Form, Input, Flex, Typography } from "antd";
 
 const onFinish = (values) => {
   console.log("Success:", values);
@@ -37,7 +37,6 @@ export default function Login() {
                 No account? Contact our administrator to create one for you.
             </Typography>
         </Form.Item>
-
         <Form.Item
           label="Username"
           name="username"
@@ -45,7 +44,6 @@ export default function Login() {
         >
           <Input />
         </Form.Item>
-
         <Form.Item
           label="Password"
           name="password"
@@ -53,11 +51,6 @@ export default function Login() {
         >
           <Input.Password />
         </Form.Item>
-
-        <Form.Item name="remember" valuePropName="checked" label={null}>
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
-
         <Form.Item label={null}>
           <Button type="primary" htmlType="submit">
             Submit

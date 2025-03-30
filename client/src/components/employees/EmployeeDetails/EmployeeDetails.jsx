@@ -3,10 +3,10 @@ import { useParams } from "react-router";
 
 import { Card, Flex, Typography } from "antd";
 import EmployeeTab from "./EmployeeDetailsTabs";
+import EmployeeDetailsMenu from "../EmployeeDetails/EmployeeDetailsMenu/EmployeeDetailsMenu";
 import EmployeeService from "../../../services/employeeService";
 import ProjectService from "../../../services/projectService";
 import InstrumentService from "../../../services/instrumentService";
-import EmployeeDetailsMenu from "../EmployeeDetailsMenu/EmployeeDetailsMenu";
 
 const imgStyle = {
   display: "block",

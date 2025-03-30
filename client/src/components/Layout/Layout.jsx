@@ -5,13 +5,13 @@ import { Layout } from 'antd';
 
 import Home from "../home/Home";
 import Projects from "../projects/Projects";
-import ProjectDetails from "../projects/ProjectDetails";
+import ProjectDetails from "../projects/ProjectDetails/ProjectDetails";
 import Employees from "../employees/Employees";
 import EmployeeDetails from "../employees/EmployeeDetails/EmployeeDetails";
 import Instruments from "../instruments/Instruments";
-import Navbar from "../navigation/Navbar";
-import AuthMenu from "../navigation/Authentication";
-import Login from "../navigation/Login";
+import Navbar from "./MainMenu";
+import AuthMenu from "./AuthenticationMenu";
+import Login from "../login/Login";
 import NotFound from "../404";
 
 const { Header, Footer, Content } = Layout;

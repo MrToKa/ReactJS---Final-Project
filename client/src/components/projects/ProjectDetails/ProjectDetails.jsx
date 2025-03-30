@@ -3,8 +3,8 @@ import { useParams } from "react-router"; // Correct import for useParams
 
 import { Card, Flex, Typography } from "antd";
 import ProjectService from "../../../services/projectService";
-import ProjectDetailsMenu from "../ProjectDetailsMenu/ProjectDetailsMenu";
-import ProjectEmployeesTable from "../ProjectEmployeesTable/ProjectEmployeesTable";
+import ProjectDetailsMenu from "../ProjectDetails/ProjectDetailsMenu/ProjectDetailsMenu";
+import ProjectEmployeesTable from "../ProjectDetails/ProjectEmployeesTable";
 
 const imgStyle = {
   display: "block",
