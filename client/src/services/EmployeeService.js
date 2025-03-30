@@ -1,6 +1,6 @@
 const baseUrl = 'http://localhost:3030/jsonstore/employees';
 
-import InstrumentService from './InstrumentService.js';
+import InstrumentService from './instrumentService.js';
 
 export default {
     async getAll() {

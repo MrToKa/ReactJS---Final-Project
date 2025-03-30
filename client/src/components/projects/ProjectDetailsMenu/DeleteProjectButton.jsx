@@ -4,8 +4,8 @@ import { useNavigate } from "react-router";
 import { Button, Modal, Typography } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
-import ProjectService from "../../../services/ProjectService";
-import EmployeeService from "../../../services/EmployeeService";
+import ProjectService from "../../../services/projectService";
+import EmployeeService from "../../../services/employeeService";
 
 export default function DeleteProjectButton({ projectId }) {
     const [isModalOpen, setIsModalOpen] = useState(false);

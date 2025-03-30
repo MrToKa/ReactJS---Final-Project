@@ -6,7 +6,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Table } from "antd";
 
 import TablePagination from "../../common/TablePagination";
-import EmployeeService from "../../../services/EmployeeService";
+import EmployeeService from "../../../services/employeeService";
 
 export default function ProjectEmployeesTable({ project }) { // Destructure project
   const { _id: id, status: projectStatus } = project; // Extract name and status
