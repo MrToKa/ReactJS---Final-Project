@@ -2,9 +2,9 @@ import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router"; // Correct import for useParams
 
 import { Card, Flex, Typography } from "antd";
-import ProjectService from "../../services/projectService";
-import ProjectDetailsMenu from "./ProjectDetailsMenu/ProjectDetailsMenu";
-import ProjectEmployeesTable from "./ProjectEmployeesTable/ProjectEmployeesTable";
+import ProjectService from "../../../services/projectService";
+import ProjectDetailsMenu from "../ProjectDetailsMenu/ProjectDetailsMenu";
+import ProjectEmployeesTable from "../ProjectEmployeesTable/ProjectEmployeesTable";
 
 const imgStyle = {
   display: "block",

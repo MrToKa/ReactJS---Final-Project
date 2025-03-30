@@ -198,6 +198,7 @@ export default function ProjectEmployeesTable({ project }) { // Destructure proj
   return (
     <>
       <Table
+      bordered
         columns={columns}
         dataSource={paginatedData}
         pagination={false}
