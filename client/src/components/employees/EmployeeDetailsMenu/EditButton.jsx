@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Button, Form, Input, Modal } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 
-import EmployeeService from "../../../services/EmployeeService";
+import EmployeeService from "../../../services/employeeService";
 
 export default function EditButton({ employeeId, refreshEmployee }) {
   const [form] = Form.useForm();

@@ -1,7 +1,7 @@
 import { Button, Modal, Radio, message } from "antd";
 import { useState } from "react";
 
-import EmployeeService from "../../../services/EmployeeService";
+import EmployeeService from "../../../services/employeeService";
 
 const style = {
   display: "flex",

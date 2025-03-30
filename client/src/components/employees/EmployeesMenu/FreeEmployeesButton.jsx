@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 
 import { CheckOutlined, UndoOutlined } from '@ant-design/icons';
-import EmployeeService from "../../../services/EmployeeService";
+import EmployeeService from "../../../services/employeeService";
 
 export default function FreeEmployeesButton({ isFreeActive, setIsFreeActive, resetStyles, processAndSetEmployees }) {
     const toggleFreeEmployees = async () => {

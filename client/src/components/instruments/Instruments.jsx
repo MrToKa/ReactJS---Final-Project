@@ -4,7 +4,7 @@ import { Col, Row } from 'antd';
 
 import InstrumentCard from './InstrumentsCard/InstrumentCard';
 import InstrumentService from '../../services/InstrumentService';
-import EmployeeService from '../../services/EmployeeService';
+import EmployeeService from '../../services/employeeService';
 import InstrumentsMenu from './InstrumentsMenu/InstrumentsMenu';
 
 export default function Instruments() {

@@ -14,7 +14,7 @@ import AuthMenu from "../navigation/Authentication";
 import Login from "../navigation/Login";
 import NotFound from "../404";
 
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Footer, Content } = Layout;
 
 const headerStyle = {
   textAlign: 'center',
@@ -46,8 +46,10 @@ export default function AppLayout() {
             <div style={authMenuStyle}>
                 <AuthMenu />
             </div>
-        </Header>
-            
+        </Header>        
+        <Content style={{ padding: '0 50px', minHeight: '100vh' }}>  
+            <div style={{ padding: 24, minHeight: 380, background: '#fff' }}>
+                         
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/projects" element={<Projects />} />
@@ -57,8 +59,14 @@ export default function AppLayout() {
                 <Route path="/instruments" element={<Instruments />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="*" element={<NotFound />} />
-              </Routes>      
-
+              </Routes>
+            </div>
+        </Content>  
+        <Footer style={{ textAlign: 'center' }}>
+            <p>© 2023 Company Name. All rights reserved.</p>
+            <p>Developed by Your Name</p>
+            <p>Version 1.0.0</p>
+        </Footer>    
         </>
     );
 }

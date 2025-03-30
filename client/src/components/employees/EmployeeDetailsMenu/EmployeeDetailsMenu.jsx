@@ -10,7 +10,7 @@ export default function EmployeeDetailsMenu({ employee, refreshEmployee }) {
   const { employeeId } = useParams();
 
   return (
-    <Card>
+    <>
       <Flex wrap gap="large" justify="center">
         {employee.currentProject ? (
           <ReturnHomeButton 
@@ -28,6 +28,6 @@ export default function EmployeeDetailsMenu({ employee, refreshEmployee }) {
         />
         <DeleteButton employeeId={employeeId} />
       </Flex>
-    </Card>
+    </>
   );
 }

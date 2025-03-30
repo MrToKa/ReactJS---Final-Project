@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { Button, Form, Input, Modal } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
-import EmployeeService from "../../../services/EmployeeService";
+import EmployeeService from "../../../services/employeeService";
 
 export default function CreateEmployeeButton({ reloadEmployees, resetStyles }) {
     const [form] = Form.useForm();

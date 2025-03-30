@@ -18,7 +18,7 @@ const ProjectsMenu = ({ reloadProjects, setProjects }) => {
   };
 
   return (
-    <Card>
+    <>
       <Flex gap="large" vertical>
         <Flex wrap gap="large" justify="center">
           <CreateProjectButton reloadProjects={reloadProjects} resetStyles={resetStyles} /> {/* Pass resetStyles */}
@@ -42,7 +42,7 @@ const ProjectsMenu = ({ reloadProjects, setProjects }) => {
           />
         </Flex>
       </Flex>
-    </Card>
+    </>
   );
 };
 

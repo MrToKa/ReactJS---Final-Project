@@ -19,7 +19,7 @@ export default function Login() {
       style={{ height: "50vh", display: "flex" }} // Center vertically and horizontally
     >
       <Form
-        name="basic"
+        name="login"
         labelCol={{ span: 24 }} // Make labels span the full width
         wrapperCol={{ span: 24 }} // Align input fields with labels
         style={{

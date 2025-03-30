@@ -25,7 +25,7 @@ export default function EmployeeTab({ projects, instruments }) {
         size="large"
         style={{
           marginBottom: 32,
-        }}
+        }}        
         items={items} // Use the updated items array directly
       />      
     </div>

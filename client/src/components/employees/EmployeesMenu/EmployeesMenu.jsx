@@ -16,7 +16,7 @@ const EmployeesMenu = ({ reloadEmployees, setEmployees, processAndSetEmployees }
   };
 
   return (
-    <Card>
+    <>
       <Flex gap="large" vertical>
         <Flex wrap gap="large" justify="center">
           <CreateEmployeeButton reloadEmployees={reloadEmployees} resetStyles={resetStyles} /> {/* Pass resetStyles */}
@@ -36,7 +36,7 @@ const EmployeesMenu = ({ reloadEmployees, setEmployees, processAndSetEmployees }
           />
         </Flex>
       </Flex>
-    </Card>
+    </>
   );
 };
 

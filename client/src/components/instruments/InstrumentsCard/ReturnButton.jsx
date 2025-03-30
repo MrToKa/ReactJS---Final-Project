@@ -1,6 +1,6 @@
 import { Button } from "antd";
 
-import EmployeeService from "../../../services/EmployeeService";
+import EmployeeService from "../../../services/employeeService";
 
 export default function ReturnButton({ instrument, owner, onReturn }) {
   return (

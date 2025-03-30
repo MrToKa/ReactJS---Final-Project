@@ -1,7 +1,7 @@
 import { Button } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 
-import EmployeeService from "../../../services/EmployeeService";
+import EmployeeService from "../../../services/employeeService";
 
 export default function ReturnHomeButton({ employeeId, refreshEmployee }) {
     const handleReturnHome = async () => {        

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Modal, Radio, message } from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
-import EmployeeService from "../../../services/EmployeeService";
+import EmployeeService from "../../../services/employeeService";
 import ProjectService from "../../../services/ProjectService";
 
 export default function AssignProjectButton({ employeeId, refreshEmployee }) {

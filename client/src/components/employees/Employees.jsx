@@ -7,7 +7,7 @@ import { Button, Input, Space, Table } from "antd";
 
 import TablePagination from "../common/TablePagination";
 import EmployeesMenu from "./EmployeesMenu/EmployeesMenu"; // Import EmployeesMenu
-import EmployeeService from "../../services/EmployeeService";
+import EmployeeService from "../../services/employeeService";
 import ProjectService from "../../services/ProjectService";
 
 export default function Employees() {

@@ -20,7 +20,7 @@ export default function InstrumentsMenu({
   };
 
   return (
-    <Card>
+    <>
       <Flex wrap gap="large" justify="center">
         <CreateInstrumentButton reloadInstruments={refreshInstruments} />
         <OccupiedInstrumentsButton
@@ -36,6 +36,6 @@ export default function InstrumentsMenu({
           processAndSetInstruments={processAndSetInstruments}
         />
       </Flex>
-    </Card>
+    </>
   );
 }
