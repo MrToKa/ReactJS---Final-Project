@@ -20,6 +20,14 @@ export default function EmployeeTab({ projects, instruments }) {
   return (
     <div>      
       <Tabs
+        tabPosition="top"
+        animated={false}
+        tabBarStyle={{
+          marginBottom: 0,
+          backgroundColor: "#f0f2f5",
+          fontSize: "1.5em",
+        }}
+        tabBarGutter={0}      
         defaultActiveKey="1"
         type="card"
         size="large"

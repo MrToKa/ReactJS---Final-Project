@@ -29,6 +29,7 @@ export default function ProjectsTable({ projects }) {
 
   return (
     <Table
+    bordered
       columns={columns}
       dataSource={projects}
       pagination={false}

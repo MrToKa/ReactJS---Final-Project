@@ -22,6 +22,7 @@ export default function InstrumentsTable({ instruments }) {
 
   return (
     <Table
+    bordered
       columns={columns}
       dataSource={instruments}
       pagination={false}

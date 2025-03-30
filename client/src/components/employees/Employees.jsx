@@ -8,7 +8,7 @@ import { Button, Input, Space, Table } from "antd";
 import TablePagination from "../common/TablePagination";
 import EmployeesMenu from "./EmployeesMenu/EmployeesMenu"; // Import EmployeesMenu
 import EmployeeService from "../../services/employeeService";
-import ProjectService from "../../services/ProjectService";
+import ProjectService from "../../services/projectService";
 
 export default function Employees() {
   const [isShowingFree, setIsShowingFree] = useState(false); // Track free employees state
@@ -251,6 +251,7 @@ export default function Employees() {
         processAndSetEmployees={processAndSetEmployees} // Pass processAndSetEmployees
       />
       <Table
+        bordered
         columns={columns}
         dataSource={paginatedData}
         pagination={false}

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Col, Row } from 'antd';
 
 import InstrumentCard from './InstrumentsCard/InstrumentCard';
-import InstrumentService from '../../services/InstrumentService';
+import InstrumentService from '../../services/instrumentService';
 import EmployeeService from '../../services/employeeService';
 import InstrumentsMenu from './InstrumentsMenu/InstrumentsMenu';
 
