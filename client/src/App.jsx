@@ -11,7 +11,7 @@ const App = () => {
   });
 
   useEffect(() => {
-    console.log('authData updated:', authData);
+    authData
   }, [authData]);
 
   const userLoginHandler = (resultData) => {

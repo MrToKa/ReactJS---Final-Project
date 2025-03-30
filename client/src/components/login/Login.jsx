@@ -25,11 +25,9 @@ export default function Login() {
 
   const loginHandler = async (formData) => {
     setIsPending(true);
-    console.log(`Form data:`, formData);
     try {
       const data = await login(formData.email, formData.password);
       userLoginHandler(data);
-      console.log(`userLoginHandler:`, data);
       navigate("/");
     } catch (error) {
       console.log(error);

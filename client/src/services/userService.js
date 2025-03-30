@@ -50,14 +50,18 @@ export default {
 
     async logout(options) {
         const response = await fetch(`${baseUrl}/logout`, {
+            mode: 'no-cors',
             method: 'GET',
             headers: { 
                 'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': 'true',
                 'X-Authorization': options.headers['X-Authorization']
             },
             credentials: 'include'            
         });
-        if (!response.ok) {
+
+        if (!response.status === 204) {
             throw new Error('Logout failed');
         }
         return response.ok;

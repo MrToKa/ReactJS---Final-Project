@@ -29,8 +29,6 @@ export const useLogin = () => {
 export const useLogout = () => {
     const { accessToken, userLogoutHandler } = useContext(UserContext);
 
-    console.log('accessToken', accessToken);
-
     useEffect(() => {
         if (!accessToken) {
             return;
