@@ -29,7 +29,7 @@ export default function Login() {
     try {
       const data = await login(formData.email, formData.password);
       userLoginHandler(data);
-      console.log(data);
+      console.log(`userLoginHandler:`, data);
       navigate("/");
     } catch (error) {
       console.log(error);

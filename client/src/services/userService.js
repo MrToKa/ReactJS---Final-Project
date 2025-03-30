@@ -48,16 +48,19 @@ export default {
         return await response.json();
     },
 
-    async logout() {
+    async logout(options) {
         const response = await fetch(`${baseUrl}/logout`, {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include'
+            headers: { 
+                'Content-Type': 'application/json',
+                'X-Authorization': options.headers['X-Authorization']
+            },
+            credentials: 'include'            
         });
         if (!response.ok) {
             throw new Error('Logout failed');
         }
-        return await response.json();
+        return response.ok;
     },
 
     async register(user) {

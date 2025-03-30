@@ -1,18 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import AppLayout from "./components/layout/Layout";
 import { UserContext } from "./components/contexts/userContext";
 
 const App = () => {
-  const [user, setUser] = useState("");
+  const [authData, setAuthData] = useState(() => {
+    const user = JSON.parse(localStorage.getItem('user')) || {};
+    const token = localStorage.getItem('token') || '';
+    return { ...user, accessToken: token };
+  });
 
-  const userLoginHandler = (user) => {
-    setUser(user);
-  }
+  useEffect(() => {
+    console.log('authData updated:', authData);
+  }, [authData]);
+
+  const userLoginHandler = (resultData) => {
+    setAuthData(resultData);
+  };
+
+  const userLogoutHandler = () => {
+    setAuthData({});
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+  };
 
   return (
     <>
-      <UserContext.Provider value={{ user, userLoginHandler }}>
+      <UserContext.Provider value={{ ...authData, userLoginHandler, userLogoutHandler }}>
         <AppLayout />
       </UserContext.Provider>
     </>

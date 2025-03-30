@@ -12,7 +12,7 @@ const onClick = (e, navigate) => {
 
 export default function AuthMenu() {
   const navigate = useNavigate();
-  const isLoggedIn = useContext(UserContext).user !== ""; // Check if user is logged in
+  const isLoggedIn = useContext(UserContext)._id !== undefined;
 
   const authMenu = isLoggedIn
     ? [
