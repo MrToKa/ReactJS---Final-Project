@@ -1,8 +1,10 @@
-import React from 'react';
+import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router';
 
 import { Menu } from 'antd';
 import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
+
+import { UserContext } from "../contexts/userContext";
 
 const onClick = (e, navigate) => {
   navigate(e.key);
@@ -10,7 +12,7 @@ const onClick = (e, navigate) => {
 
 export default function AuthMenu() {
   const navigate = useNavigate();
-  const isLoggedIn = Boolean(localStorage.getItem('user')); // Example: Check if user is logged in
+  const isLoggedIn = useContext(UserContext).user !== ""; // Check if user is logged in
 
   const authMenu = isLoggedIn
     ? [
