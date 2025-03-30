@@ -18,21 +18,34 @@ const { Header, Footer, Sider, Content } = Layout;
 
 const headerStyle = {
   textAlign: 'center',
-  color: '#fff',
   height: 64,
   paddingInline: 48,
-  lineHeight: '64px',
-  backgroundColor: '#4096ff',
+  lineHeight: '64px',  
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
 };
 
+const navbarStyle = {
+  flex: 3, // Adjust flex ratio for Navbar
+  overflow: 'hidden',
+};
 
-export default function AppLayout(){
+const authMenuStyle = {
+  flex: 1, // Adjust flex ratio for AuthMenu
+  textAlign: 'right',
+};
 
+export default function AppLayout() {
     return (
         <>
         <Header style={headerStyle}>            
-            <Navbar />
-            <AuthMenu />
+            <div style={navbarStyle}>
+                <Navbar />
+            </div>
+            <div style={authMenuStyle}>
+                <AuthMenu />
+            </div>
         </Header>
             
               <Routes>
@@ -47,5 +60,5 @@ export default function AppLayout(){
               </Routes>      
 
         </>
-);
+    );
 }

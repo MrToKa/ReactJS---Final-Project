@@ -33,18 +33,25 @@ const items = [
 ];
 
 const Navbar = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const onClick = (e) => {
-    navigate(e.key); // Use navigate instead of window.location.pathname
+    navigate(e.key);
+  };
+
+  const getSelectedKey = () => {
+    const path = window.location.pathname;
+    if (path.startsWith('/projects')) return '/projects';
+    if (path.startsWith('/employees')) return '/employees';
+    return path; // Default to exact match for other paths
   };
 
   return (
     <Menu
       theme="dark"
       mode="horizontal"
-      selectedKeys={[window.location.pathname]}      
-      items={items}      
+      selectedKeys={[getSelectedKey()]}
+      items={items}
       style={{
         flex: 1,
         minWidth: 0,

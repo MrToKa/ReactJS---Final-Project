@@ -4,27 +4,31 @@ import { Link, useNavigate } from 'react-router';
 import { Menu } from 'antd';
 import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
 
-const authMenu = [
-  {
-    key: '/login',
-    label: <Link to="/login">Login</Link>,
-    icon: <LoginOutlined />,
-    title: 'Login',
-  },
-  {
-    key: '/logout',
-    label: <Link to="/logout">Login</Link>,
-    icon: <LogoutOutlined />,
-    title: 'Logout',
-  },
-];
-
 const onClick = (e, navigate) => {
   navigate(e.key);
 };
 
 export default function AuthMenu() {
   const navigate = useNavigate();
+  const isLoggedIn = Boolean(localStorage.getItem('user')); // Example: Check if user is logged in
+
+  const authMenu = isLoggedIn
+    ? [
+        {
+          key: '/logout',
+          label: <Link to="/logout">Logout</Link>,
+          icon: <LogoutOutlined />,
+          title: 'Logout',
+        },
+      ]
+    : [
+        {
+          key: '/login',
+          label: <Link to="/login">Login</Link>,
+          icon: <LoginOutlined />,
+          title: 'Login',
+        },
+      ];
 
   return (          
       <Menu
@@ -33,8 +37,9 @@ export default function AuthMenu() {
         selectedKeys={[window.location.pathname]}      
         items={authMenu}      
         style={{
-          flex: 0,
-          minWidth: 0,
+          display: 'flex',
+          justifyContent: 'flex-end',
+          flex: 1,
         }}
         onClick={(e) => onClick(e, navigate)}
       />   
