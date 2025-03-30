@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3030/jsonstore/users';
+const baseUrl = 'http://localhost:3030/users';
 
 export default {
     async getAll() {
@@ -33,5 +33,17 @@ export default {
         return fetch(`${baseUrl}/${id}`, {
             method: 'DELETE'
         });
+    },
+
+    async login(email, password) {
+        const response = await fetch(`${baseUrl}/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+        if (!response.ok) {
+            throw new Error('Login failed');
+        }
+        return await response.json();
     },
 }

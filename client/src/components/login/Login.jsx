@@ -1,27 +1,50 @@
-import {useContext} from "react";
+import { useActionState, useContext } from "react";
 import { useNavigate } from "react-router";
 
-import { Button, Form, Input, Flex, Typography } from "antd";
+import { Button, Form, Input, Flex, Typography, message, Space } from "antd";
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { UserContext } from "../contexts/userContext";
+import { useLogin } from "../api/authApi";
+
+
 
 export default function Login() {
-  const navigate = useNavigate(); // Initialize the navigation hook
+  const navigate = useNavigate(); 
 
-  const [form] = Form.useForm(); // Initialize form instance
-  const { userLoginHandler } = useContext(UserContext); // Access user context
-  
-  const onFinish = (values) => {
-    console.log('Received values:', values);
-    // Simulate a successful login and set user context
-    const user = { username: values.username }; // Replace with actual user data
-    userLoginHandler(user); // Call the context function to set user
-    form.resetFields(); // Reset form fields after submission
-    // Redirect to the home page or perform any other action
-    navigate("/"); // Navigate to the home page
+  const [messageApi, contextHolder] = message.useMessage();
+  const [form] = Form.useForm(); 
+  const { userLoginHandler } = useContext(UserContext);
+  const { login } = useLogin(); 
+
+  const errorMessage = () => {
+    messageApi.open({
+      type: 'error',
+      content: 'Failed to login! Please check your credentials.',
+      duration: 3, // Duration in seconds
+    });
   };
+  
+const loginHandler = async (_, formData) => {
+  try
+  {
+  const data = await login(formData.email, formData.password);
+  userLoginHandler(data);
+  console.log(data);
+  navigate("/"); 
+  }
+  catch (error) {
+    console.error("Login failed!!!!!!!!!!!!!!:", error);
+    // Handle login error (e.g., show a message to the user)  
+    {errorMessage()}  
+  }
+  finally {
+    form.resetFields(); // Reset form fields after submission
+  }
+}
 
-  return (
+const [_, loginAction, isPending] = useActionState(loginHandler, {email: '', password: ''});   
+
+  return (    
     <Flex
       wrap
       gap="large"
@@ -29,6 +52,7 @@ export default function Login() {
       align="center"
       style={{ height: "50vh", display: "flex", flexDirection: "column" }} // Stack items vertically
     >
+      {contextHolder}
       <Typography.Title level={2} style={{ marginBottom: "20px" }}>
         Login
       </Typography.Title>
@@ -37,13 +61,13 @@ export default function Login() {
         name="login"
         initialValues={{ remember: true }}
         style={{ maxWidth: 560 }}
-        onFinish={onFinish}
+        onFinish={loginAction}
       >
         <Form.Item
-          name="username"
-          rules={[{ required: true, message: 'Please input your Username!' }]}
+          name="email"
+          rules={[{ required: true, message: 'Please input your Email!' }]}
         >
-          <Input prefix={<UserOutlined />} placeholder="Username" />
+          <Input prefix={<UserOutlined />} type="email" placeholder="Email" />
         </Form.Item>
         <Form.Item
           name="password"
@@ -52,7 +76,7 @@ export default function Login() {
           <Input prefix={<LockOutlined />} type="password" placeholder="Password" />
         </Form.Item>
         <Form.Item>
-          <Button block type="primary" htmlType="submit">
+          <Button block type="primary" htmlType="submit" disabled={isPending}>
             Log in
           </Button>       
         </Form.Item>
