@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Row } from "antd";
 import ProjectCard from "./ProjectCard";
 import ProjectsMenu from "./PeojectsMenu/ProjectsMenu";
-import ProjectService from "../../services/ProjectService";
+import ProjectService from "../../services/projectService";
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);

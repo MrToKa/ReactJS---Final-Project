@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router';
 
 import { AimOutlined , EyeOutlined } from '@ant-design/icons';
@@ -7,8 +7,12 @@ import { Card, Button } from 'antd';
 const { Meta } = Card;
 
 export default function ProjectCard({ project }) {
+    const [loading, setLoading] = useState(true);
+
     return (
         <Card
+        loading={loading}
+        onLoad={() => setLoading(false)}
             style={{
                 width: 400,
                 height: 405,

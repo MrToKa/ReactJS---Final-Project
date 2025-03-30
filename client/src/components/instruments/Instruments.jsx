@@ -96,7 +96,7 @@ export default function Instruments() {
       <Row gutter={24} justify="center" style={{ height: 'auto' }}>
         {instrument.map((item, index) => (
           <Col span={6} key={item.id || `instrument-${index}`}>
-            <InstrumentCard
+            <InstrumentCard            
               instrument={item}
               owner={owners[item.currentOwner] || null}
               onDelete={refreshInstruments}

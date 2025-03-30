@@ -1,4 +1,7 @@
+import { useState } from "react";
+
 import { Card, Space } from "antd";
+
 import ReturnButton from "./ReturnButton";
 import DeleteButton from "./DeleteButton";
 import GiveButton from "./GiveButton";
@@ -7,8 +10,12 @@ import EditButton from "./EditButton";
 const { Meta } = Card;
 
 export default function InstrumentCard({ instrument, owner, onDelete, onReturn, resetStyles }) {
+  const [loading, setLoading] = useState(true);
+
   const renderCard = () => (
     <Card
+      loading={loading}
+      onLoad={() => setLoading(false)}
       style={{
         width: 400,
         height: 440,

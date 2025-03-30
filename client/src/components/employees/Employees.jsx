@@ -252,6 +252,7 @@ export default function Employees() {
       />
       <Table
         bordered
+        loading={!employees.length} // Show loading state if employees are not loaded
         columns={columns}
         dataSource={paginatedData}
         pagination={false}
