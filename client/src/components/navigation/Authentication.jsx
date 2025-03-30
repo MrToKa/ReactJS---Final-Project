@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 import { Menu } from 'antd';
 import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
- const authMenu = [
+
+const authMenu = [
   {
     key: '/login',
     label: <Link to="/login">Login</Link>,
@@ -18,11 +19,13 @@ import { LoginOutlined, LogoutOutlined } from '@ant-design/icons';
   },
 ];
 
-const onClick = (e) => {
-  window.location.pathname = e.key;
-}
+const onClick = (e, navigate) => {
+  navigate(e.key);
+};
 
 export default function AuthMenu() {
+  const navigate = useNavigate();
+
   return (          
       <Menu
         theme="dark"
@@ -33,7 +36,7 @@ export default function AuthMenu() {
           flex: 0,
           minWidth: 0,
         }}
-        onClick={onClick}
+        onClick={(e) => onClick(e, navigate)}
       />   
   );
 };
