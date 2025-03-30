@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 import { ClockCircleOutlined, UndoOutlined } from '@ant-design/icons';
-import ProjectService from "../../../services/ProjectService";
+import ProjectService from "../../../services/projectService";
 
 export default function FutureProjectsButton({ setProjects, isFutureActive, setIsFutureActive, resetStyles }) {
   const toggleFutureProjects = async () => {

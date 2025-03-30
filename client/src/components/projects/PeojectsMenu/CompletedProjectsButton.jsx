@@ -1,6 +1,6 @@
 import { Button } from 'antd';
 import { CheckOutlined, UndoOutlined } from '@ant-design/icons';
-import ProjectService from "../../../services/ProjectService";
+import ProjectService from "../../../services/projectService";
 
 export default function CompletedProjectsButton({ setProjects, isCompletedActive, setIsCompletedActive, resetStyles }) {
   const toggleCompletedProjects = async () => {

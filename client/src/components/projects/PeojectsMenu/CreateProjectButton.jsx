@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { Button, Form, Input, Modal, Radio } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
-import ProjectService from "../../../services/ProjectService";
+import ProjectService from "../../../services/projectService";
 
 export default function CreateProjectButton({ reloadProjects, resetStyles }) { // Accept resetStyles as a prop
   const [form] = Form.useForm();
