@@ -3,10 +3,12 @@ import { useState } from "react";
 import { Button, Form, Input, Modal } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import EmployeeService from "../../../services/employeeService";
+import { useCreateEmployee } from "../../api/employeesApi";
 
 export default function CreateEmployeeButton({ reloadEmployees, resetStyles }) {
     const [form] = Form.useForm();
     const [open, setOpen] = useState(false);
+    const { create: createEmployee } = useCreateEmployee();
 
     const submitAction = async (values) => {
         const data = { ...values };
@@ -15,7 +17,9 @@ export default function CreateEmployeeButton({ reloadEmployees, resetStyles }) {
         data.password = data.firstName + data.lastName; // Generate password from first and last name
         data.previousProjects = []; // Initialize previousProjects as an empty array
         data.instruments = []; // Initialize instruments as an empty array
-        await EmployeeService.create(data);
+        // await EmployeeService.create(data);
+        await createEmployee(data); // Use the create function from the API
+
         setOpen(false);
         reloadEmployees();
         resetStyles(); // Reset styles of other buttons
