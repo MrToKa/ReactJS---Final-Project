@@ -9,6 +9,7 @@ import TablePagination from "../common/TablePagination";
 import EmployeesMenu from "./EmployeesMenu/EmployeesMenu"; // Import EmployeesMenu
 import EmployeeService from "../../services/employeeService";
 import ProjectService from "../../services/projectService";
+import { useEmployees } from "../api/employeesApi";
 
 export default function Employees() {
   const [isShowingFree, setIsShowingFree] = useState(false); // Track free employees state
@@ -19,6 +20,8 @@ export default function Employees() {
   const [employees, setEmployees] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Track current page
   const [pageSize, setPageSize] = useState(2); // Track page size
+
+  const { employees: employeesData } = useEmployees(); // Fetch employees data and loading state from API
 
   const navigate = useNavigate(); // Initialize navigate function
 
@@ -42,8 +45,12 @@ export default function Employees() {
     setPaginatedData(employeesWithKeys.slice(0, pageSize)); // Update paginated data for the first page
   };
 
-  const reloadEmployees = async () => {
-    await EmployeeService.getAll().then(processAndSetEmployees); // Use helper function
+  const reloadEmployees = async () => {   
+    const data = await employeesData();
+    data.forEach((employee) => {
+      employee.key = employee._id;
+    });
+    setEmployees(data);
   };
 
   const loadFreeEmployees = async () => {
@@ -252,7 +259,7 @@ export default function Employees() {
       />
       <Table
         bordered
-        loading={!employees.length} // Show loading state if employees are not loaded
+        loading={!employees.length} // Show loading state if data is being fetched
         columns={columns}
         dataSource={paginatedData}
         pagination={false}

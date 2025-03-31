@@ -21,3 +21,20 @@ export const useCreateEmployee = () => {
 
     return { create };
 }
+
+export const useEmployees = () => {
+    const { accessToken } = useContext(UserContext);
+
+    const employees = async () => {
+        const response = await fetch(baseUrl, {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                'X-Authorization': accessToken,
+            },
+        });
+        return await response.json();
+    };
+
+    return { employees };
+};
