@@ -4,8 +4,9 @@ import { Col, Row } from "antd";
 
 import ProjectCard from "./ProjectCard";
 import ProjectsMenu from "./PeojectsMenu/ProjectsMenu";
-import ProjectService from "../../services/projectService";
+
 import { UserContext } from "../contexts/userContext";
+import { useProjects } from "../api/projectApi";
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
@@ -13,16 +14,37 @@ export default function Projects() {
   const [isShowingFuture, setIsShowingFuture] = useState(false); // Track future state
   const { _id } = useContext(UserContext); // Get user ID from context
 
-  const reloadProjects = () => {
-    ProjectService.getAll().then(setProjects); // Fetch all projects
+  const { projects: fetchProjects } = useProjects(); // Fetch projects from API
+  const { ongoingProject: fetchOngoingProjects } = useProjects(); // Fetch ongoing projects from API
+  const { futureProject: fetchFutureProjects } = useProjects(); // Fetch future projects from API
+
+  const reloadProjects = async () => {
+    try {
+      const data = await fetchProjects();
+      setProjects(data);
+    } catch (error) {
+      console.error("Error fetching projects:", error); // Error handling
+    }
   };
 
-  const loadOngoingProjects = () => {
-    ProjectService.getOngoingProjects().then(setProjects); // Fetch ongoing projects
+  const loadOngoingProjects = async () => {
+    try {
+      const data = await fetchOngoingProjects();
+      console.log("Fetched ongoing projects:", data); // Debugging log
+      setProjects(data);
+    } catch (error) {
+      console.error("Error fetching ongoing projects:", error); // Error handling
+    }
   };
 
-  const loadFutureProjects = () => {
-    ProjectService.getFutureProjects().then(setProjects); // Fetch future projects
+  const loadFutureProjects = async () => {
+    try {
+      const data = await fetchFutureProjects();
+      console.log("Fetched future projects:", data); // Debugging log
+      setProjects(data);
+    } catch (error) {
+      console.error("Error fetching future projects:", error); // Error handling
+    }
   };
 
   const toggleOngoingProjects = () => {

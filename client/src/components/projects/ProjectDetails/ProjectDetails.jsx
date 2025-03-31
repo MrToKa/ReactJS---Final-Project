@@ -2,9 +2,10 @@ import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router"; // Correct import for useParams
 
 import { Card, Flex, Typography } from "antd";
-import ProjectService from "../../../services/projectService";
 import ProjectDetailsMenu from "../ProjectDetails/ProjectDetailsMenu/ProjectDetailsMenu";
 import ProjectEmployeesTable from "../ProjectDetails/ProjectEmployeesTable";
+
+import { useProject } from "../../api/projectApi"; // Import the custom hook
 
 const imgStyle = {
   display: "block",
@@ -18,15 +19,17 @@ export default function ProjectDetails() {
   const { projectId } = useParams();
   const [project, setProject] = useState({});
 
+  const { project: fetchProject } = useProject(); // Fetch project data using the custom hook
+
   const refreshProject = useCallback(() => {
-    ProjectService.getById(projectId).then((data) => {
+    fetchProject(projectId).then((data) => {
       if (data) {
         setProject(data);
       } else {
         console.error("Failed to fetch project data or data is null.");
       }
     });
-  }, [projectId]);
+  }, [projectId]); // Removed fetchProject from the dependency array
 
   useEffect(() => {
     refreshProject();

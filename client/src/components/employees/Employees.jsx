@@ -7,9 +7,8 @@ import { Button, Input, Space, Table } from "antd";
 
 import TablePagination from "../common/TablePagination";
 import EmployeesMenu from "./EmployeesMenu/EmployeesMenu"; // Import EmployeesMenu
-import EmployeeService from "../../services/employeeService";
 import ProjectService from "../../services/projectService";
-import { useEmployees } from "../api/employeesApi";
+import { useEmployees, useEmployeesOnProjects, useFreeEmployees } from "../api/employeesApi";
 
 export default function Employees() {
   const [isShowingFree, setIsShowingFree] = useState(false); // Track free employees state
@@ -22,6 +21,8 @@ export default function Employees() {
   const [pageSize, setPageSize] = useState(2); // Track page size
 
   const { employees: employeesData } = useEmployees(); // Fetch employees data and loading state from API
+  const { freeEmployees } = useFreeEmployees // Fetch free employees data from API
+  const { employeesOnProjects } = useEmployeesOnProjects // Fetch employees on projects data from API
 
   const navigate = useNavigate(); // Initialize navigate function
 
@@ -45,20 +46,28 @@ export default function Employees() {
     setPaginatedData(employeesWithKeys.slice(0, pageSize)); // Update paginated data for the first page
   };
 
+  const processAndSetPaginatedEmployees = (data) => {
+    data.forEach((employee) => {
+        employee.key = employee._id; // Assign unique key to each employee
+    });
+    setEmployees(data); // Set employees data
+    setCurrentPage(1); // Reset to the first page
+    setPaginatedData(data.slice(0, pageSize)); // Update paginated data for the first page
+  };
+
   const reloadEmployees = async () => {   
     const data = await employeesData();
-    data.forEach((employee) => {
-      employee.key = employee._id;
-    });
-    setEmployees(data);
+    processAndSetPaginatedEmployees(data); // Use helper function
   };
 
   const loadFreeEmployees = async () => {
-    await EmployeeService.getFreeEmployees().then(processAndSetEmployees); // Use helper function
+    const data = await freeEmployees(); // Fetch free employees
+    processAndSetPaginatedEmployees(data); // Use helper function
   };
 
   const loadEmployeesOnProjects = async () => {
-    await EmployeeService.getEmployeesOnProjects().then(processAndSetEmployees); // Use helper function
+    const data = await employeesOnProjects(); // Fetch employees on projects
+    processAndSetPaginatedEmployees(data); // Use helper function
   };
 
   const toggleFreeEmployees = () => {
@@ -257,27 +266,39 @@ export default function Employees() {
         setEmployees={setEmployees}
         processAndSetEmployees={processAndSetEmployees} // Pass processAndSetEmployees
       />
-      <Table
-        bordered
-        loading={!employees.length} // Show loading state if data is being fetched
-        columns={columns}
-        dataSource={paginatedData}
-        pagination={false}
-        title={() => (
-          <div style={{ textAlign: "center", fontWeight: "bold", fontSize: "3rem" }}>
-            Employees
-          </div>
-        )} 
-        onRow={(record) => ({
-          onClick: () => navigate(`/employees/${record.key}`),
-          style: { cursor: "pointer" }, // Add cursor style here
-        })}        
-      />
-      <TablePagination
-        items={employees}
-        onPageChange={handlePageChange}
-        tableName="Employees"
-      />
+      {employees.length === 0 ? (
+        <div style={{ textAlign: "center", fontWeight: "bold", fontSize: "2rem", marginTop: "2rem" }}>
+          {isShowingOnProjects
+            ? "Nobody is on site"
+            : isShowingFree
+            ? "Everybody is working"
+            : "Nobody is working for us... :("}
+        </div>
+      ) : (
+        <>
+          <Table
+            bordered
+            loading={!employees.length} // Show loading state if data is being fetched
+            columns={columns}
+            dataSource={paginatedData}
+            pagination={false}
+            title={() => (
+              <div style={{ textAlign: "center", fontWeight: "bold", fontSize: "3rem" }}>
+                Employees
+              </div>
+            )}
+            onRow={(record) => ({
+              onClick: () => navigate(`/employees/${record.key}`),
+              style: { cursor: "pointer" }, // Add cursor style here
+            })}
+          />
+          <TablePagination
+            items={employees}
+            onPageChange={handlePageChange}
+            tableName="Employees"
+          />
+        </>
+      )}
     </>
   );
 }

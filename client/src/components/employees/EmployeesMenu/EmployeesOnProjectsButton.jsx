@@ -1,13 +1,16 @@
-import {Button} from 'antd';
-
+import { Button } from 'antd';
 import { TeamOutlined, UndoOutlined } from '@ant-design/icons';
-import EmployeeService from "../../../services/employeeService";
+import { useEmployees, useEmployeesOnProjects } from "../../api/employeesApi";
 
 export default function EmployeesOnProjectsButton({ isOnProjectActive, setIsOnProjectActive, resetStyles, processAndSetEmployees }) {
+    const { fetchEmployeesOnProjects } = useEmployeesOnProjects(); // Use the refactored function
+    const { employees: fetchEmployees } = useEmployees(); // Use the refactored function
+
     const toggleEmployeesOnProjects = async () => {
         const employees = isOnProjectActive
-            ? await EmployeeService.getAll() // Load all employees
-            : await EmployeeService.getEmployeesOnProjects(); // Load employees on projects
+            ? await fetchEmployees() // Load all employees
+            : await fetchEmployeesOnProjects(); // Call the function to load employees on projects
+
         processAndSetEmployees(employees); // Update full list of employees
         setIsOnProjectActive(!isOnProjectActive); // Toggle state
     };

@@ -1,13 +1,16 @@
 import { Button } from 'antd';
 
 import { CheckOutlined, UndoOutlined } from '@ant-design/icons';
-import EmployeeService from "../../../services/employeeService";
+import { useEmployees, useFreeEmployees } from '../../api/employeesApi';
 
-export default function FreeEmployeesButton({ isFreeActive, setIsFreeActive, resetStyles, processAndSetEmployees }) {
+export default function FreeEmployeesButton({ isFreeActive, setIsFreeActive, resetStyles, processAndSetEmployees }) {    
+    const { employees: fetchEmployees } = useEmployees(); // Use the refactored function
+    const { freeEmployees } = useFreeEmployees(); // Use the refactored function    
+    
     const toggleFreeEmployees = async () => {
         const employees = isFreeActive
-            ? await EmployeeService.getAll() // Load all employees
-            : await EmployeeService.getFreeEmployees(); // Load free employees
+            ? await fetchEmployees() // Load all employees
+            : await freeEmployees(); // Load free employees
         processAndSetEmployees(employees); // Update full list of employees and recalculate paginated data
         setIsFreeActive(!isFreeActive); // Toggle state
     };

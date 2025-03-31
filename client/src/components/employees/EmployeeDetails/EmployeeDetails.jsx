@@ -7,6 +7,7 @@ import EmployeeDetailsMenu from "../EmployeeDetails/EmployeeDetailsMenu/Employee
 import EmployeeService from "../../../services/employeeService";
 import ProjectService from "../../../services/projectService";
 import InstrumentService from "../../../services/instrumentService";
+import { useEmployee } from "../../api/employeesApi"; // Import the custom hook
 
 const imgStyle = {
   display: "block",
@@ -23,21 +24,22 @@ export default function Employee() {
   const [currProject, setCurrProject] = useState("");
   const [instruments, setInstruments] = useState([]);
 
+  const { employee: fetchEmployee } = useEmployee(); // Fetch employee data and loading state from API
+
+  console.log("Employee ID:", employeeId); // Debugging line
+  
   useEffect(() => {
-    EmployeeService.getById(employeeId)
-      .then((response) => {
-        if (response && typeof response === "object") {
-          setEmployee(response);
-        } else {
-          console.error("Invalid response format:", response);
-          setEmployee({});
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching employee:", error);
-        setEmployee({});
-      });
-  }, [employeeId]);
+    if (employeeId) { // Ensure employeeId is defined
+        fetchEmployee(employeeId).then((data) => { // Pass employeeId to fetchEmployee
+            if (data) {
+                setEmployee(data);
+                console.log("Employee Data:", data); // Debugging line
+            } else {
+                console.error("Failed to fetch employee data or data is null.");
+            }
+        });
+    }
+  }, [fetchEmployee, employeeId]);
 
   useEffect(() => {
     ProjectService.getById(employee.currentProject)

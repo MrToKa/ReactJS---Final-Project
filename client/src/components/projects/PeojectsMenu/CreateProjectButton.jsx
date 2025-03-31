@@ -2,15 +2,18 @@ import { useState } from "react";
 
 import { Button, Form, Input, Modal, Radio } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
-import ProjectService from "../../../services/projectService";
+import { useCreateProject } from "../../api/projectApi"; // Import the custom hook
 
 export default function CreateProjectButton({ reloadProjects, resetStyles }) { // Accept resetStyles as a prop
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
 
+  const { create } = useCreateProject(); // Use the custom hook to create a project
+
   const submitAction = async (values) => {
     const data = { ...values };
-    await ProjectService.create(data);
+    // await ProjectService.create(data);
+    await create(data); // Use the custom hook to create a project
     setOpen(false);
     reloadProjects();
     resetStyles(); // Reset styles of other buttons

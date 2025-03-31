@@ -3,31 +3,44 @@ import { useState, useEffect } from "react";
 import { Button, Form, Input, Modal, Radio } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 
-import ProjectService from "../../../../services/projectService";
+import { useUpdateProject, useProject } from "../../../api/projectApi"; 
 
 export default function EditProjectButton({ projectId, refreshProject }) {
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
   const [project, setProject] = useState({});
 
+  const { update } = useUpdateProject(); // Use the custom hook to update a project
+  const { project: fetchProject } = useProject(); // Fetch project data using the custom hook
+
+
   useEffect(() => {
-    // Fetch project data and set it to state
-    ProjectService.getById(projectId).then((data) => {
-      setProject(data);
-      form.setFieldsValue(data); // Populate the form with fetched data
-    });
-  }, [projectId, form]);
+    const fetchProjectData = async () => {
+      try {
+        const data = await fetchProject(projectId);
+        setProject(data);
+        form.setFieldsValue(data); // Set form values when project data is fetched
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (projectId) {
+      fetchProjectData();
+    }
+    
+  }, [projectId, form]); // Fetch project data when projectId changes
 
   const submitAction = async (values) => {
     const data = { ...values, _id: projectId }; // Include the id in the data
-    await ProjectService.update(projectId, data);
+    await update(data); // Pass the project object with _id
     setOpen(false);
     refreshProject(); // Refresh the project details after updating
   };
 
   const handleOpen = async () => {
     try {
-      const data = await ProjectService.getById(projectId);
+      const data = await fetchProject(projectId); // Fetch project data when opening the modal
       setProject(data);
       form.setFieldsValue(data);
       setOpen(true);
