@@ -1,13 +1,13 @@
 import { useContext } from 'react';
 
-const baseUrl = 'http://localhost:3030/data/projects';
+const baseUrl = 'http://localhost:3030/data/instruments';
 
 import { UserContext } from '../contexts/userContext.js';
 
-export const useProjects = () => {
+export const useInstruments = () => {
     const { accessToken } = useContext(UserContext);
 
-    const projects = async () => {
+    const instruments = async () => {
         try {
             const response = await fetch(baseUrl, {
                 method: 'GET',
@@ -22,18 +22,18 @@ export const useProjects = () => {
             const data = await response.json();
             return data;
         } catch (error) {
-            console.error("Error fetching projects from API:", error); // Error handling
+            console.error("Error fetching instruments from API:", error); // Error handling
             return [];
         }
-    };
+    }
 
-    return { projects };
-}
+    return { instruments };
+};
 
-export const useProject = () => {
+export const useInstrument = () => {
     const { accessToken } = useContext(UserContext);
 
-    const project = async (id) => { // Accept id as a parameter
+    const instrument = async (id) => { // Accept id as a parameter
         const response = await fetch(`${baseUrl}/${id}`, {
             method: 'GET',
             headers: { 
@@ -44,46 +44,46 @@ export const useProject = () => {
         return await response.json();
     };
 
-    return { project };
+    return { instrument };
 };
 
-export const useCreateProject = () => {
+export const useCreateInstrument = () => {
     const { accessToken } = useContext(UserContext);
 
-    const create = async (project) => {
+    const createInstrument = async (instrument) => {
         const response = await fetch(baseUrl, {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
                 'X-Authorization': accessToken,
             },
-            body: JSON.stringify(project)
+            body: JSON.stringify(instrument)
         });
         return await response.json();
     };
 
-    return { create };
-}
+    return { createInstrument };
+};
 
-export const useUpdateProject = () => { // Removed id parameter
+export const useUpdateInstrument = () => {
     const { accessToken } = useContext(UserContext);
 
-    const update = async (project) => { // Use _id from the project object
-        const response = await fetch(`${baseUrl}/${project._id}`, {
+    const update = async (id, instrument) => {
+        const response = await fetch(`${baseUrl}/${id}`, {
             method: 'PUT',
             headers: { 
                 'Content-Type': 'application/json',
                 'X-Authorization': accessToken,
             },
-            body: JSON.stringify(project)
+            body: JSON.stringify(instrument)
         });
         return await response.json();
     };
 
     return { update };
-}
+};
 
-export const useDeleteProject = () => {
+export const useDeleteInstrument = () => {
     const { accessToken } = useContext(UserContext);
 
     const remove = async (id) => {
@@ -98,39 +98,20 @@ export const useDeleteProject = () => {
     };
 
     return { remove };
-}
+};
 
-//getOngoingProjects
-export const useOngoingProjects = () => {
-    const { accessToken } = useContext(UserContext);
+//getFreeInstruments
+export const useGetFreeInstruments = async () => {
+    const response = await this.instruments();
+    const freeInstruments = response.filter(i => i.currentOwner === "");
 
-    const ongoingProjects = async () => {
-        const response = await this.projects(); // Call the projects function to get all projects
-        return response.filter(project => project.status === 'ongoing'); // Filter ongoing projects
+    return { freeInstruments }; // Return the filtered data
+};
 
-    };
+//getOccupiedInstruments
+export const useGetOccupiedInstruments = async () => {
+    const response = await this.instruments();
+    const occupiedInstruments = response.filter(i => i.currentOwner !== "");
 
-    return { ongoingProjects };
-}
-//getCompletedProjects
-export const useCompletedProjects = () => {
-    const { accessToken } = useContext(UserContext);
-
-    const completedProjects = async () => {
-        const response = await this.projects(); // Call the projects function to get all projects
-        return response.filter(project => project.status === 'completed'); // Filter completed projects
-    };
-
-    return { completedProjects };
-}
-//getFutureProjects
-export const useFutureProjects = () => {
-    const { accessToken } = useContext(UserContext);
-
-    const futureProjects = async () => {
-        const response = await this.projects(); // Call the projects function to get all projects
-        return response.filter(project => project.status === 'future'); // Filter future projects
-    };
-
-    return { futureProjects };
+    return { occupiedInstruments }; // Return the filtered data
 }

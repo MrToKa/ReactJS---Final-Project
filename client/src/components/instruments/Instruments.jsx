@@ -1,31 +1,39 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 
 import { Col, Row } from 'antd';
 
 import InstrumentCard from './InstrumentsCard/InstrumentCard';
-import InstrumentService from '../../services/instrumentService';
-import EmployeeService from '../../services/employeeService';
 import InstrumentsMenu from './InstrumentsMenu/InstrumentsMenu';
+
+import EmployeeService from '../../services/employeeService';
+
+import { UserContext } from "../contexts/userContext";
+import { useInstruments } from '../api/instrumentsApi';
+import { useEmployees } from '../api/employeesApi';
 
 export default function Instruments() {
   const [instrument, setInstrument] = useState([]);
   const [owners, setOwners] = useState({});
   const [isShowingFree, setIsShowingFree] = useState(false); // Lifted state for free instruments
   const [isShowingOccupied, setIsShowingOccupied] = useState(false); // Lifted state for occupied instruments
+  const { _id } = useContext(UserContext); // Get user ID from context
 
-  const refreshInstruments = () => {
+  const { instruments: allInstruments } = useInstruments(); // Custom hook to fetch instruments
+  const { useFreeInstruments } = useInstruments(); // Custom hook to fetch free instruments
+  const { useOccupiedInstruments } = useInstruments(); // Custom hook to fetch occupied instruments
+
+  const refreshInstruments = async () => { // Mark function as async
     if (isShowingFree) {
       loadFreeInstruments(); // Reload free instruments if the "Show Free" filter is active
     } else if (isShowingOccupied) {
       loadOccupiedInstruments(); // Reload occupied instruments if the "Show Occupied" filter is active
     } else {
-      InstrumentService.getAll()
-        .then((data) => {
-          setInstrument(data); // Reload all instruments if no filter is active
-        })
-        .catch((error) => {
-          console.error('Error refreshing instruments:', error);
-        });
+      try {
+        const data = await allInstruments(); // Await the Promise to resolve
+        setInstrument(data); // Reload all instruments if no filter is active
+      } catch (error) {
+        console.error("Error fetching all instruments:", error); // Error handling
+      }
     }
   };
 
@@ -60,24 +68,15 @@ export default function Instruments() {
     fetchAllEmployees(); // Fetch all employees once
   }, []);
 
-  const loadFreeInstruments = () => {
-    InstrumentService.getFreeInstruments()
-      .then((data) => {
-        setInstrument(data); // Load free instruments
-      })
-      .catch((error) => {
-        console.error('Error loading free instruments:', error);
-      });
+  const loadFreeInstruments = async () => {
+    const data = await useFreeInstruments(); // Fetch free instruments
+    processAndSetInstruments(data); // Process and set the state with free instruments
+    
   }
 
-  const loadOccupiedInstruments = () => {
-    InstrumentService.getOccupiedInstruments()
-      .then((data) => {
-        setInstrument(data); // Load occupied instruments
-      })
-      .catch((error) => {
-        console.error('Error loading occupied instruments:', error);
-      });
+  const loadOccupiedInstruments = async () => {
+    const data = await useOccupiedInstruments(); // Fetch occupied instruments
+    processAndSetInstruments(data); // Process and set the state with occupied instruments    
   }  
 
   return (

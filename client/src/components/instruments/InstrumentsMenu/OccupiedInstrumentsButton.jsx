@@ -1,13 +1,19 @@
 import { Button } from 'antd';
 
 import { ToolOutlined, UndoOutlined } from '@ant-design/icons';
-import InstrumentService from "../../../services/InstrumentService";
+
+import { useGetOccupiedInstruments } from '../../api/instrumentsApi';
+import { useInstruments } from '../../api/instrumentsApi'; // Custom hook to fetch instruments
 
 export default function OccupiedInstrumentsButton({ isOccupiedActive, setIsOccupiedActive, resetStyles, processAndSetInstruments }) {
+
+    const { occupiedInstruments } = useGetOccupiedInstruments(); // Custom hook to fetch occupied instruments
+    const { instruments: allInstruments } = useInstruments(); // Custom hook to fetch all instruments
+
     const toggleOccupiedInstruments = async () => {
         const instruments = isOccupiedActive
-            ? await InstrumentService.getAll()
-            : await InstrumentService.getOccupiedInstruments();
+            ? await allInstruments()
+            : await occupiedInstruments();
         processAndSetInstruments(instruments);
         setIsOccupiedActive(!isOccupiedActive); // Toggle active state
     };

@@ -2,16 +2,19 @@ import { useState } from "react";
 
 import { Button, Form, Input, Modal } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
-import InstrumentService from "../../../services/InstrumentService";
+
+import { useCreateInstrument } from '../../api/instrumentsApi';
 
 export default function CreateInstrumentButton({ reloadInstruments }) {
     const [form] = Form.useForm();
     const [open, setOpen] = useState(false);
 
+    const { createInstrument } = useCreateInstrument(); // Custom hook to fetch instruments
+
     const submitAction = async (values) => {
         const data = { ...values };
         data.currentOwner = ""; // Set currentOwner to empty string
-        await InstrumentService.create(data);
+        await createInstrument(data); // Call the createInstrument function from the custom hook
         setOpen(false);
         reloadInstruments();
     };
