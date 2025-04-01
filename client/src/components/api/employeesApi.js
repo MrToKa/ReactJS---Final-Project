@@ -15,7 +15,8 @@ export const useEmployees = () => {
                 'X-Authorization': accessToken,
             },
         });
-        return await response.json();
+        const result = await response.json();
+        return Array.isArray(result) ? result : []; // Ensure the result is always an array
     };
 
     return { employees };
@@ -113,41 +114,52 @@ export const useEmployeesOnProjects = () => {
 };
 
 export const useEmployeesByProjectId = (projectId) => {
+    const { employees } = useEmployees();
+
     const employeesByProjectId = async () => {
-        this.employees().then((data) => {
-            return data.filter(e => e.currentProject === projectId);
-        });
-    }
+        const data = await employees(); // Fetch all employees
+        return data.filter(e => e.currentProject === projectId); // Filter employees by projectId
+        };    
 
     return { employeesByProjectId };
 };
 
 export const useEmployeesWereOnProject = (projectId) => {
+    const { employees } = useEmployees();
+
     const employeesWereOnProject = async () => {
-        this.employees().then((data) => {
-            return data.filter(e => e.previousProjects && e.previousProjects.includes(projectId));
-        });
-    }
+        const data = await employees(); // Fetch all employees
+        return data.filter(e => e.previousProjects.includes(projectId)); // Filter employees who were on the project
+    };    
 
     return { employeesWereOnProject };
 };
 
 export const useSetEmployeeOnProject = (employeeId, projectId) => {
+    const { employee: currentEmployee } = useEmployee();
+    const { update } = useUpdateEmployee(employeeId);
+
     const setEmployeeOnProject = async () => {
-        const employee = await this.employee(employeeId);
-        employee.currentProject = projectId;
-        return this.update(employeeId, employee);
+        const employee = await currentEmployee(employeeId);
+        employee.previousProjects = employee.previousProjects || []; // Ensure previousProjects is an array
+
+        await update({ ...employee, currentProject: projectId });
+        return employee; // Return the updated employee object
     }
 
     return { setEmployeeOnProject };
 };
 
 export const useSetEmployeeFree = (employeeId) => {
+    const { employee: currentEmployee } = useEmployee();
+    const { update } = useUpdateEmployee(employeeId);
+
     const setEmployeeFree = async () => {
-        const employee = await this.employee(employeeId);
-        employee.previousProjects.push(employee.currentProject);
-        employee.currentProject = "";
-        return this.update(employeeId, employee);
+        const employee = await currentEmployee(employeeId);
+        employee.previousProjects = employee.previousProjects || []; // Ensure previousProjects is an array
+
+        await update({ ...employee, currentProject: "" });
+        return employee; // Return the updated employee object
     }
 
     return { setEmployeeFree };
