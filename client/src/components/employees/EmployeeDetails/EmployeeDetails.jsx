@@ -4,10 +4,10 @@ import { useParams } from "react-router";
 import { Card, Flex, Typography } from "antd";
 import EmployeeTab from "./EmployeeDetailsTabs";
 import EmployeeDetailsMenu from "../EmployeeDetails/EmployeeDetailsMenu/EmployeeDetailsMenu";
-import EmployeeService from "../../../services/employeeService";
-import ProjectService from "../../../services/projectService";
-import InstrumentService from "../../../services/instrumentService";
+
 import { useEmployee } from "../../api/employeesApi"; // Import the custom hook
+import { useProject } from "../../api/projectApi";
+import { useGetInstrumentsByEmployeeId } from "../../api/instrumentsApi";
 
 const imgStyle = {
   display: "block",
@@ -25,24 +25,23 @@ export default function Employee() {
   const [instruments, setInstruments] = useState([]);
 
   const { employee: fetchEmployee } = useEmployee(); // Fetch employee data and loading state from API
-
-  console.log("Employee ID:", employeeId); // Debugging line
+  const { project: fetchProject } = useProject(); // Fetch project data and loading state from API
+  const { getInstrumentsByEmployeeId } = useGetInstrumentsByEmployeeId(); // Destructure the function
   
   useEffect(() => {
     if (employeeId) { // Ensure employeeId is defined
         fetchEmployee(employeeId).then((data) => { // Pass employeeId to fetchEmployee
             if (data) {
                 setEmployee(data);
-                console.log("Employee Data:", data); // Debugging line
             } else {
                 console.error("Failed to fetch employee data or data is null.");
             }
         });
     }
-  }, [fetchEmployee, employeeId]);
+  }, [employeeId]); // Add fetchEmployee to dependencies
 
   useEffect(() => {
-    ProjectService.getById(employee.currentProject)
+    fetchProject(employee.currentProject)
       .then((response) => {
         if (response && typeof response === "object") {
           setCurrProject(response.name);
@@ -60,7 +59,7 @@ export default function Employee() {
   useEffect(() => {
     if (Array.isArray(employee.previousProjects) && employee.previousProjects.length > 0) {
       const promises = employee.previousProjects.map((projectId) =>
-        ProjectService.getById(projectId)
+        fetchProject(projectId)
       );
       Promise.all(promises)
         .then((responses) => {
@@ -81,13 +80,10 @@ export default function Employee() {
  // useEffect to get all the instruments assigned to the employee
   useEffect(() => {
     if (employeeId) {
-      InstrumentService.getAll()
+      getInstrumentsByEmployeeId(employeeId) // Call the function with employeeId
         .then((response) => {
-          if (response && Array.isArray(response)) {
-            const filteredInstruments = response.filter(
-              (instrument) => instrument.currentOwner === employeeId
-            );
-            setInstruments(filteredInstruments);
+          if (Array.isArray(response)) {
+            setInstruments(response);
           } else {
             console.error("Invalid response format:", response);
             setInstruments([]);
@@ -98,10 +94,10 @@ export default function Employee() {
           setInstruments([]);
         });
     }
-  }, [employeeId]);    
+  }, [employeeId]); // Add getInstrumentsByEmployeeId to dependencies    
 
   const refreshEmployee = useCallback(() => {
-    EmployeeService.getById(employeeId).then((data) => {
+    fetchEmployee(employeeId).then((data) => {
       if (data) {
         setEmployee(data);
       } else {

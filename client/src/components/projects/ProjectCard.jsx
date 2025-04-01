@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 
-import { AimOutlined , EyeOutlined } from '@ant-design/icons';
 import { Card, Button } from 'antd';
+import { AimOutlined , EyeOutlined } from '@ant-design/icons';
 
 const { Meta } = Card;
 

@@ -8,6 +8,9 @@ import { Button, Input, Space, Table } from "antd";
 import TablePagination from "../common/TablePagination";
 import EmployeesMenu from "./EmployeesMenu/EmployeesMenu"; // Import EmployeesMenu
 import ProjectService from "../../services/projectService";
+
+import FOUCShield from "../common/FOUCShield";
+
 import { useEmployees, useEmployeesOnProjects, useFreeEmployees } from "../api/employeesApi";
 
 export default function Employees() {
@@ -19,7 +22,8 @@ export default function Employees() {
   const [employees, setEmployees] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Track current page
   const [pageSize, setPageSize] = useState(2); // Track page size
-
+  const [loading, setLoading] = useState(true); // Track loading state
+  
   const { employees: employeesData } = useEmployees(); // Fetch employees data and loading state from API
   const { freeEmployees } = useFreeEmployees // Fetch free employees data from API
   const { employeesOnProjects } = useEmployeesOnProjects // Fetch employees on projects data from API
@@ -56,18 +60,24 @@ export default function Employees() {
   };
 
   const reloadEmployees = async () => {   
+    setLoading(true); // Start loading
     const data = await employeesData();
     processAndSetPaginatedEmployees(data); // Use helper function
+    setLoading(false); // Stop loading
   };
 
   const loadFreeEmployees = async () => {
+    setLoading(true); // Start loading
     const data = await freeEmployees(); // Fetch free employees
     processAndSetPaginatedEmployees(data); // Use helper function
+    setLoading(false); // Stop loading
   };
 
   const loadEmployeesOnProjects = async () => {
+    setLoading(true); // Start loading
     const data = await employeesOnProjects(); // Fetch employees on projects
     processAndSetPaginatedEmployees(data); // Use helper function
+    setLoading(false); // Stop loading
   };
 
   const toggleFreeEmployees = () => {
@@ -257,46 +267,52 @@ export default function Employees() {
 
   return (
     <>
-      <EmployeesMenu
-        reloadEmployees={reloadEmployees}
-        toggleFreeEmployees={toggleFreeEmployees}
-        toggleEmployeesOnProjects={toggleEmployeesOnProjects}
-        isShowingFree={isShowingFree}
-        isShowingOnProjects={isShowingOnProjects}
-        setEmployees={setEmployees}
-        processAndSetEmployees={processAndSetEmployees} // Pass processAndSetEmployees
-      />
-      {employees.length === 0 ? (
-        <div style={{ textAlign: "center", fontWeight: "bold", fontSize: "2rem", marginTop: "2rem" }}>
-          {isShowingOnProjects
-            ? "Nobody is on site"
-            : isShowingFree
-            ? "Everybody is working"
-            : "Nobody is working for us... :("}
-        </div>
+      {loading ? (
+        <FOUCShield message="Loading employees..." />
       ) : (
         <>
-          <Table
-            bordered
-            loading={!employees.length} // Show loading state if data is being fetched
-            columns={columns}
-            dataSource={paginatedData}
-            pagination={false}
-            title={() => (
-              <div style={{ textAlign: "center", fontWeight: "bold", fontSize: "3rem" }}>
-                Employees
-              </div>
-            )}
-            onRow={(record) => ({
-              onClick: () => navigate(`/employees/${record.key}`),
-              style: { cursor: "pointer" }, // Add cursor style here
-            })}
+          <EmployeesMenu
+            reloadEmployees={reloadEmployees}
+            toggleFreeEmployees={toggleFreeEmployees}
+            toggleEmployeesOnProjects={toggleEmployeesOnProjects}
+            isShowingFree={isShowingFree}
+            isShowingOnProjects={isShowingOnProjects}
+            setEmployees={setEmployees}
+            processAndSetEmployees={processAndSetEmployees} // Pass processAndSetEmployees
           />
-          <TablePagination
-            items={employees}
-            onPageChange={handlePageChange}
-            tableName="Employees"
-          />
+          {employees.length === 0 ? (
+            <div style={{ textAlign: "center", fontWeight: "bold", fontSize: "2rem", marginTop: "2rem" }}>
+              {isShowingOnProjects
+                ? "Nobody is on site"
+                : isShowingFree
+                ? "Everybody is working"
+                : "Nobody is working for us... :("}
+            </div>
+          ) : (
+            <>
+              <Table
+                bordered
+                loading={!employees.length} // Show loading state if data is being fetched
+                columns={columns}
+                dataSource={paginatedData}
+                pagination={false}
+                title={() => (
+                  <div style={{ textAlign: "center", fontWeight: "bold", fontSize: "3rem" }}>
+                    Employees
+                  </div>
+                )}
+                onRow={(record) => ({
+                  onClick: () => navigate(`/employees/${record.key}`),
+                  style: { cursor: "pointer" }, // Add cursor style here
+                })}
+              />
+              <TablePagination
+                items={employees}
+                onPageChange={handlePageChange}
+                tableName="Employees"
+              />
+            </>
+          )}
         </>
       )}
     </>

@@ -1,12 +1,13 @@
 import { Button } from 'antd';
+
 import { CheckOutlined, UndoOutlined } from '@ant-design/icons';
+
 import { useCompletedProjects } from "../../api/projectApi"; // Import the custom hook
 import { useProjects } from '../../api/projectApi';
 
 export default function CompletedProjectsButton({ setProjects, isCompletedActive, setIsCompletedActive, resetStyles }) {
   const { projects: fetchProjects } = useProjects(); // Fetch projects from API
   const { completedProjects } = useCompletedProjects(); // Use the custom hook to get completed projects
-
 
   const toggleCompletedProjects = async () => {
     if (isCompletedActive) {

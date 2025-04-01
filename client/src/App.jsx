@@ -14,7 +14,7 @@ export default function App() {
     const user = JSON.parse(localStorage.getItem('user')) || {};
     const token = localStorage.getItem('token') || '';
     const updatedAuthData = { ...user, accessToken: token };
-    console.log("Updated authData in App:", updatedAuthData); // Debugging log
+    //console.log("Updated authData in App:", updatedAuthData); // Debugging log
     setAuthData(updatedAuthData); // Ensure authData is updated on app load
   }, []); // Run only once on component mount
 

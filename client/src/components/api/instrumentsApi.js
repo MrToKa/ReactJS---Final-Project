@@ -115,3 +115,30 @@ export const useGetOccupiedInstruments = async () => {
 
     return { occupiedInstruments }; // Return the filtered data
 }
+
+//getInstrumentsByEmployeeId
+export const useGetInstrumentsByEmployeeId = () => {
+    const { accessToken } = useContext(UserContext);
+
+    const getInstrumentsByEmployeeId = async (employeeId) => {
+        try {
+            const response = await fetch(baseUrl, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Authorization': accessToken,
+                },
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            return data.filter((i) => i.currentOwner === employeeId); // Filter instruments by employeeId
+        } catch (error) {
+            console.error("Error fetching instruments by employee ID:", error);
+            return [];
+        }
+    };
+
+    return { getInstrumentsByEmployeeId };
+};
