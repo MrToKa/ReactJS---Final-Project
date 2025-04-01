@@ -1,6 +1,6 @@
 {
     "fa7e767c-c2dc-4e0d-b524-96c7698baf16": {
-        "name": "HKW Jena",
+        "name": "HKW Jena JSONSTORE",
         "location": "Jena, Germoney",
         "status": "completed",
         "image": "https://www.bv-apolda.de/fileadmin/_processed_/d/0/csm_hkw-jena-12_699e638daa.jpg",
@@ -10,7 +10,7 @@
         "_id": "fa7e767c-c2dc-4e0d-b524-96c7698baf16"
     },
     "538f5ac6-47d8-4f30-8009-96dd28621d22": {
-        "name": "Ski Pista",
+        "name": "Ski Pista JSONSTORE",
         "location": "Copenhagen, Denmark",
         "status": "ongoing",
         "image": "https://emag.directindustry.com/wp-content/uploads/sites/3/copenhill_big-yankodesign01.jpg",
@@ -20,7 +20,7 @@
         "_id": "538f5ac6-47d8-4f30-8009-96dd28621d22"
     },
     "64c8c9e6-3c31-4a30-b4c2-e7ee6ee8ba5b": {
-        "name": "NeoChim",
+        "name": "NeoChim JSONSTORE",
         "location": "Dimitrovgrad, Bulgaria",
         "status": "future",
         "image": "https://www.bulgarianagriculture.com/re_images/1351778433_neochimlogo.gif",

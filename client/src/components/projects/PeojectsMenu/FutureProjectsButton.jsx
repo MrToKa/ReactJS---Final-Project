@@ -1,13 +1,22 @@
+import React from 'react';
+
 import { Button } from 'antd';
 import { ClockCircleOutlined, UndoOutlined } from '@ant-design/icons';
-import ProjectService from "../../../services/projectService";
+
+import { useFutureProjects } from "../../api/projectApi"; // Import the custom hook
+import { useProjects } from '../../api/projectApi';
 
 export default function FutureProjectsButton({ setProjects, isFutureActive, setIsFutureActive, resetStyles }) {
+  const { projects: fetchProjects } = useProjects(); // Fetch projects from API
+  const { futureProjects } = useFutureProjects(); // Use the custom hook to get future projects
+
   const toggleFutureProjects = async () => {
     if (isFutureActive) {
-      await ProjectService.getAll().then(setProjects); // Load all projects
+      await fetchProjects().then(setProjects); // Load all projects
     } else {
-      await ProjectService.getFutureProjects().then(setProjects); // Load future projects
+      await futureProjects().then(setProjects).catch((error) => {
+        console.error("Error fetching future projects:", error); // Error handling
+      }); // Load future projects
     }
     setIsFutureActive(!isFutureActive); // Toggle state
   };

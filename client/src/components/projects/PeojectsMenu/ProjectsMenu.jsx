@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
-import { Card, Flex } from 'antd';
+import { Flex } from 'antd';
+
 import CreateProjectButton from './CreateProjectButton';
 import OngoingProjectsButton from './OngoingProjectsButton';
 import CompletedProjectsButton from './CompletedProjectsButton';

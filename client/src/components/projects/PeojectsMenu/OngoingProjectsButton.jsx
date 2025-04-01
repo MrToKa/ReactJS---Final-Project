@@ -1,13 +1,18 @@
 import { Button } from 'antd';
 import { CaretRightOutlined, UndoOutlined } from '@ant-design/icons';
-import ProjectService from "../../../services/projectService";
+
+import { useOngoingProjects } from "../../api/projectApi"; // Import the custom hook
+import { useProjects } from '../../api/projectApi';
 
 export default function OngoingProjectsButton({ setProjects, isOngoingActive, setIsOngoingActive, resetStyles }) {
+  const { projects: fetchProjects } = useProjects(); // Fetch projects from API
+  const { ongoingProjects } = useOngoingProjects(); // Use the custom hook to get ongoing projects
+
   const toggleOngoingProjects = async () => {
     if (isOngoingActive) {
-      await ProjectService.getAll().then(setProjects); // Load all projects
+      await fetchProjects().then(setProjects); // Load all projects
     } else {
-      await ProjectService.getOngoingProjects().then(setProjects); // Load ongoing projects
+      await ongoingProjects().then(setProjects); // Load ongoing projects
     }
     setIsOngoingActive(!isOngoingActive); // Toggle state
   };

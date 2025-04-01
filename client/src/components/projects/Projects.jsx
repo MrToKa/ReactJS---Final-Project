@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import { Col, Row } from "antd";
 
@@ -80,7 +80,7 @@ export default function Projects() {
     reloadProjects();
   }, []); // Fetch all projects on initial load
 
-    if (loading || !projects) {    
+  if (loading || !projects) {    
     return (
       <FOUCShield message="Loading projects..." />
     );
