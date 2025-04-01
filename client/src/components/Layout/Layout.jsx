@@ -9,7 +9,7 @@ import ProjectDetails from "../projects/ProjectDetails/ProjectDetails";
 import Employees from "../employees/Employees";
 import EmployeeDetails from "../employees/EmployeeDetails/EmployeeDetails";
 import Instruments from "../instruments/Instruments";
-import Navbar from "./MainMenu";
+import MainMenu from "./MainMenu";
 import AuthMenu from "./AuthenticationMenu";
 import Login from "../login/Login";
 import Logout from "../logout/Logout";
@@ -42,7 +42,7 @@ export default function AppLayout() {
         <>
         <Header style={headerStyle}>            
             <div style={navbarStyle}>
-                <Navbar />
+                <MainMenu />
             </div>
             <div style={authMenuStyle}>
                 <AuthMenu />

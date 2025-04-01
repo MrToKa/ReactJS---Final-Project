@@ -5,15 +5,12 @@ const baseUrl = 'http://localhost:3030/data/projects';
 import { UserContext } from '../contexts/userContext.js';
 
 export const useProjects = () => {
-    const { accessToken } = useContext(UserContext);
-
     const projects = async () => {
         try {
             const response = await fetch(baseUrl, {
                 method: 'GET',
                 headers: { 
-                    'Content-Type': 'application/json',
-                    'X-Authorization': accessToken,
+                    'Content-Type': 'application/json'
                 },
             });
             if (!response.ok) {
@@ -31,14 +28,11 @@ export const useProjects = () => {
 }
 
 export const useProject = () => {
-    const { accessToken } = useContext(UserContext);
-
     const project = async (id) => { // Accept id as a parameter
         const response = await fetch(`${baseUrl}/${id}`, {
             method: 'GET',
             headers: { 
                 'Content-Type': 'application/json',
-                'X-Authorization': accessToken,
             },
         });
         return await response.json();
@@ -102,20 +96,15 @@ export const useDeleteProject = () => {
 
 //getOngoingProjects
 export const useOngoingProjects = () => {
-    const { accessToken } = useContext(UserContext);
-
     const ongoingProjects = async () => {
         const response = await this.projects(); // Call the projects function to get all projects
         return response.filter(project => project.status === 'ongoing'); // Filter ongoing projects
-
     };
 
     return { ongoingProjects };
 }
 //getCompletedProjects
 export const useCompletedProjects = () => {
-    const { accessToken } = useContext(UserContext);
-
     const completedProjects = async () => {
         const response = await this.projects(); // Call the projects function to get all projects
         return response.filter(project => project.status === 'completed'); // Filter completed projects
@@ -125,8 +114,6 @@ export const useCompletedProjects = () => {
 }
 //getFutureProjects
 export const useFutureProjects = () => {
-    const { accessToken } = useContext(UserContext);
-
     const futureProjects = async () => {
         const response = await this.projects(); // Call the projects function to get all projects
         return response.filter(project => project.status === 'future'); // Filter future projects

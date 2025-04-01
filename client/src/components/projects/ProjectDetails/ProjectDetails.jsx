@@ -1,11 +1,13 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useContext } from "react"; // Add useContext import
 import { useParams } from "react-router"; // Correct import for useParams
 
 import { Card, Flex, Typography } from "antd";
+
 import ProjectDetailsMenu from "../ProjectDetails/ProjectDetailsMenu/ProjectDetailsMenu";
 import ProjectEmployeesTable from "../ProjectDetails/ProjectEmployeesTable";
 
 import { useProject } from "../../api/projectApi"; // Import the custom hook
+import { UserContext } from "../../contexts/userContext";
 
 const imgStyle = {
   display: "block",
@@ -18,6 +20,7 @@ const imgStyle = {
 export default function ProjectDetails() {
   const { projectId } = useParams();
   const [project, setProject] = useState({});
+  const { user } = useContext(UserContext); // Access user from UserContext
 
   const { project: fetchProject } = useProject(); // Fetch project data using the custom hook
 
@@ -91,11 +94,14 @@ export default function ProjectDetails() {
           </Flex>
         </Flex>
       </Card>
-
-      <ProjectDetailsMenu refreshProject={refreshProject} />
       
-      {project.name && project.status !== "future" && (
-          <ProjectEmployeesTable project={project} />
+      {user && ( // Show only if the user is logged in
+        <>
+          <ProjectDetailsMenu refreshProject={refreshProject} />
+          {project.name && project.status !== "future" && (
+            <ProjectEmployeesTable project={project} />
+          )}
+        </>
       )}
     </>
   );
