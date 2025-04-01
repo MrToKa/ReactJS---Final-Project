@@ -1,10 +1,11 @@
 import { useEffect, useState, useCallback, useContext } from "react"; // Add useContext import
 import { useParams } from "react-router"; // Correct import for useParams
 
-import { Card, Flex, Typography } from "antd";
+import { Card, Flex, Typography, Spin } from "antd";
 
 import ProjectDetailsMenu from "../ProjectDetails/ProjectDetailsMenu/ProjectDetailsMenu";
 import ProjectEmployeesTable from "../ProjectDetails/ProjectEmployeesTable";
+import FOUCShield from "../../common/FOUCShield";
 
 import { useProject } from "../../api/projectApi"; // Import the custom hook
 import { UserContext } from "../../contexts/userContext";
@@ -19,24 +20,36 @@ const imgStyle = {
 
 export default function ProjectDetails() {
   const { projectId } = useParams();
-  const [project, setProject] = useState({});
-  const { user } = useContext(UserContext); // Access user from UserContext
+  const [project, setProject] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const user = useContext(UserContext);
 
-  const { project: fetchProject } = useProject(); // Fetch project data using the custom hook
+  const { project: fetchProject } = useProject();
 
   const refreshProject = useCallback(() => {
-    fetchProject(projectId).then((data) => {
-      if (data) {
-        setProject(data);
-      } else {
-        console.error("Failed to fetch project data or data is null.");
-      }
-    });
-  }, [projectId]); // Removed fetchProject from the dependency array
+    setLoading(true);
+    fetchProject(projectId)
+      .then((data) => {
+        if (data) {
+          setProject(data);
+        } else {
+          console.error("Failed to fetch project data or data is null.");
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [projectId]);
 
   useEffect(() => {
     refreshProject();
   }, [refreshProject]);
+
+  if (loading || !project) {    
+    return (
+      <FOUCShield message="Loading project details..." />
+    );
+  }
 
   return (
     <>
@@ -53,8 +66,8 @@ export default function ProjectDetails() {
           align="center"
           style={{
             width: "100%",
-            flexDirection: "row", // Ensure horizontal alignment
-            gap: "32px", // Add spacing between the image and text
+            flexDirection: "row",
+            gap: "32px",
           }}
         >
           <img
@@ -68,40 +81,29 @@ export default function ProjectDetails() {
             justify="space-between"
             style={{
               padding: 32,
-              maxWidth: "600px", // Optional: Limit the width of the text section
+              maxWidth: "600px",
             }}
           >
             <Typography.Title level={3}>
               {project.name}
             </Typography.Title>
             <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-              <Typography.Text>
-                <strong>Location:</strong> {project.location}
-              </Typography.Text>
-              <Typography.Text>
-                <strong>Start date:</strong> {project.startDate}
-              </Typography.Text>
-              <Typography.Text>
-                <strong>End date:</strong> {project.endDate}
-              </Typography.Text>
-              <Typography.Text>
-                <strong>Project status:</strong> {project.status}
-              </Typography.Text>
-              <Typography.Text>
-                <strong>Description:</strong> {project.description}
-              </Typography.Text>
+              <Typography.Text><strong>Location:</strong> {project.location}</Typography.Text>
+              <Typography.Text><strong>Start date:</strong> {project.startDate}</Typography.Text>
+              <Typography.Text><strong>End date:</strong> {project.endDate}</Typography.Text>
+              <Typography.Text><strong>Project status:</strong> {project.status}</Typography.Text>
+              <Typography.Text><strong>Description:</strong> {project.description}</Typography.Text>
             </div>
           </Flex>
         </Flex>
       </Card>
-      
-      {user && ( // Show only if the user is logged in
-        <>
-          <ProjectDetailsMenu refreshProject={refreshProject} />
-          {project.name && project.status !== "future" && (
-            <ProjectEmployeesTable project={project} />
-          )}
-        </>
+
+      {user?._id === project._ownerId && (
+        <ProjectDetailsMenu refreshProject={refreshProject} />
+      )}
+
+      {user?._id && project.name && project.status !== "future" && (
+        <ProjectEmployeesTable project={project} />
       )}
     </>
   );
