@@ -143,12 +143,18 @@ export const useGetInstrumentsByEmployeeId = () => {
 
     const getInstrumentsByEmployeeId = async (employeeId) => {
         try {
-            const response = await instruments(); // Fetch all instruments        
-            const data = await response.json();
-            return data.filter((i) => i.currentOwner === employeeId); // Filter instruments by employeeId
+            const data = await instruments(); // Fetch all instruments        
+            const instrumentsList = Array.isArray(data) ? data : Object.values(data); // Ensure data is an array
+            const filteredInstruments = instrumentsList.filter((i) => i.currentOwner === employeeId); // Filter instruments by employeeId
+
+            if (filteredInstruments.length === 0) {
+                return []; // Return empty array if no instruments found
+            }
+
+            return Array.isArray(filteredInstruments) ? filteredInstruments : Object.values(filteredInstruments); // Ensure the result is an array
         } catch (error) {
-            console.error("Error fetching instruments by employee ID:", error);
-            return [];
+            console.error("Error fetching instruments by employee ID:", error); // Error handling
+            return []; // Return empty array on error
         }
     };
 

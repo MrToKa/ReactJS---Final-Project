@@ -3,7 +3,7 @@ import { Tabs } from 'antd';
 import InstrumentsTable from './InstrumentsTable';
 import ProjectsTable from './ProjectsTable';
 
-export default function EmployeeTab({ refreshEmployee, refreshKey }) { // Accept refreshEmployee as a prop
+export default function EmployeeTab({ refreshKey }) { // Accept refreshEmployee as a prop
   const items = [
     {
       label: 'Projects',
@@ -13,7 +13,7 @@ export default function EmployeeTab({ refreshEmployee, refreshKey }) { // Accept
     {
       label: 'Instruments',
       key: '2',
-      children: <InstrumentsTable refreshEmployee={refreshEmployee} />, // No changes needed here
+      children: <InstrumentsTable refreshKey={refreshKey} />, // No changes needed here
     },
   ];
 
