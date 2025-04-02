@@ -3,16 +3,19 @@ import { useState, useEffect } from "react";
 import { Button, Form, Input, Modal } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 
-import EmployeeService from "../../../../services/employeeService";
+import { useEmployee, useUpdateEmployee } from "../../../api/employeesApi";
 
 export default function EditButton({ employeeId, refreshEmployee }) {
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
   const [employee, setEmployee] = useState({});
 
+  const { employee: fetchEmployee } = useEmployee(); // Fetch employee details
+  const { update: updateEmployee } = useUpdateEmployee(); // Fetch all instruments
+
   useEffect(() => {
     // Fetch employee data and set it to state
-    EmployeeService.getById(employeeId).then((data) => {
+    fetchEmployee(employeeId).then((data) => {
       setEmployee(data);
       form.setFieldsValue(data); // Populate the form with fetched data
     });
@@ -20,14 +23,14 @@ export default function EditButton({ employeeId, refreshEmployee }) {
 
   const submitAction = async (values) => {
     const data = { ...employee, ...values, _id: employeeId }; // Merge existing data with form values
-    await EmployeeService.update(employeeId, data);
+    await updateEmployee(employeeId, data);
     setOpen(false);
     refreshEmployee(); // Refresh the employee details after updating
   };
 
   const handleOpen = async () => {
     try {
-      const data = await EmployeeService.getById(employeeId);
+      const data = await fetchEmployee(employeeId);
       setEmployee(data);
       form.setFieldsValue(data);
       setOpen(true);
@@ -79,15 +82,7 @@ export default function EditButton({ employeeId, refreshEmployee }) {
                 initialValue={employee.lastName}
                 >
                     <Input />
-                </Form.Item>
-                <Form.Item 
-                name="email" 
-                label="Email" 
-                rules={[{ required: true, type: "email" }]}
-                initialValue={employee.email}
-                >
-                    <Input />
-                </Form.Item>
+                </Form.Item>                
                 <Form.Item
                 name="image"
                 label="Image URL"

@@ -57,7 +57,7 @@ export const useCreateEmployee = () => {
     return { create };
 }
 
-export const useUpdateEmployee = () => { // Remove id from the hook
+export const useUpdateEmployee = () => {
     const { accessToken } = useContext(UserContext);
 
     const update = async (id, employee) => { // Accept id and employee as parameters
