@@ -2,16 +2,21 @@ import { useState, useEffect } from "react";
 
 import { Button, Form, Input, Modal } from "antd";
 
-import InstrumentService from "../../../services/InstrumentService";
+import { useInstrument } from "../../api/instrumentsApi";
+import { useUpdateInstrument } from "../../api/instrumentsApi";
 
 export default function EditButton({ instrumentId, currentOwner, onReturn }) {
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
   const [instrument, setInstrument] = useState({});
 
+  const { instrument: fetchInstrument } = useInstrument(); // Custom hook to fetch instrument details
+  const { update: updateInstrument } = useUpdateInstrument(); // Custom hook to update instrument details
+
+
   useEffect(() => {
     // Fetch instrument data and set it to state
-    InstrumentService.getById(instrumentId).then((data) => {
+    fetchInstrument(instrumentId).then((data) => {
       setInstrument(data);
       form.setFieldsValue(data); // Populate the form with fetched data
     });
@@ -19,14 +24,14 @@ export default function EditButton({ instrumentId, currentOwner, onReturn }) {
 
   const submitAction = async (values) => {
     const data = { ...values, _id: instrumentId, currentOwner }; // Include currentOwner in the data
-    await InstrumentService.update(instrumentId, data);
+    await updateInstrument(instrumentId, data);
     setOpen(false);
     onReturn(); // Refresh the instrument details after updating
   };
 
   const handleOpen = async () => {
     try {
-      const data = await InstrumentService.getById(instrumentId);
+      const data = await fetchInstrument(instrumentId);
       setInstrument(data);
       form.setFieldsValue(data);
       setOpen(true);
