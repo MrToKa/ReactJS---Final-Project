@@ -41,7 +41,7 @@ export default function Employees() {
         if (resolveProjectName) {
           const projectName =
             employee.currentProject !== ""
-              ? (await projectData(employee.currentProject))?.name ?? "Unknown"
+              ? (await projectData(employee.currentProject))?.name ?? "Unknown project"
               : "Currently free";
   
           updatedEmployee.currentProject = projectName;

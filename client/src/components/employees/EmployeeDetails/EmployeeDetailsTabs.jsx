@@ -1,19 +1,19 @@
-import { Radio, Tabs } from 'antd';
+import { Tabs } from 'antd';
 
 import InstrumentsTable from './InstrumentsTable';
 import ProjectsTable from './ProjectsTable';
 
-export default function EmployeeTab({ projects, instruments }) {
+export default function EmployeeTab({ refreshEmployee, refreshKey }) { // Accept refreshEmployee as a prop
   const items = [
     {
       label: 'Projects',
       key: '1',
-      children: <ProjectsTable projects={projects} />, // Pass projects data
+      children: <ProjectsTable refreshKey={refreshKey} />, // Pass refreshEmployee to ProjectsTable
     },
     {
       label: 'Instruments',
       key: '2',
-      children: <InstrumentsTable instruments={instruments} />, // Pass instruments data
+      children: <InstrumentsTable refreshEmployee={refreshEmployee} />, // No changes needed here
     },
   ];
 

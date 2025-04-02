@@ -23,7 +23,8 @@ export default function EmployeeDetailsMenu({ employee, refreshEmployee }) {
             refreshEmployee={refreshEmployee}
           />
         )}
-        <EditButton employeeId={employeeId} 
+        <EditButton 
+        employeeId={employeeId} 
         refreshEmployee={refreshEmployee} 
         />
         <DeleteButton employeeId={employeeId} />

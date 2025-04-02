@@ -118,10 +118,10 @@ export const useEmployeesOnProjects = () => {
     return { fetchEmployeesOnProjects }; // Return the function
 };
 
-export const useEmployeesByProjectId = (projectId) => {
+export const useEmployeesByProjectId = () => {
     const { employees } = useEmployees();
 
-    const employeesByProjectId = async () => {
+    const employeesByProjectId = async (projectId) => {
         const data = await employees(); // Fetch all employees
         return data.filter(e => e.currentProject === projectId); // Filter employees by projectId
         };    
@@ -129,16 +129,22 @@ export const useEmployeesByProjectId = (projectId) => {
     return { employeesByProjectId };
 };
 
-export const useEmployeesWereOnProject = (projectId) => {
+export const useEmployeeProjectHistory = () => {
     const { employees } = useEmployees();
-
-    const employeesWereOnProject = async () => {
-        const data = await employees(); // Fetch all employees
-        return data.filter(e => e.previousProjects.includes(projectId)); // Filter employees who were on the project
-    };    
-
-    return { employeesWereOnProject };
-};
+  
+    const getProjectsByEmployeeId = async (employeeId) => {
+      const data = await employees(); // Get all employees
+      const employeeList = Array.isArray(data) ? data : Object.values(data);
+      const employee = employeeList.find((e) => e._id === employeeId);
+  
+      if (!employee) return []; // No employee found
+  
+      return Array.isArray(employee.previousProjects) ? employee.previousProjects : [];
+    };
+  
+    return { getProjectsByEmployeeId };
+  };
+  
 
 export const useSetEmployeeOnProject = () => {
     const { employee: currentEmployee } = useEmployee();

@@ -42,7 +42,7 @@ export default function AssignProjectButton({ employeeId, refreshEmployee }) {
                 .then(() => {
                     setProjectsList([]); // Clear the project list
                     setIsModalOpen(false); // Close the modal
-                    refreshEmployee(); // Refresh employee details
+                    refreshEmployee(); // Refresh employee details and tabs
                 })
                 .catch((error) => {
                     console.error("Error assigning project:", error);

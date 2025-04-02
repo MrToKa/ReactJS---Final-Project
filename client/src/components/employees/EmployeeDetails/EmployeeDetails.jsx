@@ -17,12 +17,26 @@ const imgStyle = {
 };
 
 export default function Employee() {
-  const { employeeId } = useParams();
   const [employee, setEmployee] = useState({});
   const [currProject, setCurrProject] = useState("");
-
+  
+  const { employeeId } = useParams();
   const { employee: fetchEmployee } = useEmployee(); // Fetch employee data and loading state from API
   const { project: fetchProject } = useProject(); // Fetch project data and loading state from API
+
+  const [refreshKey, setRefreshKey] = useState(0);
+
+const refreshEmployee = useCallback(() => {
+  fetchEmployee(employeeId).then((data) => {
+    if (data) {
+      setEmployee(data);
+      setRefreshKey(prev => prev + 1); // Trigger refresh in children
+    } else {
+      console.error("Failed to fetch employee data or data is null.");
+    }
+  });
+}, [employeeId]);
+
   
   useEffect(() => {
     if (employeeId) { // Ensure employeeId is defined
@@ -55,16 +69,6 @@ export default function Employee() {
       setCurrProject("Currently free"); // Handle empty currentProject
     }
   }, [employee.currentProject]); 
-
-  const refreshEmployee = useCallback(() => {
-    fetchEmployee(employeeId).then((data) => {
-      if (data) {
-        setEmployee(data);
-      } else {
-        console.error("Failed to fetch employee data or data is null.");
-      }
-    });
-  }, [employeeId]);
 
   useEffect(() => {
     refreshEmployee();  
@@ -123,7 +127,7 @@ export default function Employee() {
         refreshEmployee={refreshEmployee} 
       />
 
-      <EmployeeTab />
+      <EmployeeTab refreshKey={refreshKey} /> {/* Pass refreshEmployee */}
     </>
   );
 }
