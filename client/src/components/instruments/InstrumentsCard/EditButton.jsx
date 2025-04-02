@@ -51,44 +51,40 @@ export default function EditButton({ instrumentId, currentOwner, onReturn }) {
         title="Edit Instrument"
         okText="Edit"
         cancelText="Cancel"
-        okButtonProps={{ autoFocus: true, htmlType: "submit" }}
         onCancel={() => setOpen(false)}
+        onOk={() => form.submit()} // manually trigger submit from modal
         destroyOnClose
-        modalRender={(dom) => (
-          <Form
-            layout="vertical"
-            form={form} // Pass the form instance here
-            name="Update Instrument Modal"
-            onFinish={submitAction}
-          >
-            {dom}
-          </Form>
-        )}
       >
-        <Form.Item
-          name="name"
-          label="Name"
-          rules={[{ required: true }]}
-          initialValue={instrument.name}
+        <Form
+          layout="vertical"
+          form={form}
+          name="Update Instrument Modal"
+          onFinish={submitAction}
         >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="identityNumber"
-          label="Identity Number"
-          rules={[{ required: true }]}
-          initialValue={instrument.identityNumber}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="image"
-          label="Image URL"
-          rules={[{ required: true }]}
-          initialValue={instrument.image}
-        >
-          <Input />
-        </Form.Item>
+          <Form.Item
+            name="name"
+            label="Name"
+            rules={[{ required: true, message: "Please enter instrument name" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name="identityNumber"
+            label="Identity Number"
+            rules={[{ required: true, message: "Please enter identity number" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name="image"
+            label="Image URL"
+            rules={[{ required: true, message: "Please enter image URL" }]}
+          >
+            <Input />
+          </Form.Item>
+        </Form>
       </Modal>
     </>
   );
