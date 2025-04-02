@@ -165,5 +165,3 @@ export const useSetEmployeeFree = (employeeId) => {
     return { setEmployeeFree };
 };
 
-//setInstrumentToEmployee
-//returnInstrumentFromEmployee

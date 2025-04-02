@@ -3,6 +3,8 @@ import { useContext } from 'react';
 const baseUrl = 'http://localhost:3030/data/instruments';
 
 import { UserContext } from '../contexts/userContext.js';
+import { useEmployee } from './employeesApi.js'; // Import the useEmployee hook
+import { useUpdateEmployee } from './employeesApi.js'; // Import the useUpdateEmployee hook
 
 export const useInstruments = () => {
     const { accessToken } = useContext(UserContext);
@@ -101,37 +103,49 @@ export const useDeleteInstrument = () => {
 };
 
 //getFreeInstruments
-export const useGetFreeInstruments = async () => {
-    const response = await this.instruments();
-    const freeInstruments = response.filter(i => i.currentOwner === "");
+export const useGetFreeInstruments = () => {
+    const { instruments } = useInstruments();
 
-    return { freeInstruments }; // Return the filtered data
+    const freeInstruments = async () => {
+        try {
+            const response = await instruments(); // Fetch all instruments        
+            const data = await response.json();
+            return data.filter((i) => i.currentOwner === ""); // Filter instruments by employeeId
+        } catch (error) {
+            console.error("Error fetching instruments by employee ID:", error);
+            return [];
+        }
+    };
+
+    return { freeInstruments };
+    
 };
 
 //getOccupiedInstruments
-export const useGetOccupiedInstruments = async () => {
-    const response = await this.instruments();
-    const occupiedInstruments = response.filter(i => i.currentOwner !== "");
+export const useGetOccupiedInstruments = () => {
+    const { instruments } = useInstruments();
 
-    return { occupiedInstruments }; // Return the filtered data
+    const occupiedInstruments = async () => {
+        try {
+            const response = await instruments(); // Fetch all instruments        
+            const data = await response.json();
+            return data.filter((i) => i.currentOwner !== ""); // Filter instruments by employeeId
+        } catch (error) {
+            console.error("Error fetching instruments by employee ID:", error);
+            return [];
+        }
+    };
+
+    return { occupiedInstruments };
 }
 
 //getInstrumentsByEmployeeId
 export const useGetInstrumentsByEmployeeId = () => {
-    const { accessToken } = useContext(UserContext);
+    const { instruments } = useInstruments();
 
     const getInstrumentsByEmployeeId = async (employeeId) => {
         try {
-            const response = await fetch(baseUrl, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Authorization': accessToken,
-                },
-            });
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+            const response = await instruments(); // Fetch all instruments        
             const data = await response.json();
             return data.filter((i) => i.currentOwner === employeeId); // Filter instruments by employeeId
         } catch (error) {
@@ -141,4 +155,48 @@ export const useGetInstrumentsByEmployeeId = () => {
     };
 
     return { getInstrumentsByEmployeeId };
+};
+
+
+
+//setInstrumentToEmployee
+export const useSetInstrumentToEmployee = (employeeId, instrumentId) => {
+    const { employee: currentEmployee } = useEmployee();
+    const { instrument: currentInstrument } = useInstrument();
+    const { updateEmployee } = useUpdateEmployee(employeeId);
+    const { updateInstrument } = useUpdateInstrument(instrumentId);
+
+
+    const setInstrumentToEmployee = async () => {
+        const employee = await currentEmployee(employeeId);
+        const instrument = await currentInstrument(instrumentId);
+        instrument.currentOwner = employeeId; // Set the current owner to the employee ID
+        employee.instruments.push(instrumentId); // Add the instrument ID to the employee's instruments array
+
+        await updateInstrument(instrumentId, instrument) // Update the instrument in the database
+        await updateEmployee(employeeId, employee) // Update the employee in the database 
+    }
+
+    return { setInstrumentToEmployee };
+};
+
+//returnInstrumentFromEmployee
+export const useReturnInstrumentFromEmployee = (employeeId, instrumentId) => {
+    const { employee: currentEmployee } = useEmployee();
+    const { instrument: currentInstrument } = useInstrument();
+    const { updateEmployee } = useUpdateEmployee(employeeId);
+    const { updateInstrument } = useUpdateInstrument(instrumentId);
+
+
+    const returnInstrumentFromEmployee = async () => {
+        const employee = await currentEmployee(employeeId);
+        const instrument = await currentInstrument(instrumentId);
+        instrument.currentOwner = ""; // Set the current owner to the employee ID
+        employee.instruments = employee.instruments.filter(i => i !== instrumentId); // Remove the instrument ID from the employee's instruments array
+
+        await updateInstrument(instrumentId, instrument) // Update the instrument in the database
+        await updateEmployee(employeeId, employee) // Update the employee in the database 
+    }
+
+    return { returnInstrumentFromEmployee };
 };

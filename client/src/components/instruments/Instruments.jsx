@@ -5,11 +5,11 @@ import { Col, Row } from 'antd';
 import InstrumentCard from './InstrumentsCard/InstrumentCard';
 import InstrumentsMenu from './InstrumentsMenu/InstrumentsMenu';
 
-import EmployeeService from '../../services/employeeService';
-
 import { UserContext } from "../contexts/userContext";
-import { useInstruments } from '../api/instrumentsApi';
 import { useEmployees } from '../api/employeesApi';
+import { useInstruments } from '../api/instrumentsApi'; // Custom hook to fetch instruments
+import { useGetFreeInstruments } from '../api/instrumentsApi';
+import { useGetOccupiedInstruments } from '../api/instrumentsApi'; // Custom hook to fetch occupied instruments
 
 export default function Instruments() {
   const [instrument, setInstrument] = useState([]);
@@ -19,8 +19,9 @@ export default function Instruments() {
   const { _id } = useContext(UserContext); // Get user ID from context
 
   const { instruments: allInstruments } = useInstruments(); // Custom hook to fetch instruments
-  const { useFreeInstruments } = useInstruments(); // Custom hook to fetch free instruments
-  const { useOccupiedInstruments } = useInstruments(); // Custom hook to fetch occupied instruments
+  const { freeInstruments } = useGetFreeInstruments(); // Custom hook to fetch free instruments
+  const { occupiedInstruments } = useGetOccupiedInstruments(); // Custom hook to fetch occupied instruments
+  const { employees: fetchEmployees } = useEmployees(); // Custom hook to fetch employee details
 
   const refreshInstruments = async () => { // Mark function as async
     if (isShowingFree) {
@@ -37,8 +38,8 @@ export default function Instruments() {
     }
   };
 
-  const fetchAllEmployees = () => {
-    EmployeeService.getAll()
+  const fetchAllEmployees = async () => {
+    await fetchEmployees()
       .then((response) => {
         if (response && Array.isArray(response)) {
           const employeesMap = response.reduce((acc, employee) => {
@@ -69,13 +70,13 @@ export default function Instruments() {
   }, []);
 
   const loadFreeInstruments = async () => {
-    const data = await useFreeInstruments(); // Fetch free instruments
+    const data = await freeInstruments(); // Fetch free instruments
     processAndSetInstruments(data); // Process and set the state with free instruments
     
   }
 
   const loadOccupiedInstruments = async () => {
-    const data = await useOccupiedInstruments(); // Fetch occupied instruments
+    const data = await occupiedInstruments(); // Fetch occupied instruments
     processAndSetInstruments(data); // Process and set the state with occupied instruments    
   }  
 
