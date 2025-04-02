@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 
-import { Col, Row } from "antd";
+import { Flex } from "antd";
 
 import ProjectCard from "./ProjectCard";
 import ProjectsMenu from "./PeojectsMenu/ProjectsMenu";
@@ -103,13 +103,11 @@ export default function Projects() {
           No projects yet!
         </div>
       ) : (
-        <Row gutter={24} justify="center" style={{ height: "auto" }}>
-          {projects.map((project) => (
-            <Col key={project._id} span={6}>
-              <ProjectCard project={project} />
-            </Col>
-          ))}
-        </Row>
+        <Flex wrap gap="small" justify="center" style={{ height: 'auto' }}>
+        {Array.from(projects.map((project) => (
+              <ProjectCard project={project} key={project._id} />            
+        )))}
+      </Flex>
       )}
     </>
   );

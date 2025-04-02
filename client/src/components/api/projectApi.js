@@ -3,6 +3,7 @@ import { useContext } from 'react';
 const baseUrl = 'http://localhost:3030/data/projects';
 
 import { UserContext } from '../contexts/userContext.js';
+import { useEmployees } from './employeesApi.js'; // Import the useEmployee hook
 
 export const useProjects = () => {
     const projects = async () => {
@@ -127,3 +128,35 @@ export const useFutureProjects = () => {
 
     return { futureProjects };
 };
+
+export const useEmployeesCurrentlyOnProject = () => {
+    const { project } = useProject(); // Use the project function from useProject
+    const { employees } = useEmployees(); // Use the employees function from useEmployees
+
+    const employeesCurrentlyOnProject = async (projectId) => {
+        const projectData = await project(projectId); // Get project data
+        const allEmployees = await employees(); // Get all employees
+        return allEmployees.filter(employee => employee.currentProject === projectData._id); // Filter employees on the project
+    }
+
+    return { employeesCurrentlyOnProject };
+};
+
+export const useEmployeesPreviouslyOnProject = () => {
+    const { project } = useProject(); // Use the project function from useProject
+    const { employees } = useEmployees(); // Use the employees function from useEmployees
+
+    const employeesPreviouslyOnProject = async (projectId) => {
+        const projectData = await project(projectId); // Get project data
+        const allEmployees = await employees(); // Get all employees
+        return allEmployees.filter(
+            (employee) =>
+              Array.isArray(employee.previousProjects) &&
+              employee.previousProjects.includes(projectData._id)
+          );
+          
+    }
+
+    return { employeesPreviouslyOnProject };
+};
+

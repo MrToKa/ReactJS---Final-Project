@@ -5,8 +5,10 @@ import { useNavigate } from "react-router";
 import { SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Table } from "antd";
 
+import { useEmployeesCurrentlyOnProject, useEmployeesPreviouslyOnProject  } from "../../api/projectApi";
+
 import TablePagination from "../../common/TablePagination";
-import EmployeeService from "../../../services/employeeService";
+import FOUCShield from "../../common/FOUCShield";
 
 export default function ProjectEmployeesTable({ project }) { // Destructure project
   const { _id: id, status: projectStatus } = project; // Extract name and status
@@ -16,15 +18,22 @@ export default function ProjectEmployeesTable({ project }) { // Destructure proj
   const [searchedColumn, setSearchedColumn] = useState("");
   const [currentPage, setCurrentPage] = useState(1); // Track current page
   const [pageSize, setPageSize] = useState(2); // Track page size
+  const [loading, setLoading] = useState(true); // Loading state
+
+  const { employeesCurrentlyOnProject } = useEmployeesCurrentlyOnProject(); // Fetch employees currently on project
+  const { employeesPreviouslyOnProject } = useEmployeesPreviouslyOnProject(); // Fetch employees previously on project
 
   const navigate = useNavigate(); // Initialize navigate function
 
   const employeeData = async () => {
+    setLoading(true); // Start loading
     let data = [];
     if (projectStatus === "ongoing") {
-      data = await EmployeeService.getEmployeesByProjectId(id);
+      data = await employeesCurrentlyOnProject(id);
+      console.log("Fetching employees currently on project:", id); // Debugging log
     } else if (projectStatus === "completed") {
-      data = await EmployeeService.getEmployeesWereOnProject(id);
+      console.log("Fetching employees previously on project:", id); // Debugging log
+      data = await employeesPreviouslyOnProject(id);
     }
     const employeesWithKeys = data.map((employee) => ({
       ...employee,
@@ -33,6 +42,7 @@ export default function ProjectEmployeesTable({ project }) { // Destructure proj
     setEmployees(employeesWithKeys);
     setCurrentPage(1); // Reset to the first page
     setPaginatedData(employeesWithKeys.slice(0, pageSize)); // Update paginated data for the first page
+    setLoading(false); // End loading
   };
 
   useEffect(() => {
@@ -194,6 +204,17 @@ export default function ProjectEmployeesTable({ project }) { // Destructure proj
         width: "33%",
     },
   ];
+
+  if (loading) {
+    return <FOUCShield message="Loading employees..." />; // Show loading shield while fetching data
+  }
+  if (employees.length === 0) {
+    return (
+      <div style={{ textAlign: "center", marginTop: "20px", fontSize: "4 rem" }}>
+        No employees yet!
+      </div>
+    );
+  }
 
   return (
     <>

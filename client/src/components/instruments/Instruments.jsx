@@ -1,11 +1,11 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 
-import { Col, Row, Flex } from 'antd';
+import { Flex, Spin } from 'antd';
 
 import InstrumentCard from './InstrumentsCard/InstrumentCard';
 import InstrumentsMenu from './InstrumentsMenu/InstrumentsMenu';
+import FOUCShield from "../common/FOUCShield";
 
-import { UserContext } from "../contexts/userContext";
 import { useEmployees } from '../api/employeesApi';
 import { useInstruments } from '../api/instrumentsApi'; // Custom hook to fetch instruments
 import { useGetFreeInstruments } from '../api/instrumentsApi';
@@ -16,7 +16,7 @@ export default function Instruments() {
   const [owners, setOwners] = useState({});
   const [isShowingFree, setIsShowingFree] = useState(false); // Lifted state for free instruments
   const [isShowingOccupied, setIsShowingOccupied] = useState(false); // Lifted state for occupied instruments
-  const { _id } = useContext(UserContext); // Get user ID from context
+  const [loading, setLoading] = useState(true); // Loading state
 
   const { instruments: allInstruments } = useInstruments(); // Custom hook to fetch instruments
   const { freeInstruments } = useGetFreeInstruments(); // Custom hook to fetch free instruments
@@ -24,10 +24,11 @@ export default function Instruments() {
   const { employees: fetchEmployees } = useEmployees(); // Custom hook to fetch employee details
 
   const refreshInstruments = async () => { // Mark function as async
+    setLoading(true);
     if (isShowingFree) {
-      loadFreeInstruments(); // Reload free instruments if the "Show Free" filter is active
+      await loadFreeInstruments(); // Reload free instruments if the "Show Free" filter is active
     } else if (isShowingOccupied) {
-      loadOccupiedInstruments(); // Reload occupied instruments if the "Show Occupied" filter is active
+      await loadOccupiedInstruments(); // Reload occupied instruments if the "Show Occupied" filter is active
     } else {
       try {
         const data = await allInstruments(); // Await the Promise to resolve
@@ -36,6 +37,7 @@ export default function Instruments() {
         console.error("Error fetching all instruments:", error); // Error handling
       }
     }
+    setLoading(false);
   };
 
   const fetchAllEmployees = async () => {
@@ -70,18 +72,25 @@ export default function Instruments() {
   }, []);
 
   const loadFreeInstruments = async () => {
+    setLoading(true);
     const data = await freeInstruments(); // Fetch free instruments
     processAndSetInstruments(data); // Process and set the state with free instruments
-
+    setLoading(false);
   }
 
   const loadOccupiedInstruments = async () => {
+    setLoading(true);
     const data = await occupiedInstruments(); // Fetch occupied instruments
     processAndSetInstruments(data); // Process and set the state with occupied instruments    
+    setLoading(false);
+  }
+
+  if (loading) {
+    return <FOUCShield message="Loading instruments..." />; // Show loading shield while fetching data
   }
 
   return (
-    <>
+    <>      
       <InstrumentsMenu
         refreshInstruments={refreshInstruments}
         isShowingFree={isShowingFree} // Pass state for free instruments

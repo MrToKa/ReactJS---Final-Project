@@ -118,17 +118,6 @@ export const useEmployeesOnProjects = () => {
     return { fetchEmployeesOnProjects }; // Return the function
 };
 
-export const useEmployeesByProjectId = () => {
-    const { employees } = useEmployees();
-
-    const employeesByProjectId = async (projectId) => {
-        const data = await employees(); // Fetch all employees
-        return data.filter(e => e.currentProject === projectId); // Filter employees by projectId
-        };    
-
-    return { employeesByProjectId };
-};
-
 export const useEmployeeProjectHistory = () => {
     const { employees } = useEmployees();
   
@@ -143,8 +132,7 @@ export const useEmployeeProjectHistory = () => {
     };
   
     return { getProjectsByEmployeeId };
-  };
-  
+};  
 
 export const useSetEmployeeOnProject = () => {
     const { employee: currentEmployee } = useEmployee();

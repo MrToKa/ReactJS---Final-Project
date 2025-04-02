@@ -79,21 +79,25 @@ export default function Employees() {
   };
 
   const toggleFreeEmployees = () => {
+    setLoading(true); // Start loading
     if (isShowingFree) {
       reloadEmployees(); // Load all employees
     } else {
       loadFreeEmployees(); // Load free employees
     }
     setIsShowingFree(!isShowingFree); // Toggle state
+    setLoading(false); // Stop loading
   };
 
   const toggleEmployeesOnProjects = () => {
+    setLoading(true); // Start loading
     if (isShowingOnProjects) {
       reloadEmployees(); // Load all employees
     } else {
       loadEmployeesOnProjects(); // Load employees on projects
     }
     setIsShowingOnProjects(!isShowingOnProjects); // Toggle state
+    setLoading(false); // Stop loading
   };
 
   useEffect(() => {
@@ -290,7 +294,7 @@ export default function Employees() {
             <>
               <Table
                 bordered
-                loading={!employees.length} // Show loading state if data is being fetched
+                loading={loading} // Show loading state if data is being fetched
                 columns={columns}
                 dataSource={paginatedData}
                 pagination={false}

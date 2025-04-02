@@ -2,8 +2,10 @@ import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router";
 
 import { Card, Flex, Typography } from "antd";
+
 import EmployeeTab from "./EmployeeDetailsTabs";
 import EmployeeDetailsMenu from "../EmployeeDetails/EmployeeDetailsMenu/EmployeeDetailsMenu";
+import FOUCShield from "../../common/FOUCShield";
 
 import { useEmployee } from "../../api/employeesApi"; // Import the custom hook
 import { useProject } from "../../api/projectApi";
@@ -19,6 +21,7 @@ const imgStyle = {
 export default function Employee() {
   const [employee, setEmployee] = useState({});
   const [currProject, setCurrProject] = useState("");
+  const [loading, setLoading] = useState(true); // Loading state
   
   const { employeeId } = useParams();
   const { employee: fetchEmployee } = useEmployee(); // Fetch employee data and loading state from API
@@ -27,6 +30,7 @@ export default function Employee() {
   const [refreshKey, setRefreshKey] = useState(0);
 
 const refreshEmployee = useCallback(() => {
+  setLoading(true); // Set loading to true before fetching
   fetchEmployee(employeeId).then((data) => {
     if (data) {
       setEmployee(data);
@@ -34,24 +38,28 @@ const refreshEmployee = useCallback(() => {
     } else {
       console.error("Failed to fetch employee data or data is null.");
     }
+    setLoading(false); // Set loading to false after fetching
   });
 }, [employeeId]);
 
   
   useEffect(() => {
     if (employeeId) { // Ensure employeeId is defined
+        setLoading(true); // Set loading to true before fetching
         fetchEmployee(employeeId).then((data) => { // Pass employeeId to fetchEmployee
             if (data) {
                 setEmployee(data);
             } else {
                 console.error("Failed to fetch employee data or data is null.");
             }
+            setLoading(false); // Set loading to false after fetching
         });
     }
   }, [employeeId]); // Add fetchEmployee to dependencies
 
   useEffect(() => {
     if (employee.currentProject) { // Only fetch if currentProject is defined and not empty
+      setLoading(true); // Set loading to true before fetching
       fetchProject(employee.currentProject)
         .then((response) => {
           if (response && response.name) {
@@ -64,6 +72,9 @@ const refreshEmployee = useCallback(() => {
         .catch((error) => {
           console.error("Error fetching project:", error);
           setCurrProject("");
+        })
+        .finally(() => {
+          setLoading(false); // Set loading to false after fetching
         });
     } else if (employee.currentProject === "") {
       setCurrProject("Currently free"); // Handle empty currentProject
@@ -73,6 +84,10 @@ const refreshEmployee = useCallback(() => {
   useEffect(() => {
     refreshEmployee();  
   }, [refreshEmployee]);
+
+  if (loading) {
+    return <FOUCShield message="Loading employee data..." />; // Show loading shield while fetching data
+  }
 
   return (
     <>

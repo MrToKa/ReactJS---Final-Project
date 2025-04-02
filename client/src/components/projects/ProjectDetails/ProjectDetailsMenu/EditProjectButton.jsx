@@ -33,7 +33,7 @@ export default function EditProjectButton({ projectId, refreshProject }) {
 
   const submitAction = async (values) => {
     const data = { ...values, _id: projectId }; // Include the id in the data
-    await update(data); // Pass the project object with _id
+    await update(projectId, data); // Pass the project object with _id
     setOpen(false);
     refreshProject(); // Refresh the project details after updating
   };
