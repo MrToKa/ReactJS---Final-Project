@@ -28,6 +28,7 @@ export const useProjects = () => {
 }
 
 export const useProject = () => {
+    
     const project = async (id) => { // Accept id as a parameter
         const response = await fetch(`${baseUrl}/${id}`, {
             method: 'GET',

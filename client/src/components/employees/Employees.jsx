@@ -30,53 +30,51 @@ export default function Employees() {
 
   const navigate = useNavigate(); // Initialize navigate function
 
-  const processAndSetEmployees = async (data) => {
+  const processAndSetEmployees = async (data, resolveProjectName = false) => {
     const employeesWithKeys = await Promise.all(
       data.map(async (employee) => {
-        let projectName = "Currently free"; // Default value if no project
-        if (employee.currentProject) {
-          const project = await projectData(employee.currentProject);
-          projectName = project?.name; 
-        }
-        return {
+        const updatedEmployee = {
           ...employee,
           key: employee._id,
-          currentProject: projectName, // Replace project ID with project name
         };
+  
+        if (resolveProjectName) {
+          const projectName =
+            employee.currentProject !== ""
+              ? (await projectData(employee.currentProject))?.name ?? "Unknown"
+              : "Currently free";
+  
+          updatedEmployee.currentProject = projectName;
+        }
+  
+        return updatedEmployee;
       })
     );
+  
     setEmployees(employeesWithKeys);
-    setCurrentPage(1); // Reset to the first page
-    setPaginatedData(employeesWithKeys.slice(0, pageSize)); // Update paginated data for the first page
+    setCurrentPage(1);
+    setPaginatedData(employeesWithKeys.slice(0, pageSize));
   };
-
-  const processAndSetPaginatedEmployees = (data) => {
-    data.forEach((employee) => {
-        employee.key = employee._id; // Assign unique key to each employee
-    });
-    setEmployees(data); // Set employees data
-    setCurrentPage(1); // Reset to the first page
-    setPaginatedData(data.slice(0, pageSize)); // Update paginated data for the first page
-  };
+  
 
   const reloadEmployees = async () => {   
     setLoading(true); // Start loading
     const data = await employeesData();
-    processAndSetPaginatedEmployees(data); // Use helper function
+    processAndSetEmployees(data, true); // Use helper function
     setLoading(false); // Stop loading
   };
 
   const loadFreeEmployees = async () => {
     setLoading(true); // Start loading
     const data = await freeEmployees(); // Fetch free employees
-    processAndSetPaginatedEmployees(data); // Use helper function
+    processAndSetEmployees(data); // Use helper function
     setLoading(false); // Stop loading
   };
 
   const loadEmployeesOnProjects = async () => {
     setLoading(true); // Start loading
     const data = await employeesOnProjects(); // Fetch employees on projects
-    processAndSetPaginatedEmployees(data); // Use helper function
+    processAndSetEmployees(data, true); // Use helper function
     setLoading(false); // Stop loading
   };
 

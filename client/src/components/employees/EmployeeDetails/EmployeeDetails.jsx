@@ -148,9 +148,6 @@ export default function Employee() {
             </Typography.Title>
             <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
               <Typography.Text>
-                <strong>E-mail:</strong> {employee.email}
-              </Typography.Text>
-              <Typography.Text>
                 <strong>Job position:</strong> {employee.job}
               </Typography.Text>
               <Typography.Text>

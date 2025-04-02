@@ -12,7 +12,7 @@ export default function CreateEmployeeButton({ reloadEmployees, resetStyles }) {
 
     const submitAction = async (values) => {
         const data = { ...values };
-        data.currentProject = "Currently free"; // Set currentProject to empty string
+        data.currentProject = ""; // Set currentProject to empty string
         data.previousProjects = []; // Initialize previousProjects as an empty array
         data.instruments = []; // Initialize instruments as an empty array
         // await EmployeeService.create(data);
