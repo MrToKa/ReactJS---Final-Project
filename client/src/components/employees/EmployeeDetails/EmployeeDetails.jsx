@@ -7,7 +7,6 @@ import EmployeeDetailsMenu from "../EmployeeDetails/EmployeeDetailsMenu/Employee
 
 import { useEmployee } from "../../api/employeesApi"; // Import the custom hook
 import { useProject } from "../../api/projectApi";
-import { useGetInstrumentsByEmployeeId } from "../../api/instrumentsApi";
 
 const imgStyle = {
   display: "block",
@@ -20,13 +19,10 @@ const imgStyle = {
 export default function Employee() {
   const { employeeId } = useParams();
   const [employee, setEmployee] = useState({});
-  const [projects, setProjects] = useState([]);
   const [currProject, setCurrProject] = useState("");
-  const [instruments, setInstruments] = useState([]);
 
   const { employee: fetchEmployee } = useEmployee(); // Fetch employee data and loading state from API
   const { project: fetchProject } = useProject(); // Fetch project data and loading state from API
-  const { getInstrumentsByEmployeeId } = useGetInstrumentsByEmployeeId(); // Destructure the function
   
   useEffect(() => {
     if (employeeId) { // Ensure employeeId is defined
@@ -41,60 +37,24 @@ export default function Employee() {
   }, [employeeId]); // Add fetchEmployee to dependencies
 
   useEffect(() => {
-    fetchProject(employee.currentProject)
-      .then((response) => {
-        if (response && typeof response === "object") {
-          setCurrProject(response.name);
-        } else {
-          console.error("Invalid response format:", response);
-          setCurrProject("");
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching project:", error);
-        setCurrProject("");
-      });
-  }, [employee.currentProject]);  
-
-  useEffect(() => {
-    if (Array.isArray(employee.previousProjects) && employee.previousProjects.length > 0) {
-      const promises = employee.previousProjects.map((projectId) =>
-        fetchProject(projectId)
-      );
-      Promise.all(promises)
-        .then((responses) => {
-          const validProjects = responses.filter(
-            (response) => response && typeof response === "object"
-          ); // Filter out invalid responses
-          setProjects(validProjects); // Store the full project objects
-        })
-        .catch((error) => {
-          console.error("Error fetching projects:", error);
-          setProjects([]);
-        });
-    } else {
-      setProjects([]);
-    }
-  }, [employee.previousProjects]);
-
- // useEffect to get all the instruments assigned to the employee
-  useEffect(() => {
-    if (employeeId) {
-      getInstrumentsByEmployeeId(employeeId) // Call the function with employeeId
+    if (employee.currentProject) { // Only fetch if currentProject is defined and not empty
+      fetchProject(employee.currentProject)
         .then((response) => {
-          if (Array.isArray(response)) {
-            setInstruments(response);
+          if (response && response.name) {
+            setCurrProject(response.name);
           } else {
             console.error("Invalid response format:", response);
-            setInstruments([]);
+            setCurrProject("");
           }
         })
         .catch((error) => {
-          console.error("Error fetching instruments:", error);
-          setInstruments([]);
+          console.error("Error fetching project:", error);
+          setCurrProject("");
         });
+    } else if (employee.currentProject === "") {
+      setCurrProject("Currently free"); // Handle empty currentProject
     }
-  }, [employeeId]); // Add getInstrumentsByEmployeeId to dependencies    
+  }, [employee.currentProject]); 
 
   const refreshEmployee = useCallback(() => {
     fetchEmployee(employeeId).then((data) => {
@@ -163,7 +123,7 @@ export default function Employee() {
         refreshEmployee={refreshEmployee} 
       />
 
-      <EmployeeTab projects={projects} instruments={instruments} />
+      <EmployeeTab />
     </>
   );
 }

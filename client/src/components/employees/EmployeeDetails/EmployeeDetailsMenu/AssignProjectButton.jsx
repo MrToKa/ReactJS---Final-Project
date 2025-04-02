@@ -5,8 +5,6 @@ import { GlobalOutlined } from "@ant-design/icons";
 import { useOngoingProjects } from "../../../api/projectApi";
 import { useSetEmployeeOnProject } from "../../../api/employeesApi";
 
-
-
 export default function AssignProjectButton({ employeeId, refreshEmployee }) {
     const [projectsList, setProjectsList] = useState([]);
     const [selectedProject, setSelectedProject] = useState("");

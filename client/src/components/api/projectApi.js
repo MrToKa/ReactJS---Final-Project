@@ -29,7 +29,7 @@ export const useProjects = () => {
 
 export const useProject = () => {
 
-    const project = async (id) => { // Accept id as a parameter
+    const project = async (id) => {
         const response = await fetch(`${baseUrl}/${id}`, {
             method: 'GET',
             headers: { 
