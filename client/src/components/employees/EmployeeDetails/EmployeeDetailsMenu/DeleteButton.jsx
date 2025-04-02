@@ -4,24 +4,27 @@ import { useNavigate } from "react-router";
 import { Button, Modal, Typography } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
-import EmployeeService from '../../../../services/employeeService';
-import InstrumentService from "../../../../services/instrumentService";
-
+import { useInstruments, useUpdateInstrument } from "../../../api/instrumentsApi";
+import { useDeleteEmployee } from "../../../api/employeesApi";
 
 export default function DeleteButton({ employeeId }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
 
+    const { instruments: fetchInstruments } = useInstruments(); // Fetch all instruments
+    const { update: updateInstrument } = useUpdateInstrument(); // Fetch all instruments
+    const { deleteEmployee } = useDeleteEmployee(); // Fetch all instruments
+
     const handleDelete = async () => {
         try {            
-            const instruments = await InstrumentService.getAll();
+            const instruments = await fetchInstruments();
             const instrumentPromises = instruments.map(async (instrument) => {
                 if (instrument.currentOwner === employeeId) {
                     instrument.currentOwner = "";
 
                     if (instrument._id) { // Ensure the instrument has a valid id
                         try {
-                            await InstrumentService.update(instrument._id, instrument);
+                            await updateInstrument(instrument._id, instrument);
                         } catch (error) {
                             console.error(`Failed to update instrument with id ${instrument._id}:`, error);
                         }
@@ -32,7 +35,7 @@ export default function DeleteButton({ employeeId }) {
             });
             await Promise.all(instrumentPromises);
             // Delete the employee
-            await EmployeeService.delete(employeeId);
+            await deleteEmployee(employeeId);
             setIsModalOpen(false);
             navigate("/employees");
         } catch (error) {

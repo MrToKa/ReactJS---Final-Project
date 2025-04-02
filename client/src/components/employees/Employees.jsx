@@ -7,11 +7,10 @@ import { Button, Input, Space, Table } from "antd";
 
 import TablePagination from "../common/TablePagination";
 import EmployeesMenu from "./EmployeesMenu/EmployeesMenu"; // Import EmployeesMenu
-import ProjectService from "../../services/projectService";
-
 import FOUCShield from "../common/FOUCShield";
 
 import { useEmployees, useEmployeesOnProjects, useFreeEmployees } from "../api/employeesApi";
+import { useProject } from "../api/projectApi"; // Import useProjects hook
 
 export default function Employees() {
   const [isShowingFree, setIsShowingFree] = useState(false); // Track free employees state
@@ -25,6 +24,7 @@ export default function Employees() {
   const [loading, setLoading] = useState(true); // Track loading state
   
   const { employees: employeesData } = useEmployees(); // Fetch employees data and loading state from API
+  const { project: projectData } = useProject(); // Fetch project data from API
   const { freeEmployees } = useFreeEmployees // Fetch free employees data from API
   const { employeesOnProjects } = useEmployeesOnProjects // Fetch employees on projects data from API
 
@@ -35,7 +35,7 @@ export default function Employees() {
       data.map(async (employee) => {
         let projectName = "Currently free"; // Default value if no project
         if (employee.currentProject) {
-          const project = await ProjectService.getById(employee.currentProject);
+          const project = await projectData(employee.currentProject);
           projectName = project?.name; 
         }
         return {

@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { Button, Form, Input, Modal } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
-import EmployeeService from "../../../services/employeeService";
+
 import { useCreateEmployee } from "../../api/employeesApi";
 
 export default function CreateEmployeeButton({ reloadEmployees, resetStyles }) {
@@ -12,9 +12,7 @@ export default function CreateEmployeeButton({ reloadEmployees, resetStyles }) {
 
     const submitAction = async (values) => {
         const data = { ...values };
-        data.currentProject = ""; // Set currentProject to empty string
-        data.email = data.firstName + "." + data.lastName + "@example.com"; // Generate email from first and last name
-        data.password = data.firstName + data.lastName; // Generate password from first and last name
+        data.currentProject = "Currently free"; // Set currentProject to empty string
         data.previousProjects = []; // Initialize previousProjects as an empty array
         data.instruments = []; // Initialize instruments as an empty array
         // await EmployeeService.create(data);

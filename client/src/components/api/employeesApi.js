@@ -80,10 +80,10 @@ export const useUpdateEmployee = () => { // Remove id from the hook
     return { update };
 }
 
-export const useDeleteEmployee = (id) => {
+export const useDeleteEmployee = () => {
     const { accessToken } = useContext(UserContext);
 
-    const deleteEmployee = async () => {
+    const deleteEmployee = async (id) => {
         await fetch(`${baseUrl}/${id}`, {
             method: 'DELETE',
             headers: { 

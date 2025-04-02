@@ -7,12 +7,14 @@ export default function EmployeesOnProjectsButton({ isOnProjectActive, setIsOnPr
     const { employees: fetchEmployees } = useEmployees(); // Use the refactored function
 
     const toggleEmployeesOnProjects = async () => {
-        const employees = isOnProjectActive
-            ? await fetchEmployees() // Load all employees
-            : await fetchEmployeesOnProjects(); // Call the function to load employees on projects
-
-        processAndSetEmployees(employees); // Update full list of employees
-        setIsOnProjectActive(!isOnProjectActive); // Toggle state
+        if (isOnProjectActive) {
+            const allEmployees = await fetchEmployees(); // Fetch all employees
+            processAndSetEmployees(allEmployees); // Process and set all employees
+        } else {
+            const employeesOnProjects = await fetchEmployeesOnProjects(); // Fetch employees on projects
+            processAndSetEmployees(employeesOnProjects); // Process and set employees on projects
+        }
+        setIsOnProjectActive(!isOnProjectActive); // Toggle the state
     };
 
     return (
