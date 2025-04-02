@@ -4,8 +4,8 @@ import { useNavigate } from "react-router";
 import { Button, Form, Input, Flex, Typography, message } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 
-import { UserContext } from "../contexts/userContext";
-import { useLogin } from "../api/authApi";
+import { UserContext } from "../../contexts/userContext";
+import { useLogin } from "../../api/authApi";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -30,8 +30,7 @@ export default function Login() {
       userLoginHandler(data);
       navigate("/");
     } catch (error) {
-      console.log(error);
-      errorMessage();
+      errorMessage(error);
     } finally {
       setIsPending(false);
       form.resetFields();

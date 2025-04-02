@@ -11,8 +11,9 @@ import EmployeeDetails from "../employees/EmployeeDetails/EmployeeDetails";
 import Instruments from "../instruments/Instruments";
 import MainMenu from "./MainMenu";
 import AuthMenu from "./AuthenticationMenu";
-import Login from "../login/Login";
-import Logout from "../logout/Logout";
+import Login from "../account/login/Login";
+import Logout from "../account/logout/Logout";
+import Create from "../account/create/Create";
 import NotFound from "../404";
 
 const { Header, Footer, Content } = Layout;
@@ -60,6 +61,7 @@ export default function AppLayout() {
                 <Route path="/instruments" element={<Instruments />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/logout" element={<Logout />} />
+                <Route path="/create" element={<Create />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
