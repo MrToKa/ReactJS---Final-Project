@@ -30,15 +30,27 @@
 
 ### 2. Logged-in User
 
-- The logged-in user is redirected to the **Home** page by default.
+- By logging-in the user is redirected to the **Home** page.
 - The **Home** page provides information about the user's rights across the system.
 
 #### Projects Page
 
 - Displays a menu with four buttons:
-  1. **Create Project**: Opens an input form to fill in the required data and create a new project.
+  1. **Create Project**: Opens an input form to fill in the required data and creates a new project.
+  2. Other buttons are for quick filtration of the displayed projects.
+
+#### Project details page
+
+- Displays the Project information
+  - Picture of the project
+  - Name
+  - Location
+  - Status of the projects
+  - Start date
+  - End date
+- If the user is an owner of the Project, he can see a menu buttons:
   2. **Edit** or **Delete**: The user can only edit or delete their own projects.
-  3. Changing the project status from **Ongoing** to **Completed**:
+  3. In **Edit** form changing the project status from **Ongoing** to **Completed**:
      - Frees all employees assigned to the project.
      - Adds the project to the employees' experience table.
 
@@ -47,15 +59,15 @@
 - Displays a table of all employees working on projects.
 - Includes a menu with buttons for:
   - Creating a new employee.
-  - Filtering the employee table.
-- The table supports additional filtration.
+  - Filtering the employees table.
+- The table supports additional own filtration.
 - Clicking on a row redirects the user to the **Details Page** of the employee:
   - Displays short information and a picture of the employee.
   - Includes a menu with three buttons for managing the employee:
     - Employees can only be assigned to **Ongoing** projects via the **Assign to Project** button.
   - Below the menu:
-    - A table shows the employee's previous projects for better knowledge of their experience.
-    - A tab displays the instruments assigned to the employee.
+    - A tab with table shows the employee's previous projects for better knowledge of their experience.
+    - Another tab displays a table with the instruments assigned to the employee.
     - Instruments can be returned to the warehouse by clicking the link in the **Action** column.
 
 #### Instruments Page
@@ -88,6 +100,6 @@
 
 ### Important Note
 
-Please be aware that changes to the data will not be persisted. All operations are performed in memory and will be lost when the service is restarted.
+Please be aware that changes to the data will not be persisted. All operations are performed in memory and will be lost when the service is restarted. All the tables pagination is set to two rows for quick showing of the functionality.
 
-**Note:** The described functionality is valid as of **02-Apr-2025 21:00 EET**.
+**Note:** The described functionality is valid as of **02-Apr-2025 23:00 EET**.
