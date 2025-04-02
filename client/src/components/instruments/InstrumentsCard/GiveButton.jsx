@@ -1,7 +1,8 @@
 import { Button, Modal, Radio, message } from "antd";
 import { useState } from "react";
 
-import EmployeeService from "../../../services/employeeService";
+import { useEmployees } from "../../api/employeesApi";
+import { useSetInstrumentToEmployee } from "../../api/instrumentsApi";
 
 const style = {
   display: "flex",
@@ -14,6 +15,8 @@ export default function GiveButton({ instrument, onReturn }) {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [value, setValue] = useState(null);
+  const { employees } = useEmployees(); // Custom hook to fetch employee details
+  const { setInstrumentToEmployee } = useSetInstrumentToEmployee(); // Custom hook to set instrument to employee
 
   const onChange = (e) => {
     setValue(e.target.value);
@@ -22,7 +25,7 @@ export default function GiveButton({ instrument, onReturn }) {
 
   const showModal = () => {
     setIsModalOpen(true);
-    EmployeeService.getAll()
+    employees()
       .then((response) => {
         if (response && Array.isArray(response)) {
           setEmployeesList(response);
@@ -39,12 +42,10 @@ export default function GiveButton({ instrument, onReturn }) {
 
   const handleOk = () => {
     if (selectedEmployee) {
-      EmployeeService.setInstrumentToEmployee(
-        selectedEmployee,
-        instrument._id
-      ).then(() => {
-        onReturn(); // Refresh the filtered list
-      });
+      setInstrumentToEmployee(selectedEmployee, instrument._id) // Pass arguments dynamically
+        .then(() => {
+          onReturn(); // Refresh the filtered list
+        });
       setEmployeesList([]);
       setIsModalOpen(false);
     } else {

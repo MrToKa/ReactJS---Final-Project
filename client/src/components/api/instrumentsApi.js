@@ -160,37 +160,37 @@ export const useGetInstrumentsByEmployeeId = () => {
 
 
 //setInstrumentToEmployee
-export const useSetInstrumentToEmployee = (employeeId, instrumentId) => {
+export const useSetInstrumentToEmployee = () => {
     const { employee: currentEmployee } = useEmployee();
     const { instrument: currentInstrument } = useInstrument();
-    const { updateEmployee } = useUpdateEmployee(employeeId);
-    const { updateInstrument } = useUpdateInstrument(instrumentId);
+    const { update: updateEmployee } = useUpdateEmployee();
+    const { update: updateInstrument } = useUpdateInstrument();
 
-
-    const setInstrumentToEmployee = async () => {
+    const setInstrumentToEmployee = async (employeeId, instrumentId) => {
         const employee = await currentEmployee(employeeId);
         const instrument = await currentInstrument(instrumentId);
+
         instrument.currentOwner = employeeId; // Set the current owner to the employee ID
         employee.instruments.push(instrumentId); // Add the instrument ID to the employee's instruments array
 
-        await updateInstrument(instrumentId, instrument) // Update the instrument in the database
-        await updateEmployee(employeeId, employee) // Update the employee in the database 
-    }
+        await updateInstrument(instrumentId, instrument); // Update the instrument in the database
+        await updateEmployee(employeeId, employee); // Update the employee in the database
+    };
 
     return { setInstrumentToEmployee };
 };
 
 //returnInstrumentFromEmployee
-export const useReturnInstrumentFromEmployee = (employeeId, instrumentId) => {
+export const useReturnInstrumentFromEmployee = () => {
     const { employee: currentEmployee } = useEmployee();
     const { instrument: currentInstrument } = useInstrument();
-    const { updateEmployee } = useUpdateEmployee(employeeId);
-    const { updateInstrument } = useUpdateInstrument(instrumentId);
+    const { update: updateEmployee } = useUpdateEmployee();
+    const { update: updateInstrument } = useUpdateInstrument();
 
-
-    const returnInstrumentFromEmployee = async () => {
+    const returnInstrumentFromEmployee = async (employeeId, instrumentId) => {
         const employee = await currentEmployee(employeeId);
         const instrument = await currentInstrument(instrumentId);
+
         instrument.currentOwner = ""; // Set the current owner to the employee ID
         employee.instruments = employee.instruments.filter(i => i !== instrumentId); // Remove the instrument ID from the employee's instruments array
 

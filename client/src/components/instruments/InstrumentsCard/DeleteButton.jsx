@@ -14,13 +14,14 @@ const { returnInstrumentFromEmployee } = useReturnInstrumentFromEmployee();
 
 const showConfirm = (instrument, onDelete) => {
   confirm({
-    title: "Do you want to delete this instrument?",
+    title: `Do you want to delete this instrument? ${instrument._id} `,    
     icon: <ExclamationCircleFilled />,
     onOk() {
-      returnInstrumentFromEmployee(instrument.currentOwner, instrument._id);
-      deleteInstrument(instrument._id).then(() => {
-        onDelete(instrument._id); // Update the state in the parent component
-      });
+      returnInstrumentFromEmployee(instrument.currentOwner, instrument._id).then(() => {
+        return deleteInstrument(instrument._id);
+      }).then(() => {
+        onDelete();
+      });  
     },
     onCancel() {}
   });

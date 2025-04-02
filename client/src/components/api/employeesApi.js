@@ -57,19 +57,24 @@ export const useCreateEmployee = () => {
     return { create };
 }
 
-export const useUpdateEmployee = (id) => {
+export const useUpdateEmployee = () => { // Remove id from the hook
     const { accessToken } = useContext(UserContext);
 
-    const update = async (employee) => {
-        const response = await fetch(`${baseUrl}/${id}`, {
+    const update = async (id, employee) => { // Accept id and employee as parameters
+        const response = await fetch(`${baseUrl}/${id}`, { // Use id dynamically
             method: 'PUT',
             headers: { 
                 'Content-Type': 'application/json',
                 'X-Authorization': accessToken,
             },
-            body: JSON.stringify(employee)
+            body: JSON.stringify(employee) // Send employee data to the server
         });
-        return await response.json();
+
+        if (!response.ok) {
+            throw new Error(`Failed to update employee with id ${id}: ${response.statusText}`);
+        }
+
+        return await response.json(); // Return the updated employee data
     };
 
     return { update };
@@ -137,13 +142,13 @@ export const useEmployeesWereOnProject = (projectId) => {
 
 export const useSetEmployeeOnProject = (employeeId, projectId) => {
     const { employee: currentEmployee } = useEmployee();
-    const { update } = useUpdateEmployee(employeeId);
+    const { update } = useUpdateEmployee();
 
     const setEmployeeOnProject = async () => {
         const employee = await currentEmployee(employeeId);
         employee.previousProjects = employee.previousProjects || []; // Ensure previousProjects is an array
 
-        await update({ ...employee, currentProject: projectId });
+        await update(employeeId, { ...employee, currentProject: projectId });
         return employee; // Return the updated employee object
     }
 
@@ -152,13 +157,13 @@ export const useSetEmployeeOnProject = (employeeId, projectId) => {
 
 export const useSetEmployeeFree = (employeeId) => {
     const { employee: currentEmployee } = useEmployee();
-    const { update } = useUpdateEmployee(employeeId);
+    const { update } = useUpdateEmployee();
 
     const setEmployeeFree = async () => {
         const employee = await currentEmployee(employeeId);
         employee.previousProjects = employee.previousProjects || []; // Ensure previousProjects is an array
 
-        await update({ ...employee, currentProject: "" });
+        await update(employeeId, { ...employee, currentProject: "" });
         return employee; // Return the updated employee object
     }
 
