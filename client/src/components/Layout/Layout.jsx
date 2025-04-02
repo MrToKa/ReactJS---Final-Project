@@ -80,7 +80,7 @@ export default function AppLayout() {
             </div>
         </Content>  
         <Footer style={{ textAlign: 'center' }}>
-            <p>© 2025 "Cool Company" Inc. All rights reserved.</p>
+            <p>© 2025 "The Cool Company" Inc. All rights reserved.</p>
             <p>Developed by Todor Chankov for SoftUni ReactJS February 2025 Final Project Defense</p>
             <p>Version 1.0.0</p>
         </Footer>    

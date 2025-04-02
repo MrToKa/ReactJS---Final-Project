@@ -10,9 +10,10 @@ export default function ProjectDetailsMenu({ refreshProject }) {
     return (
         <Card>
             <Flex gap="large" vertical>
-                <Flex wrap gap="large" justify="center"></Flex>
-                <EditProjectButton projectId={projectId} refreshProject={refreshProject} />
-                <DeleteProjectButton projectId={projectId} />
+                <Flex wrap gap="large" justify="center">
+                    <EditProjectButton projectId={projectId} refreshProject={refreshProject} />
+                    <DeleteProjectButton projectId={projectId} />
+                </Flex>
             </Flex>
         </Card>
     );

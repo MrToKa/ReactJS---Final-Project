@@ -8,7 +8,7 @@ import { useUpdateInstrument } from "../../api/instrumentsApi";
 export default function EditButton({ instrumentId, currentOwner, onReturn }) {
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
-  const [instrument, setInstrument] = useState({});
+  const [, setInstrument] = useState({});
 
   const { instrument: fetchInstrument } = useInstrument(); // Custom hook to fetch instrument details
   const { update: updateInstrument } = useUpdateInstrument(); // Custom hook to update instrument details
