@@ -140,13 +140,16 @@ export const useEmployeesWereOnProject = (projectId) => {
     return { employeesWereOnProject };
 };
 
-export const useSetEmployeeOnProject = (employeeId, projectId) => {
+export const useSetEmployeeOnProject = () => {
     const { employee: currentEmployee } = useEmployee();
     const { update } = useUpdateEmployee();
 
-    const setEmployeeOnProject = async () => {
+    const setEmployeeOnProject = async (employeeId, projectId) => {
         const employee = await currentEmployee(employeeId);
         employee.previousProjects = employee.previousProjects || []; // Ensure previousProjects is an array
+        if (employee.previousProjects.includes(projectId)) {
+            employee.previousProjects = employee.previousProjects.filter(id => id !== projectId); // Remove projectId from previousProjects
+        }
 
         await update(employeeId, { ...employee, currentProject: projectId });
         return employee; // Return the updated employee object
@@ -155,11 +158,11 @@ export const useSetEmployeeOnProject = (employeeId, projectId) => {
     return { setEmployeeOnProject };
 };
 
-export const useSetEmployeeFree = (employeeId) => {
+export const useSetEmployeeFree = () => {
     const { employee: currentEmployee } = useEmployee();
     const { update } = useUpdateEmployee();
 
-    const setEmployeeFree = async () => {
+    const setEmployeeFree = async (employeeId) => {
         const employee = await currentEmployee(employeeId);
         employee.previousProjects = employee.previousProjects || []; // Ensure previousProjects is an array
 

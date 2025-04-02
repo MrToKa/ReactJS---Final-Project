@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 
-import { Card, Flex } from "antd";
+import { Flex } from "antd";
 import EditButton from "./EditButton";
 import DeleteButton from "./DeleteButton";
 import AssignProjectButton from "./AssignProjectButton";

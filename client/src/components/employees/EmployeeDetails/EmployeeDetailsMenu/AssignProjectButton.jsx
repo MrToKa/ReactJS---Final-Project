@@ -1,14 +1,20 @@
 import { useState } from "react";
 import { Button, Modal, Radio, message } from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
-import EmployeeService from "../../../../services/employeeService";
-import ProjectService from "../../../../services/projectService";
+
+import { useOngoingProjects } from "../../../api/projectApi";
+import { useSetEmployeeOnProject } from "../../../api/employeesApi";
+
+
 
 export default function AssignProjectButton({ employeeId, refreshEmployee }) {
     const [projectsList, setProjectsList] = useState([]);
     const [selectedProject, setSelectedProject] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [value, setValue] = useState(null);
+
+    const { ongoingProjects } = useOngoingProjects(); // Fetch all ongoing projects
+    const { setEmployeeOnProject } = useSetEmployeeOnProject(); // Fetch all instruments
 
     const onChange = (e) => {
         setValue(e.target.value);
@@ -17,7 +23,7 @@ export default function AssignProjectButton({ employeeId, refreshEmployee }) {
 
     const showModal = () => {
         setIsModalOpen(true);
-        ProjectService.getOngoingProjects()
+        ongoingProjects()
             .then((response) => {
                 if (response && Array.isArray(response)) {
                     setProjectsList(response);
@@ -34,7 +40,7 @@ export default function AssignProjectButton({ employeeId, refreshEmployee }) {
 
     const handleOk = () => {
         if (selectedProject) {
-            EmployeeService.setEmployeeOnProject(employeeId, selectedProject)
+            setEmployeeOnProject(employeeId, selectedProject)
                 .then(() => {
                     setProjectsList([]); // Clear the project list
                     setIsModalOpen(false); // Close the modal
