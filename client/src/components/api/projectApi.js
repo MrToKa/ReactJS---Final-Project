@@ -29,7 +29,6 @@ export const useProjects = () => {
 }
 
 export const useProject = () => {
-
     const project = async (id) => {
         const response = await fetch(`${baseUrl}/${id}`, {
             method: 'GET',
@@ -61,7 +60,7 @@ export const useCreateProject = () => {
     return { create };
 }
 
-export const useUpdateProject = () => { // Removed id parameter
+export const useUpdateProject = () => {
     const { accessToken } = useContext(UserContext);
 
     const update = async (id, project) => { // Use _id from the project object

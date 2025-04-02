@@ -82,7 +82,15 @@ export default function EditButton({ employeeId, refreshEmployee }) {
                 initialValue={employee.lastName}
                 >
                     <Input />
-                </Form.Item>                
+                </Form.Item>
+                <Form.Item
+                name="job"
+                label="Job Title"
+                rules={[{ required: true }]}
+                initialValue={employee.job}
+                >
+                    <Input />
+                </Form.Item>                  
                 <Form.Item
                 name="image"
                 label="Image URL"

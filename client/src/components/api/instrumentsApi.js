@@ -76,6 +76,7 @@ export const useUpdateInstrument = () => {
             headers: { 
                 'Content-Type': 'application/json',
                 'X-Authorization': accessToken,
+                'X-Admin': accessToken, // Add X-Admin header for admin override
             },
             body: JSON.stringify(instrument)
         });
@@ -94,6 +95,7 @@ export const useDeleteInstrument = () => {
             headers: { 
                 'Content-Type': 'application/json',
                 'X-Authorization': accessToken,
+                'X-Admin': accessToken,
             },
         });
         return await response.json();

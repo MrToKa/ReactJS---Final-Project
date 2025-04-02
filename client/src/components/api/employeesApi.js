@@ -66,6 +66,7 @@ export const useUpdateEmployee = () => {
             headers: { 
                 'Content-Type': 'application/json',
                 'X-Authorization': accessToken,
+                'X-Admin': accessToken,
             },
             body: JSON.stringify(employee) // Send employee data to the server
         });
@@ -89,6 +90,7 @@ export const useDeleteEmployee = () => {
             headers: { 
                 'Content-Type': 'application/json',
                 'X-Authorization': accessToken,
+                'X-Admin': accessToken,
             },
         });
     };

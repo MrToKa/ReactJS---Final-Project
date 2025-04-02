@@ -2,15 +2,22 @@ import { useEffect } from "react";
 import { useContext } from "react";
 import { UserContext } from "../contexts/userContext";
 
-import userService from "../../services/userService";
+const baseUrl = 'http://localhost:3030/users';
 
 export const useLogin = () => {
     const login = async (userEmail, password)  => {
-        const result = await userService.login(userEmail, password);
-
-        if (result.error) {
-            throw new Error(result.error);
+        const response = await fetch(`${baseUrl}/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: userEmail, password }),
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+        const result = await response.json();
+
         const { email, username, _id, accessToken } = result;
         const user = { email, username, _id, accessToken };
         const token = accessToken;
@@ -18,12 +25,12 @@ export const useLogin = () => {
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', token);
 
-        return user;
+        return user; // Return the parsed user object
     };
 
     return { 
         login,
-     };
+    };
 };
 
 export const useLogout = () => {
@@ -40,12 +47,17 @@ export const useLogout = () => {
             }
         };
 
-        userService.logout(options)
-            .then(() => {
-                localStorage.removeItem('user');
-                localStorage.removeItem('token');
-                userLogoutHandler();
-            });
+        const logout = async () => {
+            const response = await fetch(`${baseUrl}/logout`, options);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            localStorage.removeItem('user');
+            localStorage.removeItem('token');
+            userLogoutHandler();
+        }
+
+        logout();
 
     }, [accessToken, userLogoutHandler]);
 
@@ -56,11 +68,17 @@ export const useLogout = () => {
 
 export const useRegister = () => {
     const register = async (userEmail, password) => {
-        const result = await userService.register(userEmail, password);
-
-        if (result.error) {
-            throw new Error(result.error);
+        const result = await fetch(`${baseUrl}/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: userEmail, password }),
+        });
+        if (!result.ok) {
+            throw new Error(`HTTP error! status: ${result.status}`);
         }
+
         // Assuming result contains user data
         const { email, username, _id } = result;
         const user = { email, username, _id };
