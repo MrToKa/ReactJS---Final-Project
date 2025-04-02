@@ -1,5 +1,5 @@
-import React from 'react';
-import { Routes, Route } from "react-router";
+import React, { useContext } from 'react';
+import { Routes, Route, Navigate } from "react-router";
 
 import { Layout } from 'antd';
 
@@ -15,6 +15,7 @@ import Login from "../account/login/Login";
 import Logout from "../account/logout/Logout";
 import Create from "../account/create/Create";
 import NotFound from "../404";
+import { UserContext } from "../contexts/userContext";
 
 const { Header, Footer, Content } = Layout;
 
@@ -38,6 +39,12 @@ const authMenuStyle = {
   textAlign: 'right',
 };
 
+// ProtectedRoute component
+function ProtectedRoute({ children }) {
+  const user = useContext(UserContext);
+  return user._id ? children : <Navigate to="/login" />;
+}
+
 export default function AppLayout() {
     return (
         <>
@@ -56,9 +63,9 @@ export default function AppLayout() {
                 <Route path="/" element={<Home />} />
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/projects/:projectId" element={<ProjectDetails />} />
-                <Route path="/employees" element={<Employees />} />
-                <Route path="/employees/:employeeId" element={<EmployeeDetails />} />
-                <Route path="/instruments" element={<Instruments />} />
+                <Route path="/employees" element={<ProtectedRoute><Employees /></ProtectedRoute>} />
+                <Route path="/employees/:employeeId" element={<ProtectedRoute><EmployeeDetails /></ProtectedRoute>} />
+                <Route path="/instruments" element={<ProtectedRoute><Instruments /></ProtectedRoute>} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/logout" element={<Logout />} />
                 <Route path="/create" element={<Create />} />

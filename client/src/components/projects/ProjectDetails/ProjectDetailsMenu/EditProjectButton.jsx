@@ -3,16 +3,18 @@ import { useState, useEffect } from "react";
 import { Button, Form, Input, Modal, Radio } from "antd";
 import { EditOutlined } from "@ant-design/icons";
 
-import { useUpdateProject, useProject } from "../../../api/projectApi"; 
+import { useUpdateProject, useProject } from "../../../api/projectApi";
+import { useSetEmployeeFree, useEmployeesOnProjects } from "../../../api/employeesApi";
 
 export default function EditProjectButton({ projectId, refreshProject }) {
   const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
   const [project, setProject] = useState({});
+  const { setEmployeeFree } = useSetEmployeeFree(); // Use the custom hook to set an employee free
+  const { fetchEmployeesOnProjects: employeesOnProject } = useEmployeesOnProjects(); // Fetch employees on the project using the custom hook
 
   const { update } = useUpdateProject(); // Use the custom hook to update a project
   const { project: fetchProject } = useProject(); // Fetch project data using the custom hook
-
 
   useEffect(() => {
     const fetchProjectData = async () => {
@@ -34,6 +36,19 @@ export default function EditProjectButton({ projectId, refreshProject }) {
   const submitAction = async (values) => {
     const data = { ...values, _id: projectId }; // Include the id in the data
     await update(projectId, data); // Pass the project object with _id
+    const employeesOnCurrentProject = await employeesOnProject(projectId); // Fetch employees on the project
+
+    console.log("Employees on current project:", employeesOnCurrentProject); // Debugging log
+    console.log("Project ID:", projectId); // Debugging log
+
+    if (data.status === "Completed" && employeesOnCurrentProject.length > 0) {
+      console.log("Setting employees free:", employeesOnCurrentProject);
+      for (const employee of employeesOnCurrentProject) {
+        console.log("Employee ID:", employee._id); // Debugging log
+        await setEmployeeFree(employee._id); // Access the _id property of each employee
+      }   
+    }
+
     setOpen(false);
     refreshProject(); // Refresh the project details after updating
   };
@@ -116,9 +131,9 @@ export default function EditProjectButton({ projectId, refreshProject }) {
           initialValue={project.status}
         >
           <Radio.Group>
-            <Radio value="ongoing">Ongoing</Radio>
-            <Radio value="completed">Completed</Radio>
-            <Radio value="future">Future</Radio>
+            <Radio value="Ongoing">Ongoing</Radio>
+            <Radio value="Completed">Completed</Radio>
+            <Radio value="Future">Future</Radio>
           </Radio.Group>
         </Form.Item>
         <Form.Item name="image" label="Image URL" initialValue={project.image}>

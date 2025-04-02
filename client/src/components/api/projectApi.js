@@ -100,7 +100,7 @@ export const useOngoingProjects = () => {
     const { projects } = useProjects(); // Use the projects function from useProjects
     const ongoingProjects = async () => {
         const response = await projects(); // Call the projects function to get all projects
-        return response.filter(project => project.status === 'ongoing'); // Filter ongoing projects
+        return response.filter(project => project.status === 'Ongoing'); // Filter ongoing projects
     };
 
     return { ongoingProjects };
@@ -111,7 +111,7 @@ export const useCompletedProjects = () => {
     const { projects } = useProjects(); // Use the projects function from useProjects
     const completedProjects = async () => {
         const response = await projects(); // Call the projects function to get all projects
-        return response.filter(project => project.status === 'completed'); // Filter completed projects
+        return response.filter(project => project.status === 'Completed'); // Filter completed projects
     };
 
     return { completedProjects };
@@ -122,7 +122,7 @@ export const useFutureProjects = () => {
     const { projects } = useProjects(); // Use the projects function from useProjects
     const futureProjects = async () => {
         const response = await projects(); // Call the projects function to get all projects
-        return response.filter(project => project.status === 'future'); // Filter future projects
+        return response.filter(project => project.status === 'Future'); // Filter future projects
     };
 
     return { futureProjects };

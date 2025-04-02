@@ -28,11 +28,9 @@ export default function ProjectEmployeesTable({ project }) { // Destructure proj
   const employeeData = async () => {
     setLoading(true); // Start loading
     let data = [];
-    if (projectStatus === "ongoing") {
+    if (projectStatus === "Ongoing") {
       data = await employeesCurrentlyOnProject(id);
-      console.log("Fetching employees currently on project:", id); // Debugging log
-    } else if (projectStatus === "completed") {
-      console.log("Fetching employees previously on project:", id); // Debugging log
+    } else if (projectStatus === "Completed") {
       data = await employeesPreviouslyOnProject(id);
     }
     const employeesWithKeys = data.map((employee) => ({
@@ -235,7 +233,7 @@ export default function ProjectEmployeesTable({ project }) { // Destructure proj
         rowClassName="table-row"
         rowKey={(record) => record.key} // Use the unique key for each row
         footer={() =>
-          projectStatus !== "completed" && projectStatus !== "future" ? (
+          projectStatus !== "Completed" && projectStatus !== "Future" ? (
             <div style={{ textAlign: "right", padding: "1px" }}>
               There are currently {employees.length} employees on site
             </div>

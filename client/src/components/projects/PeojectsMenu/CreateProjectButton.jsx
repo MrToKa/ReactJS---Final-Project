@@ -80,9 +80,9 @@ export default function CreateProjectButton({ reloadProjects, resetStyles }) { /
           ]}
         >
           <Radio.Group>
-            <Radio value="ongoing">Ongoing</Radio>
-            <Radio value="completed">Completed</Radio>
-            <Radio value="future">Future</Radio>
+            <Radio value="Ongoing">Ongoing</Radio>
+            <Radio value="Completed">Completed</Radio>
+            <Radio value="Future">Future</Radio>
           </Radio.Group>
         </Form.Item>
         <Form.Item name="image" label="Image URL">

@@ -102,7 +102,7 @@ export default function ProjectDetails() {
         <ProjectDetailsMenu refreshProject={refreshProject} />
       )}
 
-      {user?._id && project.name && project.status !== "future" && (
+      {user?._id && project.name && project.status !== "Future" && (
         <ProjectEmployeesTable project={project} />
       )}
     </>

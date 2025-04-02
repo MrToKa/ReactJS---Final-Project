@@ -15,8 +15,8 @@ export default function ProjectCard({ project }) {
         onLoad={() => setLoading(false)}
             style={{
                 width: 400,
-                height: 405,
-                margin: '20px',
+                height: 435,
+                margin: '10px',
             }}
             cover={
                 <div style={{ width: 398, height: 250, overflow: 'hidden', border: '1px solid #f0f0f0' }}> 
@@ -43,6 +43,8 @@ export default function ProjectCard({ project }) {
                     <span>
                         <AimOutlined style={{ marginRight: 8 }} />
                         {project.location}
+                        <br/>
+                        {project.status}
                     </span>
                 }
             />

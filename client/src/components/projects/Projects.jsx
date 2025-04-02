@@ -103,11 +103,19 @@ export default function Projects() {
           No projects yet!
         </div>
       ) : (
-        <Flex wrap gap="small" justify="center" style={{ height: 'auto' }}>
-        {Array.from(projects.map((project) => (
-              <ProjectCard project={project} key={project._id} />            
-        )))}
-      </Flex>
+        <Flex
+          wrap
+          gap="small"
+          justify="center"
+          style={{
+            height: 445, // Card height (405) + 10
+            padding: "5px 0", // 5px spacing above and below
+          }}
+        >
+          {Array.from(projects.map((project) => (
+            <ProjectCard project={project} key={project._id} />
+          )))}
+        </Flex>
       )}
     </>
   );
