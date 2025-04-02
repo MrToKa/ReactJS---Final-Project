@@ -8,11 +8,14 @@ export default function FreeEmployeesButton({ isFreeActive, setIsFreeActive, res
     const { freeEmployees } = useFreeEmployees(); // Use the refactored function    
     
     const toggleFreeEmployees = async () => {
-        const employees = isFreeActive
-            ? await fetchEmployees() // Load all employees
-            : await freeEmployees(); // Load free employees
-        processAndSetEmployees(employees); // Update full list of employees and recalculate paginated data
-        setIsFreeActive(!isFreeActive); // Toggle state
+        if (isFreeActive) {
+            const allEmployees = await fetchEmployees(); // Fetch all employees
+            processAndSetEmployees(allEmployees, true); // Process and set all employees
+        } else {
+            const freeEmployeesList = await freeEmployees(); // Fetch free employees
+            processAndSetEmployees(freeEmployeesList, true); // Process and set free employees
+        }
+        setIsFreeActive(!isFreeActive); // Toggle the state
     };
     
     return (

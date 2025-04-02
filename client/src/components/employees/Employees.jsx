@@ -67,7 +67,7 @@ export default function Employees() {
   const loadFreeEmployees = async () => {
     setLoading(true); // Start loading
     const data = await freeEmployees(); // Fetch free employees
-    await processAndSetEmployees(data); // Use helper function
+    await processAndSetEmployees(data, true); // Pass true to resolve project name
     setLoading(false); // Stop loading
   };
 

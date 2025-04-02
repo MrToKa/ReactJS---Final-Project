@@ -9,10 +9,10 @@ export default function EmployeesOnProjectsButton({ isOnProjectActive, setIsOnPr
     const toggleEmployeesOnProjects = async () => {
         if (isOnProjectActive) {
             const allEmployees = await fetchEmployees(); // Fetch all employees
-            processAndSetEmployees(allEmployees); // Process and set all employees
+            processAndSetEmployees(allEmployees, true); // Process and set all employees
         } else {
             const employeesOnProjects = await fetchEmployeesOnProjects(); // Fetch employees on projects
-            processAndSetEmployees(employeesOnProjects); // Process and set employees on projects
+            processAndSetEmployees(employeesOnProjects, true); // Process and set employees on projects
         }
         setIsOnProjectActive(!isOnProjectActive); // Toggle the state
     };
