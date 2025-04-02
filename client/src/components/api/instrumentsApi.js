@@ -108,11 +108,10 @@ export const useGetFreeInstruments = () => {
 
     const freeInstruments = async () => {
         try {
-            const response = await instruments(); // Fetch all instruments        
-            const data = await response.json();
+            const data = await instruments(); // Fetch all instruments      
             return data.filter((i) => i.currentOwner === ""); // Filter instruments by employeeId
         } catch (error) {
-            console.error("Error fetching instruments by employee ID:", error);
+            console.error("Error fetching free instruments:", error);
             return [];
         }
     };
@@ -127,11 +126,10 @@ export const useGetOccupiedInstruments = () => {
 
     const occupiedInstruments = async () => {
         try {
-            const response = await instruments(); // Fetch all instruments        
-            const data = await response.json();
+            const data = await instruments(); // Fetch all instruments      
             return data.filter((i) => i.currentOwner !== ""); // Filter instruments by employeeId
         } catch (error) {
-            console.error("Error fetching instruments by employee ID:", error);
+            console.error("Error fetching occupied instruments:", error);
             return [];
         }
     };

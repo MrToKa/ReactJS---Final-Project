@@ -9,10 +9,11 @@ export default function FreeInstrumentsButton({ isFreeActive, setIsFreeActive, r
     const { instruments: allInstruments } = useInstruments(); // Custom hook to fetch all instruments
 
     const toggleFreeInstruments = async () => {
-        const instruments = isFreeActive
-            ? await allInstruments() // Load all instruments
-            : await freeInstruments(); // Load free instruments
-        processAndSetInstruments(instruments); // Update full list of instruments and recalculate paginated data
+        if (isFreeActive) {
+            await allInstruments().then(processAndSetInstruments); // Load all instruments
+        } else {
+            await freeInstruments().then(processAndSetInstruments); // Load free instruments
+        }
         setIsFreeActive(!isFreeActive); // Toggle state
     };
     

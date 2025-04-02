@@ -11,11 +11,12 @@ export default function OccupiedInstrumentsButton({ isOccupiedActive, setIsOccup
     const { instruments: allInstruments } = useInstruments(); // Custom hook to fetch all instruments
 
     const toggleOccupiedInstruments = async () => {
-        const instruments = isOccupiedActive
-            ? await allInstruments()
-            : await occupiedInstruments();
-        processAndSetInstruments(instruments);
-        setIsOccupiedActive(!isOccupiedActive); // Toggle active state
+        if (isOccupiedActive) {
+            await allInstruments().then(processAndSetInstruments); // Load all instruments
+        } else {
+            await occupiedInstruments().then(processAndSetInstruments); // Load occupied instruments
+        }
+        setIsOccupiedActive(!isOccupiedActive); // Toggle state
     };
 
     return (
