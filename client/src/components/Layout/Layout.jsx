@@ -45,6 +45,12 @@ function ProtectedRoute({ children }) {
   return user._id ? children : <Navigate to="/login" />;
 }
 
+// GuestRoute component
+function GuestRoute({ children }) {
+  const user = useContext(UserContext);
+  return !user._id ? children : <Navigate to="/" />;
+}
+
 export default function AppLayout() {
     return (
         <>
@@ -66,9 +72,9 @@ export default function AppLayout() {
                 <Route path="/employees" element={<ProtectedRoute><Employees /></ProtectedRoute>} />
                 <Route path="/employees/:employeeId" element={<ProtectedRoute><EmployeeDetails /></ProtectedRoute>} />
                 <Route path="/instruments" element={<ProtectedRoute><Instruments /></ProtectedRoute>} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/logout" element={<Logout />} />
-                <Route path="/create" element={<Create />} />
+                <Route path="/login" element={<GuestRoute><Login /></GuestRoute>} />
+                <Route path="/logout" element={<ProtectedRoute><Logout /></ProtectedRoute>} />
+                <Route path="/create" element={<ProtectedRoute><Create /></ProtectedRoute>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
