@@ -14,7 +14,7 @@ const { returnInstrumentFromEmployee } = useReturnInstrumentFromEmployee();
 
 const showConfirm = (instrument, onDelete) => {
   confirm({
-    title: `Do you want to delete this instrument? ${instrument._id} `,    
+    title: `Do you want to delete this instrument?`,    
     icon: <ExclamationCircleFilled />,
     onOk() {
       returnInstrumentFromEmployee(instrument.currentOwner, instrument._id).then(() => {
