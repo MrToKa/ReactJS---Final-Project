@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 
-import { Col, Row } from 'antd';
+import { Col, Row, Flex } from 'antd';
 
 import InstrumentCard from './InstrumentsCard/InstrumentCard';
 import InstrumentsMenu from './InstrumentsMenu/InstrumentsMenu';
@@ -72,13 +72,13 @@ export default function Instruments() {
   const loadFreeInstruments = async () => {
     const data = await freeInstruments(); // Fetch free instruments
     processAndSetInstruments(data); // Process and set the state with free instruments
-    
+
   }
 
   const loadOccupiedInstruments = async () => {
     const data = await occupiedInstruments(); // Fetch occupied instruments
     processAndSetInstruments(data); // Process and set the state with occupied instruments    
-  }  
+  }
 
   return (
     <>
@@ -89,22 +89,21 @@ export default function Instruments() {
         isShowingOccupied={isShowingOccupied} // Pass state for occupied instruments
         setIsShowingOccupied={setIsShowingOccupied} // Pass setter for occupied instruments
         processAndSetInstruments={processAndSetInstruments}
-      />      
+      />
       <h2 style={{ textAlign: 'center', marginTop: '20px' }}>
         {isShowingFree ? 'Free Instruments' : isShowingOccupied ? 'Occupied Instruments' : 'All Instruments'}
       </h2>
-      <Row gutter={24} justify="center" style={{ height: 'auto' }}>
-        {instrument.map((item, index) => (
-          <Col span={6} key={item.id || `instrument-${index}`}>
-            <InstrumentCard            
+      <Flex wrap gap="small" justify="center" style={{ height: 'auto' }}>
+        {Array.from(instrument.map((item) => (          
+            <InstrumentCard
+              key={item._id}
               instrument={item}
               owner={owners[item.currentOwner] || null}
               onDelete={refreshInstruments}
               onReturn={refreshInstruments} // Refresh instruments after returning
-            />
-          </Col>
-        ))}
-      </Row>
+            />          
+        )))}
+      </Flex>
     </>
   );
 };
