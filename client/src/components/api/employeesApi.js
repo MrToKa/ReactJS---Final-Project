@@ -165,6 +165,9 @@ export const useSetEmployeeFree = () => {
     const setEmployeeFree = async (employeeId) => {
         const employee = await currentEmployee(employeeId);
         employee.previousProjects = employee.previousProjects || []; // Ensure previousProjects is an array
+        if (!employee.previousProjects.includes(employee.currentProject)) {
+            employee.previousProjects.push(employee.currentProject); // Add currentProject to previousProjects if not already present
+        }
 
         await update(employeeId, { ...employee, currentProject: "" });
         return employee; // Return the updated employee object

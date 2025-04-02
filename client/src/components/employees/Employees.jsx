@@ -50,8 +50,8 @@ export default function Employees() {
         return updatedEmployee;
       })
     );
-  
     setEmployees(employeesWithKeys);
+    setLoading(false); // Stop loading
     setCurrentPage(1);
     setPaginatedData(employeesWithKeys.slice(0, pageSize));
   };
@@ -60,21 +60,21 @@ export default function Employees() {
   const reloadEmployees = async () => {   
     setLoading(true); // Start loading
     const data = await employeesData();
-    processAndSetEmployees(data, true); // Use helper function
+    await processAndSetEmployees(data, true); // Use helper function
     setLoading(false); // Stop loading
   };
 
   const loadFreeEmployees = async () => {
     setLoading(true); // Start loading
     const data = await freeEmployees(); // Fetch free employees
-    processAndSetEmployees(data); // Use helper function
+    await processAndSetEmployees(data); // Use helper function
     setLoading(false); // Stop loading
   };
 
   const loadEmployeesOnProjects = async () => {
     setLoading(true); // Start loading
     const data = await employeesOnProjects(); // Fetch employees on projects
-    processAndSetEmployees(data, true); // Use helper function
+    await processAndSetEmployees(data, true); // Use helper function
     setLoading(false); // Stop loading
   };
 
